@@ -1,0 +1,105 @@
+From 6b426063f37aa28e14afe8979384e12c7018d819 Mon Sep 17 00:00:00 2001
+From: Christoph Matthies <christoph.matthies@gmail.com>
+Date: Mon, 18 Apr 2016 16:53:36 +0200
+Subject: [PATCH 1/3] Redirect to external login path after invalid login.
+ Fixes #364
+
+---
+ config/initializers/devise.rb | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
+
+diff --git a/config/initializers/devise.rb b/config/initializers/devise.rb
+index 1a5836e..5ad61ef 100644
+--- a/config/initializers/devise.rb
++++ b/config/initializers/devise.rb
+@@ -1,5 +1,25 @@
+ # Use this hook to configure devise mailer, warden hooks and so forth.
+ # Many of these configuration options can be set straight in your model.
++
++# Custom Devise FailureApp that redirects to external login on invalid login attempts.
++# http://stackoverflow.com/questions/5832631/devise-redirect-after-login-fail
++class RedirectFailure < Devise::FailureApp
++  def redirect_url
++    external_login_path
++  end
++
++  def respond
++    if http_auth?
++      http_auth
++    else
++      # https://github.com/plataformatec/devise/blob/69bee06ceee6280b54304928bb6e55c5064abad8/config/locales/en.yml
++      # https://github.com/plataformatec/devise/wiki/I18n
++      flash[:error] = I18n.t(:invalid, :authentication_keys => 'username', :scope => [:devise, :failure])
++      redirect
++    end
++  end
++end
++
+ Devise.setup do |config|
+   # The secret key used by Devise. Devise uses this key to generate
+   # random tokens. Changing this key will render invalid all existing
+@@ -246,6 +266,13 @@
+   #   manager.default_strategies(scope: :user).unshift :some_external_strategy
+   # end
+ 
++  # Use custom Devise FailureApp that redirects to external login
++  # when an invalid username / password is given.
++  # Defined in lib/redirect_failure.rb
++  config.warden do |manager|
++    manager.failure_app = RedirectFailure
++  end
++
+   # ==> Mountable engine configurations
+   # When using Devise inside an engine, let's call it `MyEngine`, and this engine
+   # is mountable, there are some extra configurations to be taken into account.
+
+From 3ac0f11ac948108eb4cb11c4f40b113f67479dd9 Mon Sep 17 00:00:00 2001
+From: Christoph Matthies <christoph.matthies@gmail.com>
+Date: Mon, 18 Apr 2016 17:29:10 +0200
+Subject: [PATCH 2/3] Redirect to sign in path after logout, so that success
+ flash messages are displayed.
+
+---
+ app/controllers/application_controller.rb | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/app/controllers/application_controller.rb b/app/controllers/application_controller.rb
+index d64301d..e2e560d 100644
+--- a/app/controllers/application_controller.rb
++++ b/app/controllers/application_controller.rb
+@@ -7,6 +7,13 @@ class ApplicationController < ActionController::Base
+ 
+   before_filter :set_locale
+ 
++  # Override the path that is redirected to after user is signed out.
++  # This defaults to root_path.
++  # https://github.com/plataformatec/devise/blob/master/lib/devise/controllers/helpers.rb
++  def after_sign_out_path_for(resource_or_scope)
++    new_user_session_path
++  end
++
+   def ensure_valid_email
+     requested_path = request.env['PATH_INFO']
+     if current_user.nil?
+
+From 06ec0f98b2d98b8a7284fcee8f3232f558a55048 Mon Sep 17 00:00:00 2001
+From: Christoph Matthies <christoph.matthies@gmail.com>
+Date: Mon, 18 Apr 2016 17:43:35 +0200
+Subject: [PATCH 3/3] Removed superflous comment in devise.rb
+
+---
+ config/initializers/devise.rb | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/config/initializers/devise.rb b/config/initializers/devise.rb
+index 5ad61ef..e4bcd1b 100644
+--- a/config/initializers/devise.rb
++++ b/config/initializers/devise.rb
+@@ -268,7 +268,6 @@ def respond
+ 
+   # Use custom Devise FailureApp that redirects to external login
+   # when an invalid username / password is given.
+-  # Defined in lib/redirect_failure.rb
+   config.warden do |manager|
+     manager.failure_app = RedirectFailure
+   end
