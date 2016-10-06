@@ -1,0 +1,38 @@
+diff --git a/Gemfile b/Gemfile
+index 647ad8d..08c7449 100644
+--- a/Gemfile
++++ b/Gemfile
+@@ -114,3 +114,12 @@ group :test do
+   # Stubbing external calls by blocking traffic with WebMock.disable_net_connect! or allow:
+   #gem 'webmock'
+ end
++
++
++
++
++
++
++
++
++# Appended a bunch of lines
+diff --git a/README.md b/README.md
+index ecc3f77..1ef4fb5 100644
+--- a/README.md
++++ b/README.md
+@@ -112,3 +112,16 @@ http://newrelic.com/
+ ## Scrum Board
+ 
+ Feel free to use [Waffle.io](https://waffle.io/hpi-swt2/wimi-portal) as a digital Scrum board.
++
++
++
++
++
++
++
++
++
++
++
++
++# Appended a bunch of lines
