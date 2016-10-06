@@ -126,16 +126,15 @@ def parse_lines(lines):
 
         # ananalyse individual change
         while idx < len(lines) and diff_start_re.match(lines[idx]) == None and diff_long_commit_re.match(lines[idx]) == None and diff_filename_re.match(lines[idx]) == None:
-
             line = lines[idx]
 
             if line.startswith("+"):
                 after_line += 1
-                added_lines[after_line] = LineChange(line, LineChange.ChangeType.added, current_file, current_after_commit)
+                added_lines[after_line] = LineChange(after_line, LineChange.ChangeType.added, current_file, current_after_commit)
 
             elif line.startswith("-"):
                 before_line += 1
-                removed_lines[before_line] = LineChange(line, LineChange.ChangeType.deleted, current_file, current_before_commit)
+                removed_lines[before_line] = LineChange(before_line, LineChange.ChangeType.deleted, current_file, current_before_commit)
             else:
                 before_line += 1
                 after_line += 1
@@ -156,7 +155,7 @@ def main():
     parser.add_argument('diff', type=str, help='the filename of the diff to parse')
 
     args = parser.parse_args()
-    parse_lines(load_file(args.diff))
+    print(parse_lines(load_file(args.diff))[0].__dict__)
 
 if __name__ == "__main__":
     main()
