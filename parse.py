@@ -1,5 +1,4 @@
-#!/bin/usr/python
-
+#!/usr/bin/env python3
 
 from lxml import html
 from enum import Enum
