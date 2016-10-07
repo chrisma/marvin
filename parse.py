@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 
 from lxml import html
-from enum import Enum
 import argparse
 import re
 import requests
+
+from models import LineChange
 
 def load_blame_page(commit, file):
     blame_url = "https://github.com/hpi-swt2/wimi-portal/blame/" + commit + file
@@ -12,29 +13,6 @@ def load_blame_page(commit, file):
 
     html_tree = html.fromstring(page.content)
     return html_tree
-
-
-class LineChange:
-
-    class ChangeType(Enum):
-            added = 1
-            deleted = 2
-            modified = 3
-
-
-    def __init__(self):
-        self.number = None
-        self.change_type = None
-        self.author = None
-        self.filename = None
-        self.commit = None
-
-    def __init__(self, number, change_type, filename, commit):
-        self.number = number
-        self.change_type = change_type
-        self.filename = filename
-        self.commit = commit
-
 
 def calc_modified_lines(added_lines, removed_lines):
     modified_lines = {}
