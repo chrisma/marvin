@@ -141,7 +141,9 @@ def main():
     args = parser.parse_args()
     log.setLevel([logging.WARNING, logging.INFO, logging.DEBUG][min(2,args.verbose)])
 
-    log.debug("{}".format(parse_lines(load_file(args.diff))[0].__dict__))
+    parsed = parse_lines(load_file(args.diff))
+
+    log.info("{}".format(parsed))
 
 if __name__ == "__main__":
     logging.basicConfig(stream=sys.stderr, format='%(name)s %(levelname)s %(message)s')

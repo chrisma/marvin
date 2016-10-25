@@ -15,3 +15,9 @@ class LineChange:
         self.filename = filename
         self.commit = commit
         self.author = None
+
+    def __str__(self):
+        return ', '.join("{}: {}".format(k, str(v)) for k,v in vars(self).items())
+
+    def __repr__(self):
+        return "<{klass} {str}>".format(klass=self.__class__.__name__, str=str(self))
