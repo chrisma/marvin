@@ -5,15 +5,15 @@ from enum import Enum
 class LineChange:
 
     class ChangeType(Enum):
-            added = 1
-            deleted = 2
-            modified = 3
+        added = 1
+        deleted = 2
+        modified = 3
 
-    def __init__(self, number=None, change_type=None, filename=None, commit=None):
-        self.number = number
+    def __init__(self, line_number=None, change_type=None, file_path=None, commit_sha=None):
+        self.line_number = line_number
         self.change_type = change_type
-        self.filename = filename
-        self.commit = commit
+        self.file_path = file_path
+        self.commit_sha = commit_sha
         self.author = None
 
     def __str__(self):
@@ -21,3 +21,12 @@ class LineChange:
 
     def __repr__(self):
         return "<{klass} {str}>".format(klass=self.__class__.__name__, str=str(self))
+
+    def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            return self.__dict__ == other.__dict__
+        else:
+            return False
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
