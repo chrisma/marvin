@@ -2,11 +2,15 @@
 
 from lxml import html
 import argparse
+import sys
 import re
 import logging
 import requests
 
 from models import LineChange
+
+module = sys.modules['__main__'].__file__
+log = logging.getLogger(module)
 
 def load_blame_page(commit, file):
     blame_url = "https://github.com/hpi-swt2/wimi-portal/blame/" + commit + file
@@ -26,7 +30,7 @@ def calc_modified_lines(added_lines, removed_lines):
     return added_lines, removed_lines, modified_lines
 
 def load_file(filename):
-    logging.debug("Parsing {}".format(filename))
+    log.debug("Parsing {}".format(filename))
 
     with open(filename) as f:
         return f.readlines()
@@ -70,7 +74,7 @@ def parse_lines(lines):
                 removed_lines = {}
 
             current_file = filename_match.group(2)
-            logging.debug("Current file set to {}".format(current_file))
+            log.debug("Current file set to {}".format(current_file))
 
             # Load short commit
             idx += 1
@@ -81,7 +85,7 @@ def parse_lines(lines):
                 current_before_commit = commits_match.group(1)
                 current_after_commit = commits_match.group(2)
             else:
-                logging.error("Something went wrong when parsing commit!")
+                log.error("Something went wrong when parsing commit!")
 
             # blame_file = load_blame_page(current_commit, current_file)
 
@@ -120,7 +124,7 @@ def parse_lines(lines):
             idx += 1
 
         if not (after_finish == after_line and before_finish == before_line):
-            logging.error("Something went wrong with parsing the lines {} {} {} {} {} {}".format(
+            log.warning("Something went wrong with parsing the lines {} {} {} {} {} {}".format(
                 idx, after_line, after_finish, line, lines[idx], lines[idx-1]))
 
     if current_file != None:
@@ -132,10 +136,13 @@ def parse_lines(lines):
 def main():
     parser = argparse.ArgumentParser(description='Parses a diff, returns changed lines')
     parser.add_argument('diff', type=str, help='the filename of the diff to parse')
+    parser.add_argument('-v', '--verbose', action='count', default=0, help="increases log verbosity for each occurence.")
 
     args = parser.parse_args()
-    logging.debug("{}".format(parse_lines(load_file(args.diff))[0].__dict__))
+    log.setLevel([logging.WARNING, logging.INFO, logging.DEBUG][min(2,args.verbose)])
+
+    log.debug("{}".format(parse_lines(load_file(args.diff))[0].__dict__))
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.DEBUG)
+    logging.basicConfig(stream=sys.stderr, format='%(name)s %(levelname)s %(message)s')
     main()
