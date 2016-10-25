@@ -9,15 +9,9 @@ class LineChange:
             deleted = 2
             modified = 3
 
-    def __init__(self):
-        self.number = None
-        self.change_type = None
-        self.author = None
-        self.filename = None
-        self.commit = None
-
-    def __init__(self, number, change_type, filename, commit):
+    def __init__(self, number=None, change_type=None, filename=None, commit=None):
         self.number = number
         self.change_type = change_type
         self.filename = filename
         self.commit = commit
+        self.author = None
