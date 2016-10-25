@@ -23,7 +23,7 @@ def calc_modified_lines(added_lines, removed_lines):
     modified_lines = {}
 
     for key in set(removed_lines.keys()).intersection(set(added_lines.keys())):    
-        modified_lines[key] = LineChange(key, LineChange.ChangeType.modified, added_lines[key].filename, added_lines[key].commit)
+        modified_lines[key] = LineChange(key, LineChange.ChangeType.modified, added_lines[key].file_path, added_lines[key].commit_sha)
         del added_lines[key]
         del removed_lines[key]
 
@@ -38,7 +38,7 @@ def load_file(filename):
 def parse_lines(lines):
     diff_start_re = re.compile('^@@ -([0-9]+),([0-9]+) \+([0-9]+),([0-9]+) @@.*$')
     diff_long_commit_re = re.compile('^From ([a-f,0-9]{40}) [A-Z][a-z]{2} [A-Z][a-z]{2} [0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} [0-9]{4}$')
-    diff_filename_re = re.compile('^diff --git (.*?) (.*?)$')
+    diff_filename_re = re.compile('^diff --git a/(.*?) b/(.*?)$')
     diff_commits_re = re.compile('^index ([a-f,0-9]{7})\.\.([a-f,0-9]{7}).*$')
 
     blame_file = None
