@@ -3,6 +3,7 @@
 from lxml import html
 import argparse
 import re
+import logging
 import requests
 
 from models import LineChange
@@ -25,7 +26,7 @@ def calc_modified_lines(added_lines, removed_lines):
     return added_lines, removed_lines, modified_lines
 
 def load_file(filename):
-    print('Parsing: ', filename)
+    logging.debug("Parsing {}".format(filename))
 
     with open(filename) as f:
         return f.readlines()
@@ -69,7 +70,7 @@ def parse_lines(lines):
                 removed_lines = {}
 
             current_file = filename_match.group(2)
-            print("Current file set to", current_file)
+            logging.debug("Current file set to {}".format(current_file))
 
             # Load short commit
             idx += 1
@@ -80,7 +81,7 @@ def parse_lines(lines):
                 current_before_commit = commits_match.group(1)
                 current_after_commit = commits_match.group(2)
             else:
-                print("[Error] Something went wrong when parsing commit!")
+                logging.error("Something went wrong when parsing commit!")
 
             # blame_file = load_blame_page(current_commit, current_file)
 
@@ -119,7 +120,8 @@ def parse_lines(lines):
             idx += 1
 
         if not (after_finish == after_line and before_finish == before_line):
-            print("Something went wrong with parsing the lines", idx, after_line, after_finish, line, lines[idx], lines[idx-1])
+            logging.error("Something went wrong with parsing the lines {} {} {} {} {} {}".format(
+                idx, after_line, after_finish, line, lines[idx], lines[idx-1]))
 
     if current_file != None:
         added_lines, removed_lines, modified_lines = calc_modified_lines(added_lines, removed_lines)
@@ -132,7 +134,8 @@ def main():
     parser.add_argument('diff', type=str, help='the filename of the diff to parse')
 
     args = parser.parse_args()
-    print(parse_lines(load_file(args.diff))[0].__dict__)
+    logging.debug("{}".format(parse_lines(load_file(args.diff))[0].__dict__))
 
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.DEBUG)
     main()
