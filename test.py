@@ -1,21 +1,23 @@
+#!/usr/bin/env python3
+
 import unittest, json, codecs, os
-from collections import namedtuple
-from marvin import Marvin
+import parse
+from models import LineChange
 
-header = namedtuple('header', ['index_path', 'old_path', 'old_version', 'new_path', 'new_version'])
+# header = namedtuple('header', ['index_path', 'old_path', 'old_version', 'new_path', 'new_version'])
 
-repo_storage_dir = '../repos'
+#<LineChange change_type: ChangeType.added, line_number: 4, file_path: b/config/initializers/devise.rb, author: None, commit_sha: 5ad61ef>
+
+TEST_DATA_DIR_NAME = 'test_data'
 
 class MarvinTest(unittest.TestCase):
 	def __init__(self, *args, **kwargs):
 		super(MarvinTest, self).__init__(*args, **kwargs)
-		self.test_data_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'data')
-		self.marvin = Marvin(repo_dir=repo_storage_dir)
-		self.marvin.repo_path = os.path.join(repo_storage_dir, 'chrisma', 'wimi-portal')
+		self.test_data_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), TEST_DATA_DIR_NAME)
 
 	def read(self, file):
-		with open(os.path.join(self.test_data_dir, file), 'rb') as f:
-			return f.read()
+		file_path = os.path.join(self.test_data_dir, file)
+		return parse.load_file(file_path)
 
 	def assertKeyValueInDictList(self, item, lst):
 		def key_in_list(key, lst):
@@ -28,142 +30,166 @@ class MarvinTest(unittest.TestCase):
 		self.assertTrue(key_in_list(key, lst), msg="The key was not found.")
 		self.assertTrue(key_value_in_list(key, value, lst), msg="The key did not have the expected value.")
 
+class TestMarvinTest(MarvinTest):
+	def test_key_value_in_dict(self):
+		self.assertKeyValueInDictList(('b',2), [{'a':1,'b':2}])
+
+class TestLineChageEquality(unittest.TestCase):
+	def test_custom_eq(self):
+		self.assertEqual(LineChange(), LineChange())
+
+	def test_custom_ne(self):
+		self.assertNotEqual(LineChange(), LineChange(line_number='1'))
+
+
+class TestReturnType(MarvinTest):
+	def setUp(self):
+		self.file_changes = parse.parse_lines(self.read('modify.diff'))
+
+	def test_collection(self):
+		self.assertIsInstance(self.file_changes, list)
+
+	def test_linechange(self):
+		self.assertIsInstance(self.file_changes[0], LineChange)
+
 class TestDiffModifiedLine(MarvinTest):
 	def setUp(self):
-		self.file_changes = self.marvin.analyze_diff(self.read('modify.diff'))
-		self.line_number = 40
+		self.file_changes = parse.parse_lines(self.read('modify.diff'))
 
 	def test_amount(self):
 		self.assertEqual(len(self.file_changes), 1)
 
-	def test_header(self):
-		header = self.file_changes[0]['header']
-		self.assertEqual(header.old_path, 'Gemfile')
-		self.assertEqual(header.new_path, 'Gemfile')
+	def test_file_path(self):
+		change = self.file_changes[0]
+		self.assertEqual(change.file_path, 'Gemfile')
 
-	def test_changes(self):
-		changes = self.file_changes[0]['changes']
-		actual = [	{'start': self.line_number, 'type': 'insert', 'end': self.line_number},
-					{'start': self.line_number, 'type': 'delete', 'end': self.line_number}]
-		self.assertCountEqual(actual, changes)
+	def test_change(self):
+		change = self.file_changes[0]
+		self.assertEqual(change.line_number, 40)
+		self.assertEqual(change.change_type, LineChange.ChangeType.modified)
 
 class TestDiffAppendedLine(MarvinTest):
 	def setUp(self):
-		self.file_changes = self.marvin.analyze_diff(self.read('append.diff'))
-		self.line_number = 113
+		self.file_changes = parse.parse_lines(self.read('append.diff'))
 
 	def test_amount(self):
 		self.assertEqual(len(self.file_changes), 1)
 
-	def test_header(self):
-		header = self.file_changes[0]['header']
-		self.assertEqual(header.old_path, 'Gemfile')
-		self.assertEqual(header.new_path, 'Gemfile')
+	def test_file_path(self):
+		change = self.file_changes[0]
+		self.assertEqual(change.file_path, 'Gemfile')
 
-	def test_changes(self):
-		changes = self.file_changes[0]['changes']
-		actual = [{'start': self.line_number, 'end': self.line_number, 'type': 'insert'}]
-		self.assertCountEqual(actual, changes)
+	def test_change(self):
+		change = self.file_changes[0]
+		self.assertEqual(change.line_number, 117)
+		self.assertEqual(change.change_type, LineChange.ChangeType.added)
 
 class TestDiffMultipleAppendedLines(MarvinTest):
 	def setUp(self):
-		self.file_changes = self.marvin.analyze_diff(self.read('multiple_appends.diff'))
+		self.file_changes = parse.parse_lines(self.read('multiple_appends.diff'))
 
 	def test_amount(self):
-		self.assertEqual(len(self.file_changes), 2)
+		self.assertEqual(len(self.file_changes), 9 + 13)
 
-	def test_header(self):
-		headers_old_paths = [change['header'].old_path for change in self.file_changes]
-		self.assertCountEqual(['Gemfile', 'README.md'], headers_old_paths)
-		headers_new_paths = [change['header'].new_path for change in self.file_changes]
-		self.assertCountEqual(['Gemfile', 'README.md'], headers_new_paths)
+	def test_file_paths(self):
+		file_paths = [change.file_path for change in self.file_changes]
+		self.assertCountEqual(['Gemfile']*9 + ['README.md']*13, file_paths)
 
 	def test_change_file1(self):
-		file1_changes = [c['changes'] for c in self.file_changes if c['header'].new_path=='Gemfile'].pop()
-		# lines 117 to 125 appended
-		file1_actual = [{'start': 117, 'end': 125, 'type': 'insert'}]
-		self.assertCountEqual(file1_actual, file1_changes)
+		file1_changes = [c for c in self.file_changes if c.file_path == 'Gemfile']
+		for change in file1_changes:
+			# lines 117 to 125 appended
+			self.assertIn(change.line_number, range(117, 125+1))
+			self.assertEqual(change.change_type, LineChange.ChangeType.added)
 
 	def test_change_file2(self):
-		file2_changes = [c['changes'] for c in self.file_changes if c['header'].new_path=='README.md'].pop()
-		# lines 115 to 127 appended
-		file2_actual = [{'start': 115, 'end': 127, 'type': 'insert'}]
-		self.assertCountEqual(file2_actual, file2_changes)
+		file1_changes = [c for c in self.file_changes if c.file_path == 'README.md']
+		for change in file1_changes:
+			# lines 115 to 127 appended
+			self.assertIn(change.line_number, range(115, 127+1))
+			self.assertEqual(change.change_type, LineChange.ChangeType.added)
 
 class TestDiffPrependedLine(MarvinTest):
 	def setUp(self):
-		self.file_changes = self.marvin.analyze_diff(self.read('prepend.diff'))
-		self.line_number = 1
+		self.file_changes = parse.parse_lines(self.read('prepend.diff'))
 
 	def test_amount(self):
 		self.assertEqual(len(self.file_changes), 1)
 
-	def test_header(self):
-		header = self.file_changes[0]['header']
-		self.assertEqual(header.old_path, 'Gemfile')
-		self.assertEqual(header.new_path, 'Gemfile')
+	def test_file_path(self):
+		change = self.file_changes[0]
+		self.assertEqual(change.file_path, 'Gemfile')
 
 	def test_changes(self):
-		changes = self.file_changes[0]['changes']
-		actual = [{'start': self.line_number, 'end': self.line_number, 'type': 'insert'}]
-		self.assertCountEqual(actual, changes)
+		change = self.file_changes[0]
+		self.assertEqual(change.line_number, 1)
+		self.assertEqual(change.change_type, LineChange.ChangeType.added)
 
 class TestDiffDeletedLine(MarvinTest):
 	def setUp(self):
-		self.file_changes = self.marvin.analyze_diff(self.read('delete.diff'))
-		self.line_number = 37
+		self.file_changes = parse.parse_lines(self.read('delete.diff'))
 
 	def test_amount(self):
 		self.assertEqual(len(self.file_changes), 1)
 
-	def test_header(self):
-		header = self.file_changes[0]['header']
-		self.assertEqual(header.old_path, 'Gemfile')
-		self.assertEqual(header.new_path, 'Gemfile')
+	def test_file_path(self):
+		change = self.file_changes[0]
+		self.assertEqual(change.file_path, 'Gemfile')
 
 	def test_changes(self):
-		changes = self.file_changes[0]['changes']
-		actual = [{'start': self.line_number, 'end': self.line_number, 'type': 'delete'}]
-		self.assertCountEqual(actual, changes)
+		change = self.file_changes[0]
+		self.assertEqual(change.line_number, 37)
+		self.assertEqual(change.change_type, LineChange.ChangeType.deleted)
+
+	def test_old_sha(self):
+		# In case of a deletion the old commit is of interest
+		change = self.file_changes[0]
+		self.assertEqual(change.commit_sha, "647ad8d")
 
 class TestDiffMultipleEdits(MarvinTest):
 	def setUp(self):
-		self.file_changes = self.marvin.analyze_diff(self.read('multiple_edits.diff'))
+		self.file_changes = parse.parse_lines(self.read('multiple_edits.diff'))
+		self.new_sha = "484e717"
+		self.file_path = "Gemfile"
 
 	def test_amount(self):
-		self.assertEqual(len(self.file_changes), 1)
+		# One line prepended, one line edited, two lines appended
+		self.assertEqual(len(self.file_changes), 4)
 
-	def test_header(self):
-		header = self.file_changes[0]['header']
-		self.assertEqual(header.old_path, 'Gemfile')
-		self.assertEqual(header.new_path, 'Gemfile')
+	def test_file_path(self):
+		change = self.file_changes[0]
+		self.assertEqual(change.file_path, 'Gemfile')
 
 	def test_prepend(self):
-		changes = self.file_changes[0]['changes']
-		# line 1 prepended
-		self.assertIn({'start': 1, 'end': 1, 'type': 'insert'}, changes)
+		# First line prepended
+		actual = LineChange(line_number=1, commit_sha=self.new_sha,
+			file_path=self.file_path, change_type=LineChange.ChangeType.added)
+		self.assertIn(actual, self.file_changes)
 
 	def test_modify(self):
-		changes = self.file_changes[0]['changes']
 		#line 58 (now 59) modified
-		actual = [	{'start': 58, 'end': 58, 'type': 'delete'},
-					{'start': 59, 'end': 59, 'type': 'insert'}]
-		for elem in actual:
-			self.assertIn(elem, changes)
+		actual = LineChange(line_number=59, commit_sha=self.new_sha,
+			file_path=self.file_path, change_type=LineChange.ChangeType.modified)
+		self.assertIn(actual, self.file_changes)
 
 	def test_append(self):
-		changes = self.file_changes[0]['changes']
 		#lines 118, 119 appended.
-		self.assertIn({'start': 118, 'end': 119, 'type': 'insert'}, changes)
+		actual = [	LineChange(line_number=118, commit_sha=self.new_sha,
+						file_path=self.file_path, change_type=LineChange.ChangeType.added),
+					LineChange(line_number=119, commit_sha=self.new_sha,
+						file_path=self.file_path, change_type=LineChange.ChangeType.added)]
+		for lc in actual:
+			self.assertIn(lc, self.file_changes)
 
+@unittest.skip("Not refactored yet")
 class TestDiffMultipleFiles(MarvinTest):
 	def setUp(self):
-		self.file_changes = self.marvin.analyze_diff(self.read('multiple_files.diff'))
+		self.file_changes = parse.parse_lines(self.read('multiple_files.diff'))
 
 	def test_amount(self):
 		self.assertEqual(len(self.file_changes), 2)
 
-	def test_header(self):
+	def test_file_path(self):
 		headers_old_paths = [change['header'].old_path for change in self.file_changes]
 		self.assertCountEqual(['Gemfile', 'README.md'], headers_old_paths)
 		headers_new_paths = [change['header'].new_path for change in self.file_changes]
@@ -185,9 +211,10 @@ class TestDiffMultipleFiles(MarvinTest):
 		file2_actual = [{'start': 25, 'end': 26, 'type': 'insert'}]
 		self.assertCountEqual(file2_actual, file2_changes)
 
+@unittest.skip("Not refactored yet")
 class TestDiffLarge(MarvinTest):
 	def setUp(self):
-		self.file_changes = self.marvin.analyze_diff(self.read('pr_338.diff'))
+		self.file_changes = parse.parse_lines(self.read('pr_338.diff'))
 
 	def test_amount(self):
 		self.assertEqual(len(self.file_changes), 15)
@@ -209,6 +236,7 @@ class TestDiffLarge(MarvinTest):
 		]
 		self.assertCountEqual(actual, changes)
 
+@unittest.skip("Not refactored yet")
 class TestBlameInsert(MarvinTest):
 	def setUp(self):
 		self.line = 10
@@ -231,6 +259,7 @@ class TestBlameInsert(MarvinTest):
 				'lines': {self.line-1, self.line+1}}]
 		self.assertEqual(actual, blame)
 
+@unittest.skip("Not refactored yet")
 class TestBlameMultipleInserts(MarvinTest):
 	def setUp(self):
 		file_changes = [{'changes': [
@@ -260,9 +289,6 @@ class TestBlameMultipleInserts(MarvinTest):
 			for blame in blame_list:
 				self.assertIn(blame, actual)
 
-class TestTest(MarvinTest):
-	def test_key_value_in_dict(self):
-		self.assertKeyValueInDictList(('a',2), [{'a':1,'b':2}])
 
 if __name__ == '__main__':
 	unittest.main()
