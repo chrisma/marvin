@@ -4,10 +4,6 @@ import unittest, json, codecs, os
 import parse
 from models import LineChange
 
-# header = namedtuple('header', ['index_path', 'old_path', 'old_version', 'new_path', 'new_version'])
-
-#<LineChange change_type: ChangeType.added, line_number: 4, file_path: b/config/initializers/devise.rb, author: None, commit_sha: 5ad61ef>
-
 TEST_DATA_DIR_NAME = 'test_data'
 
 class MarvinTest(unittest.TestCase):
