@@ -66,6 +66,7 @@ class TestDiffModifiedLine(MarvinTest):
 	def test_change(self):
 		change = self.file_changes[0]
 		self.assertEqual(change.line_number, 40)
+		self.assertEqual(change.commit_sha, "d486669")
 		self.assertEqual(change.change_type, LineChange.ChangeType.modified)
 
 class TestDiffAppendedLine(MarvinTest):
@@ -82,6 +83,7 @@ class TestDiffAppendedLine(MarvinTest):
 	def test_change(self):
 		change = self.file_changes[0]
 		self.assertEqual(change.line_number, 117)
+		self.assertEqual(change.commit_sha, "647ad8d")
 		self.assertEqual(change.change_type, LineChange.ChangeType.added)
 
 class TestDiffMultipleAppendedLines(MarvinTest):
@@ -123,6 +125,7 @@ class TestDiffPrependedLine(MarvinTest):
 	def test_changes(self):
 		change = self.file_changes[0]
 		self.assertEqual(change.line_number, 1)
+		self.assertEqual(change.commit_sha, "de30360")
 		self.assertEqual(change.change_type, LineChange.ChangeType.added)
 
 class TestDiffDeletedLine(MarvinTest):
