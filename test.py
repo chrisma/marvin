@@ -184,35 +184,42 @@ class TestDiffMultipleEdits(MarvinTest):
 		for lc in actual:
 			self.assertIn(lc, self.file_changes)
 
-@unittest.skip("Not refactored yet")
 class TestDiffMultipleFiles(MarvinTest):
 	def setUp(self):
 		self.file_changes = parse.parse_lines(self.read('multiple_files.diff'))
 
 	def test_amount(self):
-		self.assertEqual(len(self.file_changes), 2)
+		self.assertEqual(len(self.file_changes), 5)
 
-	def test_file_path(self):
-		headers_old_paths = [change['header'].old_path for change in self.file_changes]
-		self.assertCountEqual(['Gemfile', 'README.md'], headers_old_paths)
-		headers_new_paths = [change['header'].new_path for change in self.file_changes]
-		self.assertCountEqual(['Gemfile', 'README.md'], headers_new_paths)
+	def test_file_paths(self):
+		file_paths = [change.file_path for change in self.file_changes]
+		self.assertCountEqual(['Gemfile']*3 + ['README.md']*2, file_paths)
 
 	def test_changes_file1(self):
-		file1_changes = [c['changes'] for c in self.file_changes if c['header'].new_path=='Gemfile'].pop()
+		file = "Gemfile"
+		new_sha = "37c323f"
+		single_file_changes = [c for c in self.file_changes if c.file_path == file]
 		# line 1 prepended, line 37 (now 38) and line 40 (now 41) modified
-		file1_actual = [{'start': 1, 'end': 1, 'type': 'insert'},
-					{'start': 37, 'end': 37, 'type': 'delete'},
-					{'start': 38, 'end': 38, 'type': 'insert'},
-					{'start': 40, 'end': 40, 'type': 'delete'},
-					{'start': 41, 'end': 41, 'type': 'insert'}]
-		self.assertCountEqual(file1_actual, file1_changes)
+		expected = [LineChange(line_number=1, commit_sha=new_sha,
+						file_path=file, change_type=LineChange.ChangeType.added),
+					LineChange(line_number=38, commit_sha=new_sha,
+						file_path=file, change_type=LineChange.ChangeType.modified),
+					LineChange(line_number=41, commit_sha=new_sha,
+						file_path=file, change_type=LineChange.ChangeType.modified)]
+		for e in expected:
+			self.assertIn(e, single_file_changes)
 
 	def test_changes_file2(self):
-		file2_changes = [c['changes'] for c in self.file_changes if c['header'].new_path=='README.md'].pop()
+		file = "README.md"
+		new_sha = "9add005"
+		single_file_changes = [c for c in self.file_changes if c.file_path == file]
 		# Inserted lines 25 and 26
-		file2_actual = [{'start': 25, 'end': 26, 'type': 'insert'}]
-		self.assertCountEqual(file2_actual, file2_changes)
+		expected = [LineChange(line_number=25, commit_sha=new_sha,
+						file_path=file, change_type=LineChange.ChangeType.added),
+					LineChange(line_number=26, commit_sha=new_sha,
+						file_path=file, change_type=LineChange.ChangeType.added)]
+		for e in expected:
+			self.assertIn(e, single_file_changes)
 
 @unittest.skip("Not refactored yet")
 class TestDiffLarge(MarvinTest):
