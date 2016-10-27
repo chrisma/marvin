@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-from lxml import html
 import argparse
 import sys
 import re
@@ -8,21 +7,15 @@ import logging
 import requests
 
 from models import LineChange
+from blame import BlameParser
 
 module = sys.modules['__main__'].__file__
 log = logging.getLogger(module)
 
-def load_blame_page(commit, file):
-    blame_url = "https://github.com/hpi-swt2/wimi-portal/blame/" + commit + file
-    page = requests.get(blame_url)
-
-    html_tree = html.fromstring(page.content)
-    return html_tree
-
 def calc_modified_lines(added_lines, removed_lines):
     modified_lines = {}
 
-    for key in set(removed_lines.keys()).intersection(set(added_lines.keys())):    
+    for key in set(removed_lines.keys()).intersection(set(added_lines.keys())):
         modified_lines[key] = LineChange(key, LineChange.ChangeType.modified, added_lines[key].file_path, added_lines[key].commit_sha)
         del added_lines[key]
         del removed_lines[key]
@@ -144,6 +137,7 @@ def main():
     parsed = parse_lines(load_file(args.diff))
 
     log.info("{}".format(parsed))
+
 
 if __name__ == "__main__":
     logging.basicConfig(stream=sys.stderr, format='%(name)s %(levelname)s %(message)s')

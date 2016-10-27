@@ -1,0 +1,7 @@
+{
+    "BLAME": {
+        "PROJECT_LINK": "https://github.com/hpi-swt2/wimi-portal",
+        "XPATH_BLAME_AUTHOR": "//tr[@class='blame-commit' and following-sibling::tr[@class='blame-line']/td[contains(@class,'js-line-number') and text()=$line]][last()]/td[@class='blame-commit-info']/div[@class='blame-commit-meta']/a[@class='muted-link' and @rel='contributor']",
+        "TEST_FILE": "test_blame.html"
+    }
+}
