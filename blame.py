@@ -28,7 +28,7 @@ class BlameParser:
         with open(html_path) as f:
             self._set_html_tree(f.read())
 
-    def get_author_from_blame(self, line):
+    def blame_line(self, line):
         if self.html_tree == None:
             if self.logger != None:
                 self.logger.error("HTML not loaded before requesting lines")
@@ -50,5 +50,5 @@ if __name__ == "__main__":
 
     blamer = BlameParser(project_link='', logger=log)
     blamer.load_html_file('test_data/test_blame.html')
-    author = blamer.get_author_from_blame(1)
+    author = blamer.blame_line(1)
     print(author)

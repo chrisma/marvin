@@ -252,7 +252,7 @@ class TestBlame(MarvinTest):
 	def test_blame(self):
 		blamer = blame.BlameParser(project_link='')
 		blamer.load_html_file(self.html_path)
-		author = blamer.get_author_from_blame(1)
+		author = blamer.blame_line(1)
 		self.assertEqual(author, 'jaSunny')
 
 @unittest.skip("Not refactored yet")
