@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import unittest, json, codecs, os
-import parse
+import parse, blame
 from models import LineChange
 
 TEST_DATA_DIR_NAME = 'test_data'
@@ -11,8 +11,11 @@ class MarvinTest(unittest.TestCase):
 		super(MarvinTest, self).__init__(*args, **kwargs)
 		self.test_data_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), TEST_DATA_DIR_NAME)
 
-	def read(self, file):
-		file_path = os.path.join(self.test_data_dir, file)
+	def full_test_path(self, file):
+		return os.path.join(self.test_data_dir, file)
+
+	def read_diff(self, file):
+		file_path = self.full_test_path(file)
 		return parse.load_file(file_path)
 
 	def assertKeyValueInDictList(self, item, lst):
@@ -40,7 +43,7 @@ class TestLineChageEquality(unittest.TestCase):
 
 class TestReturnType(MarvinTest):
 	def setUp(self):
-		self.file_changes = parse.parse_lines(self.read('modify.diff'))
+		self.file_changes = parse.parse_lines(self.read_diff('modify.diff'))
 
 	def test_collection(self):
 		self.assertIsInstance(self.file_changes, list)
@@ -50,7 +53,7 @@ class TestReturnType(MarvinTest):
 
 class TestDiffModifiedLine(MarvinTest):
 	def setUp(self):
-		self.file_changes = parse.parse_lines(self.read('modify.diff'))
+		self.file_changes = parse.parse_lines(self.read_diff('modify.diff'))
 
 	def test_amount(self):
 		self.assertEqual(len(self.file_changes), 1)
@@ -67,7 +70,7 @@ class TestDiffModifiedLine(MarvinTest):
 
 class TestDiffAppendedLine(MarvinTest):
 	def setUp(self):
-		self.file_changes = parse.parse_lines(self.read('append.diff'))
+		self.file_changes = parse.parse_lines(self.read_diff('append.diff'))
 
 	def test_amount(self):
 		self.assertEqual(len(self.file_changes), 1)
@@ -84,7 +87,7 @@ class TestDiffAppendedLine(MarvinTest):
 
 class TestDiffMultipleAppendedLines(MarvinTest):
 	def setUp(self):
-		self.file_changes = parse.parse_lines(self.read('multiple_appends.diff'))
+		self.file_changes = parse.parse_lines(self.read_diff('multiple_appends.diff'))
 
 	def test_amount(self):
 		self.assertEqual(len(self.file_changes), 9 + 13)
@@ -109,7 +112,7 @@ class TestDiffMultipleAppendedLines(MarvinTest):
 
 class TestDiffPrependedLine(MarvinTest):
 	def setUp(self):
-		self.file_changes = parse.parse_lines(self.read('prepend.diff'))
+		self.file_changes = parse.parse_lines(self.read_diff('prepend.diff'))
 
 	def test_amount(self):
 		self.assertEqual(len(self.file_changes), 1)
@@ -126,7 +129,7 @@ class TestDiffPrependedLine(MarvinTest):
 
 class TestDiffDeletedLine(MarvinTest):
 	def setUp(self):
-		self.file_changes = parse.parse_lines(self.read('delete.diff'))
+		self.file_changes = parse.parse_lines(self.read_diff('delete.diff'))
 
 	def test_amount(self):
 		self.assertEqual(len(self.file_changes), 1)
@@ -147,7 +150,7 @@ class TestDiffDeletedLine(MarvinTest):
 
 class TestDiffMultipleEdits(MarvinTest):
 	def setUp(self):
-		self.file_changes = parse.parse_lines(self.read('multiple_edits.diff'))
+		self.file_changes = parse.parse_lines(self.read_diff('multiple_edits.diff'))
 		self.new_sha = "484e717"
 		self.file_path = "Gemfile"
 
@@ -182,7 +185,7 @@ class TestDiffMultipleEdits(MarvinTest):
 
 class TestDiffMultipleFiles(MarvinTest):
 	def setUp(self):
-		self.file_changes = parse.parse_lines(self.read('multiple_files.diff'))
+		self.file_changes = parse.parse_lines(self.read_diff('multiple_files.diff'))
 
 	def test_amount(self):
 		self.assertEqual(len(self.file_changes), 5)
@@ -220,7 +223,7 @@ class TestDiffMultipleFiles(MarvinTest):
 @unittest.skip("Not refactored yet")
 class TestDiffLarge(MarvinTest):
 	def setUp(self):
-		self.file_changes = parse.parse_lines(self.read('pr_338.diff'))
+		self.file_changes = parse.parse_lines(self.read_diff('pr_338.diff'))
 
 	def test_amount(self):
 		self.assertEqual(len(self.file_changes), 15)
@@ -241,6 +244,16 @@ class TestDiffLarge(MarvinTest):
 			{'end': 83, 'start': 83, 'type': 'insert'}
 		]
 		self.assertCountEqual(actual, changes)
+
+class TestBlame(MarvinTest):
+	def setUp(self):
+		self.html_path = self.full_test_path('test_blame.html')
+
+	def test_blame(self):
+		blamer = blame.BlameParser(project_link='')
+		blamer.load_html_file(self.html_path)
+		author = blamer.get_author_from_blame(1)
+		self.assertEqual(author, 'jaSunny')
 
 @unittest.skip("Not refactored yet")
 class TestBlameInsert(MarvinTest):

@@ -16,15 +16,17 @@ class BlameParser:
         self.logger = logger
         self.html_tree = None
 
-    def load_blame_page(self, commit, file):
+    def _set_html_tree(self, string):
+        self.html_tree = html.fromstring(string)
+
+    def get_blame_page(self, commit, file):
         blame_url = self.project_link + "/blame/" + commit + file
-        page = requests.get(blame_url)
+        response = requests.get(blame_url)
+        self._set_html_tree(respone.content)
 
-        self.html_tree = html.fromstring(page.content)
-
-    def load_sample_blame_page(self):
-        with open(config['BLAME']['TEST_FILE']) as file:
-            self.html_tree = html.fromstring(file.read())
+    def load_html_file(self, html_path):
+        with open(html_path) as f:
+            self._set_html_tree(f.read())
 
     def get_author_from_blame(self, line):
         if self.html_tree == None:
@@ -45,7 +47,8 @@ class BlameParser:
 
 if __name__ == "__main__":
     logging.basicConfig(stream=sys.stderr, format='%(name)s %(levelname)s %(message)s')
+
     blamer = BlameParser(project_link='', logger=log)
-    blamer.load_sample_blame_page()
-    author = blamer.get_author_from_blame(28)
+    blamer.load_html_file('test_data/test_blame.html')
+    author = blamer.get_author_from_blame(1)
     print(author)
