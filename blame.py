@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 
 from lxml import html
-import json
+import json, sys, logging
+import requests
 
 config = json.loads(open("config.json").read())
+
+module = sys.modules['__main__'].__file__
+log = logging.getLogger(module)
 
 class BlameParser:
 
@@ -25,7 +29,7 @@ class BlameParser:
     def get_author_from_blame(self, line):
         if self.html_tree == None:
             if self.logger != None:
-                self.logger.error("HTML not loaded before requestign lines")
+                self.logger.error("HTML not loaded before requesting lines")
             return
 
         xpath_author = config['BLAME']['XPATH_BLAME_AUTHOR']
@@ -36,5 +40,12 @@ class BlameParser:
             return matches[0].text
         else:
             if self.logger != None:
-                self.logger.error("Error while finding author for line {} no matches found", str(line))
+                self.logger.error("No author found for line {}".format(line))
             return ""
+
+if __name__ == "__main__":
+    logging.basicConfig(stream=sys.stderr, format='%(name)s %(levelname)s %(message)s')
+    blamer = BlameParser(project_link='', logger=log)
+    blamer.load_sample_blame_page()
+    author = blamer.get_author_from_blame(28)
+    print(author)
