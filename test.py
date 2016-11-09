@@ -33,7 +33,7 @@ class TestMarvinTest(MarvinTest):
 	def test_key_value_in_dict(self):
 		self.assertKeyValueInDictList(('b',2), [{'a':1,'b':2}])
 
-class TestLineChageEquality(unittest.TestCase):
+class TestLineChangeEquality(unittest.TestCase):
 	def test_custom_eq(self):
 		self.assertEqual(LineChange(), LineChange())
 

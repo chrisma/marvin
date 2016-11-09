@@ -4,8 +4,6 @@ from lxml import html
 import json, sys, logging
 import requests
 
-config = json.loads(open("config.json").read())
-
 module = sys.modules['__main__'].__file__
 log = logging.getLogger(module)
 
@@ -34,7 +32,7 @@ class BlameParser:
                 self.logger.error("HTML not loaded before requesting lines")
             return
 
-        xpath_author = config['BLAME']['XPATH_BLAME_AUTHOR']
+        xpath_author = "//tr[@class='blame-commit' and following-sibling::tr[@class='blame-line']/td[contains(@class,'js-line-number') and text()=$line]][last()]/td[@class='blame-commit-info']/div[@class='blame-commit-meta']/a[@class='muted-link' and @rel='contributor']"
 
         matches = self.html_tree.xpath(xpath_author, line = str(line))
         
