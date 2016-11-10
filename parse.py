@@ -103,7 +103,7 @@ def parse_lines(lines):
         after_finish = after_line + after_offset
         idx += 1
 
-        # ananalyse individual change
+        # analyse individual change
         while idx < len(lines) \
             and diff_start_re.match(lines[idx]) == None \
             and diff_long_commit_re.match(lines[idx]) == None \
