@@ -1,6 +1,20 @@
 #!/usr/bin/env python3
 
-import unittest, json, codecs, os
+# https://docs.python.org/3/library/unittest.html
+# assertEqual(a, b) 	a == b
+# assertNotEqual(a, b) 	a != b
+# assertTrue(x) 		bool(x) is True
+# assertFalse(x) 		bool(x) is False
+# assertIs(a, b) 		a is b
+# assertIsNot(a, b) 	a is not
+# assertIsNone(x) 		x is None
+# assertIsNotNone(x) 	x is not None
+# assertIn(a, b) 		a in b
+# assertNotIn(a, b) 			a not in b
+# assertIsInstance(a, b) 		isinstance(a, b)
+# assertNotIsInstance(a, b) 	not isinstance(a, b)
+
+import unittest, json, codecs, os, logging
 import parse, blame
 from models import LineChange
 
@@ -247,13 +261,42 @@ class TestDiffLarge(MarvinTest):
 
 class TestBlame(MarvinTest):
 	def setUp(self):
-		self.html_path = self.full_test_path('test_blame.html')
+		self.line_count = 116
+		html_path = self.full_test_path('test_blame.html')
+		self.blamer = blame.BlameParser(project_link='')
+		self.blamer.load_html_file(html_path)
 
-	def test_blame(self):
-		blamer = blame.BlameParser(project_link='')
-		blamer.load_html_file(self.html_path)
-		author = blamer.blame_line(1)
-		self.assertEqual(author, 'jaSunny')
+	def test_count_blames(self):
+		data = self.blamer.blame_data
+		self.assertIsNotNone(data)
+		# 116 lines in the file
+		self.assertEqual(len(data), self.line_count)
+
+	def test_blame_first_line(self):
+		blame_info = self.blamer.blame_line(1)
+		self.assertEqual(blame_info.user_name, 'jaSunny')
+		self.assertEqual(blame_info.commit_message, 'adding rails 4.2.4 app')
+		self.assertEqual(blame_info.short_sha, '867c8f8')
+		self.assertIn(blame_info.short_sha, blame_info.commit_url)
+
+	def test_blame_multiple_line_commit(self):
+		blame_info = self.blamer.blame_line(42)
+		self.assertEqual(blame_info.user_name, 'WGierke')
+		self.assertEqual(blame_info.commit_message, 'code refactoring of dev branch')
+
+	def test_blame_last_line(self):
+		blame_info = self.blamer.blame_line(self.line_count)
+		self.assertEqual(blame_info.user_name, 'jaSunny')
+		message = 'adding newrelic, errbit supprt; improving views and validation'
+		self.assertEqual(blame_info.commit_message, message)
+
+	def test_blame_nonexistent_line(self):
+		logging.disable(logging.CRITICAL)
+		blame_info_before = self.blamer.blame_line(0)
+		self.assertIsNone(blame_info_before)
+		blame_info_after = self.blamer.blame_line(self.line_count + 1)
+		self.assertIsNone(blame_info_after)
+		logging.disable(logging.NOTSET)
 
 @unittest.skip("Not refactored yet")
 class TestBlameInsert(MarvinTest):
