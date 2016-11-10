@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 
-from lxml import html
 import json, sys, logging
-import requests
-from cssselect import HTMLTranslator
 from recordclass import recordclass
 from collections import OrderedDict
+import requests
+from lxml import html
+
+module = sys.modules['__main__'].__file__
+log = logging.getLogger(module)
 
 LineBlame = recordclass('LineBlame', [
     'short_sha',
@@ -16,9 +18,6 @@ LineBlame = recordclass('LineBlame', [
     'time'
 ])
 
-module = sys.modules['__main__'].__file__
-log = logging.getLogger(module)
-
 class BlameParser:
 
     def __init__(self, project_link, logger = None):
@@ -28,25 +27,25 @@ class BlameParser:
 
     def _parse_gh_blame_html(self, string):
         html_tree = html.fromstring(string)
-        expression = HTMLTranslator().css_to_xpath('table.blame-container')
+        expression = ".//table[contains(@class, 'blame-container')]"
         container = html_tree.xpath(expression).pop()
-        current_commit = None
+        blame = None
         for e in container.iterchildren():
             # Every <tr class="blame-commit">commit info</tr> element
             # is followed by the corresponding lines in
             # <tr class="blame-line">line info</tr> elements
             if e.get('class') == 'blame-commit':
-                current_commit = LineBlame(*[None]*6)
-                blame_sha_a = e.find('.//a[@class="blame-sha"]')
-                current_commit.short_sha = blame_sha_a.text
-                current_commit.commit_url = blame_sha_a.get('href')
-                current_commit.avatar_url = e.xpath(".//img[contains(@class, 'avatar')]").pop().get('src')
-                current_commit.commit_message = e.find('.//a[@class="message"]').get('title')
-                current_commit.user_name = e.find('.//a[@rel="contributor"]').text
-                current_commit.time = e.find('.//relative-time').get('datetime')
+                blame = LineBlame(*[None]*6)
+                sha_anchor = e.find('.//a[@class="blame-sha"]')
+                blame.short_sha = sha_anchor.text
+                blame.commit_url = sha_anchor.get('href')
+                blame.avatar_url = e.xpath(".//img[contains(@class, 'avatar')]").pop().get('src')
+                blame.commit_message = e.find('.//a[@class="message"]').get('title')
+                blame.user_name = e.find('.//a[@rel="contributor"]').text
+                blame.time = e.find('.//relative-time').get('datetime')
             if e.get('class') == 'blame-line':
                 line = e.xpath(".//td[contains(@class, 'blob-num')]").pop().text
-                self.blame_data[int(line)] = current_commit
+                self.blame_data[int(line)] = blame
 
     def get_blame_page(self, commit, file):
         blame_url = self.project_link + "/blame/" + commit + file
