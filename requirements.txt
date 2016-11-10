@@ -1,2 +1,4 @@
+cssselect==1.0.0
 lxml==3.6.4
+recordclass==0.4.1
 requests==2.11.1
