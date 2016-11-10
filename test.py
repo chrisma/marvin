@@ -79,7 +79,7 @@ class TestDiffAppendedLine(MarvinTest):
 	def test_change(self):
 		change = self.file_changes[0]
 		self.assertEqual(change.line_number, 117)
-		self.assertEqual(change.commit_sha, "647ad8d")
+		self.assertEqual(change.commit_sha, "77e39d5")
 		self.assertEqual(change.change_type, LineChange.ChangeType.added)
 
 class TestDiffMultipleAppendedLines(MarvinTest):
@@ -152,8 +152,8 @@ class TestDiffMultipleEdits(MarvinTest):
 		self.file_path = "Gemfile"
 
 	def test_amount(self):
-		# One line prepended, one line edited, two lines appended
-		self.assertEqual(len(self.file_changes), 4)
+                # One line prepended, one line edited, two lines appended
+                self.assertEqual(len(self.file_changes), 4)
 
 	def test_file_path(self):
 		change = self.file_changes[0]
