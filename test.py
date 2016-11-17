@@ -57,10 +57,14 @@ class TestLineChangeEquality(unittest.TestCase):
 
 class TestLineChangeRenameFile(MarvinTest):
 	def setUp(self):
-		self.file_changes = self.setup_parser('rename.diff').parse()
+		self.parser = self.setup_parser('rename.diff')
+		self.parser.parse()
 
 	def test_rename(self):
-		self.assertTrue(False)
+		print(self.parser.changes['sample.patch'][1])
+		for line, added in self.parser.changes['sample.diff'][0].items():
+			print(line)
+			self.assertTrue(line in self.parser.changes['sample.patch'][1])
 
 class TestLineChangeBlocks(MarvinTest):
 	def setUp(self):

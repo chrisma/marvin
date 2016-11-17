@@ -25,37 +25,28 @@ class DiffParser:
 
         with open(filename) as f:
             self.lines = f.readlines()
-            self.line_idx = 0 
+            self.line_idx = 0
 
-    def calc_modified_lines(added_lines, removed_lines):
-        modified_lines = {}
-
-        for key in set(removed_lines.keys()).intersection(set(added_lines.keys())):
-            modified_lines[key] = LineChange(key, LineChange.ChangeType.modified, added_lines[key].file_path, added_lines[key].commit_sha)
-            del added_lines[key]
-            del removed_lines[key]
-
-        return added_lines, removed_lines, modified_lines
-
-    def calc_modified_lines_for_file(self, file):
-        if not file in self.changes:
-            log.warning("Could not find {} in self.changes".format(file))
-            return
-
-        added, removed = self.changes[file]
-        self.changes[file] = DiffParser.calc_modified_lines(added, removed)
-
-    def parse_short_commit_hash(self, line=None):
+    def parse_short_commit_hash(self):
         diff_commits_re = re.compile('^index ([a-f,0-9]{7})\.\.([a-f,0-9]{7}).*$')
+        new_file_re = re.compile('^new file mode [0-9]{6}$')
+        delete_file_re = re.compile('^deleted file mode [0-9]{6}$')
 
-        commits_match = diff_commits_re.match(self.lines[self.line_idx] if line is None else line)
+        line = self.lines[self.line_idx]
+
+        # TODO Do something with this information
+        if new_file_re.match(line) != None or delete_file_re.match(line) != None:
+            self.line_idx += 1
+            line = self.lines[self.line_idx]
+
+        commits_match = diff_commits_re.match(line)
         if commits_match != None:
             self.from_commit = commits_match.group(1)
             self.to_commit  = commits_match.group(2)
         else:
             log.error("Something went wrong when parsing commit!")
 
-    def parse_next_commit(self, added, removed):
+    def parse_next_commit(self, added, removed, modified):
         if self.eof():
             return None
 
@@ -94,14 +85,26 @@ class DiffParser:
                 break
 
             if line.startswith("+"):
-                added[after_line_n] = LineChange(after_line_n, LineChange.ChangeType.added, self.current_file, self.to_commit)
+                if after_line_n in removed:
+                    del removed[after_line_n]
+                    modified[after_line_n] = LineChange(after_line_n, LineChange.ChangeType.modified, self.current_file, self.to_commit)
+                else:
+                    added[after_line_n] = LineChange(after_line_n, LineChange.ChangeType.added, self.current_file, self.to_commit)
+                
                 after_line_n += 1
             elif line.startswith("-"):
-                removed[after_line_n] = LineChange(before_line_n, LineChange.ChangeType.deleted, self.current_file, self.from_commit)
+                if after_line_n in added:
+                    del added[after_line_n]
+                    modified[after_line_n] = LineChange(after_line_n, LineChange.ChangeType.modified, self.current_file, self.to_commit)
+                else:
+                    removed[after_line_n] = LineChange(before_line_n, LineChange.ChangeType.deleted, self.current_file, self.from_commit)
+                
                 before_line_n += 1
             else:
                 before_line_n += 1
                 after_line_n += 1
+
+
 
             # TODO find code blocks
 
@@ -129,12 +132,11 @@ class DiffParser:
         if match == None:
             return None
 
-        # TODO handle rename
-
         self.current_file = match.group(2)
         log.debug("Current file set to {} ".format(self.current_file))
         added = {}
         removed = {}
+        modified = {}
 
         self.parse_short_commit_hash()
         if self.to_commit == None or self.from_commit == None:
@@ -147,10 +149,10 @@ class DiffParser:
             if match != None:
                 break
 
-            self.parse_next_commit(added, removed)
+            self.parse_next_commit(added, removed, modified)
 
 
-        self.changes[self.current_file] = DiffParser.calc_modified_lines(added, removed)
+        self.changes[self.current_file] = added, removed, modified # DiffParser.calc_modified_lines(added, removed)
 
         self.current_file = None
         self.to_commit = None
