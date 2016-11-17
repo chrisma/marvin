@@ -8,6 +8,7 @@ class LineChange:
         added = 1
         deleted = 2
         modified = 3
+        interesting = 4
 
     def __init__(self, line_number=None, change_type=None, file_path=None, commit_sha=None):
         self.line_number = line_number

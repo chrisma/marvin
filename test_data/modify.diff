@@ -9,5 +9,5 @@ index 647ad8d..d486669 100644
 -# Datetime validations
 +# Datetime validation
  gem 'validates_timeliness'
- 
+ end
  # Use Capistrano for deployment

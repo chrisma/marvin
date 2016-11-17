@@ -16,6 +16,7 @@ class DiffParser:
     def __init__(self, filename):
         self.load_file(filename)
         self.changes = {}
+        self.interesting = {}
 
     def eof(self):
         return self.line_idx >= len(self.lines)
@@ -46,7 +47,13 @@ class DiffParser:
         else:
             log.error("Something went wrong when parsing commit!")
 
-    def parse_next_commit(self, added, removed, modified):
+
+    def evaluate_line(self, line):
+        to_skip = set(["", "{", "}", "begin", "end"])
+
+        return not line.strip() in to_skip
+
+    def parse_next_commit(self, added, removed, modified, interesting):
         if self.eof():
             return None
 
@@ -107,12 +114,13 @@ class DiffParser:
 
                 before_line_n += 1
             else:
+                # TODO find code blocks and better evaluation
+                if self.evaluate_line(line):
+                    interesting[after_line_n] = LineChange(after_line_n, LineChange.ChangeType.interesting, self.current_file, self.to_commit)
+
                 before_line_n += 1
                 after_line_n += 1
 
-
-
-            # TODO find code blocks
 
             self.line_idx += 1
 
@@ -140,9 +148,7 @@ class DiffParser:
 
         self.current_file = match.group(2)
         log.debug("Current file set to {} ".format(self.current_file))
-        added = {}
-        removed = {}
-        modified = {}
+        added, removed, modified, interesting = {}, {}, {}, {}
 
         self.parse_short_commit_hash()
         if self.to_commit == None or self.from_commit == None:
@@ -155,10 +161,11 @@ class DiffParser:
             if match != None:
                 break
 
-            self.parse_next_commit(added, removed, modified)
+            self.parse_next_commit(added, removed, modified, interesting)
 
 
-        self.changes[self.current_file] = added, removed, modified # DiffParser.calc_modified_lines(added, removed)
+        self.changes[self.current_file] = added, removed, modified
+        self.interesting[self.current_file] = interesting
 
         self.current_file = None
         self.to_commit = None
@@ -169,7 +176,9 @@ class DiffParser:
     def get_all_changes(self):
         changes = []
         for file in self.changes:        
-            changes += list(self.changes[file][0].values()) + list(self.changes[file][1].values()) + list(self.changes[file][2].values())
+            changes += list(self.changes[file][0].values()) + \
+                        list(self.changes[file][1].values()) + \
+                        list(self.changes[file][2].values())
 
         return changes
 

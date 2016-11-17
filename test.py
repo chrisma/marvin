@@ -66,13 +66,15 @@ class TestLineChangeRenameFile(MarvinTest):
 
 class TestLineChangeBlocks(MarvinTest):
 	def setUp(self):
-		self.file_changes = self.setup_parser('modify.diff').parse()
+		self.parser = self.setup_parser('modify.diff')
+		self.parser.parse()
 
-	def test_block_lines_before(self):
-		self.assertTrue(False)
+	def test_interesting_lines_count(self):
+		self.assertEqual(len(self.parser.interesting['Gemfile']), 4)
 
-	def test_block_lines_after(self):
-		self.assertTrue(False)
+	def test_skip_not_interesting_lines(self):
+		self.assertTrue(39 not in self.parser.interesting['Gemfile'])
+		self.assertTrue(42 not in self.parser.interesting['Gemfile'])
 
 class TestReturnType(MarvinTest):
 	def setUp(self):
