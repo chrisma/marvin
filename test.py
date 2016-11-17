@@ -33,20 +33,6 @@ class MarvinTest(unittest.TestCase):
 		parser = parse.DiffParser(file_path)
 		return parser
 
-	def assertKeyValueInDictList(self, item, lst):
-		def key_in_list(key, lst):
-			return any([key in e for e in lst])
-
-		def key_value_in_list(key, value, lst):
-			return any([e.get(key, None) == value for e in lst])
-
-		key, value = item
-		self.assertTrue(key_in_list(key, lst), msg="The key was not found.")
-		self.assertTrue(key_value_in_list(key, value, lst), msg="The key did not have the expected value.")
-
-class TestMarvinTest(MarvinTest):
-	def test_key_value_in_dict(self):
-		self.assertKeyValueInDictList(('b',2), [{'a':1,'b':2}])
 
 class TestLineChangeEquality(unittest.TestCase):
 	def test_custom_eq(self):
