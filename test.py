@@ -178,17 +178,16 @@ class TestDiffDeleteMoreThanAdded(MarvinTest):
 	def setUp(self):
 		self.file_changes = self.setup_parser('delete_more.diff').parse()
 
-	def test_amount(self):
+	def test_overall_amount(self):
 		self.assertLength(self.file_changes, 4)
 
-	def test_change_type(self):
-		count = {LineChange.ChangeType.deleted: 0, LineChange.ChangeType.modified: 0}
+	def test_amount_deletions(self):
+		deletions = [lc for lc in self.file_changes if lc.change_type == LineChange.ChangeType.deleted]
+		self.assertLength(deletions, len(self.file_changes) - 1)
 
-		for i in range(len(self.file_changes)):
-			count[self.file_changes[i].change_type]	+= 1
-
-		self.assertEqual(count[LineChange.ChangeType.deleted], len(self.file_changes) - 1)
-		self.assertEqual(count[LineChange.ChangeType.modified], 1)
+	def test_amount_modifications(self):
+		modifications = [lc for lc in self.file_changes if lc.change_type == LineChange.ChangeType.modified]
+		self.assertLength(modifications, 1)
 
 class TestDiffMultipleEdits(MarvinTest):
 	def setUp(self):
