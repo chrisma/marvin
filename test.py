@@ -61,9 +61,7 @@ class TestLineChangeRenameFile(MarvinTest):
 		self.parser.parse()
 
 	def test_rename(self):
-		print(self.parser.changes['sample.patch'][1])
 		for line, added in self.parser.changes['sample.diff'][0].items():
-			print(line)
 			self.assertTrue(line in self.parser.changes['sample.patch'][1])
 
 class TestLineChangeBlocks(MarvinTest):
@@ -182,6 +180,22 @@ class TestDiffDeletedLine(MarvinTest):
 		# In case of a deletion the old commit is of interest
 		change = self.file_changes[0]
 		self.assertEqual(change.commit_sha, "647ad8d")
+
+class TestDiffDeleteMoreThanAdded(MarvinTest):
+	def setUp(self):
+		self.file_changes = self.setup_parser('delete_more.diff').parse()
+
+	def test_amount(self):
+		self.assertEqual(len(self.file_changes), 4)
+
+	def test_change_type(self):
+		count = {LineChange.ChangeType.deleted: 0, LineChange.ChangeType.modified: 0}
+
+		for i in range(len(self.file_changes)):
+			count[self.file_changes[i].change_type]	+= 1
+
+		self.assertEqual(count[LineChange.ChangeType.deleted], len(self.file_changes) - 1)
+		self.assertEqual(count[LineChange.ChangeType.modified], 1)
 
 class TestDiffMultipleEdits(MarvinTest):
 	def setUp(self):

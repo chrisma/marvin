@@ -71,6 +71,8 @@ class DiffParser:
         before_finish_line_n = before_line_n + before_offset
         after_finish_line_n = after_line_n + after_offset
         
+        removed_in_new_file = {}
+
         while not self.eof():
             line = self.lines[self.line_idx]
 
@@ -85,20 +87,24 @@ class DiffParser:
                 break
 
             if line.startswith("+"):
-                if after_line_n in removed:
-                    del removed[after_line_n]
+                if after_line_n in removed_in_new_file and len(removed_in_new_file[after_line_n]) > 0:
+                    del removed[removed_in_new_file[after_line_n].pop()]
                     modified[after_line_n] = LineChange(after_line_n, LineChange.ChangeType.modified, self.current_file, self.to_commit)
                 else:
                     added[after_line_n] = LineChange(after_line_n, LineChange.ChangeType.added, self.current_file, self.to_commit)
                 
                 after_line_n += 1
+
             elif line.startswith("-"):
                 if after_line_n in added:
                     del added[after_line_n]
                     modified[after_line_n] = LineChange(after_line_n, LineChange.ChangeType.modified, self.current_file, self.to_commit)
                 else:
-                    removed[after_line_n] = LineChange(before_line_n, LineChange.ChangeType.deleted, self.current_file, self.from_commit)
-                
+                    removed[before_line_n] = LineChange(before_line_n, LineChange.ChangeType.deleted, self.current_file, self.from_commit)
+                    if not after_line_n in removed_in_new_file:
+                        removed_in_new_file[after_line_n] = []
+                    removed_in_new_file[after_line_n].append(before_line_n)
+
                 before_line_n += 1
             else:
                 before_line_n += 1
