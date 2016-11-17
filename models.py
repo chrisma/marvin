@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
 from enum import Enum
+from recordclass import recordclass
 
 class LineChange:
-
     class ChangeType(Enum):
         added = 1
         deleted = 2
@@ -31,3 +31,12 @@ class LineChange:
 
     def __ne__(self, other):
         return not self.__eq__(other)
+
+LineBlame = recordclass('LineBlame', [
+    'short_sha',
+    'commit_url',
+    'avatar_url',
+    'commit_message',
+    'user_name',
+    'time'
+])

@@ -1,22 +1,13 @@
 #!/usr/bin/env python3
 
 import json, sys, logging
-from recordclass import recordclass
 from collections import OrderedDict
 import requests
 from lxml import html
+from models import LineBlame
 
 module = sys.modules['__main__'].__file__
 log = logging.getLogger(module)
-
-LineBlame = recordclass('LineBlame', [
-    'short_sha',
-    'commit_url',
-    'avatar_url',
-    'commit_message',
-    'user_name',
-    'time'
-])
 
 class BlameParser:
 
