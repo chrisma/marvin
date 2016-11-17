@@ -4,7 +4,6 @@ import argparse
 import sys
 import re
 import logging
-import requests
 
 from models import LineChange
 from blame import BlameParser
@@ -12,126 +11,167 @@ from blame import BlameParser
 module = sys.modules['__main__'].__file__
 log = logging.getLogger(module)
 
-def calc_modified_lines(added_lines, removed_lines):
-    modified_lines = {}
+class DiffParser:
 
-    for key in set(removed_lines.keys()).intersection(set(added_lines.keys())):
-        modified_lines[key] = LineChange(key, LineChange.ChangeType.modified, added_lines[key].file_path, added_lines[key].commit_sha)
-        del added_lines[key]
-        del removed_lines[key]
+    def __init__(self, filename):
+        self.load_file(filename)
+        self.changes = {}
 
-    return added_lines, removed_lines, modified_lines
+    def eof(self):
+        return self.line_idx >= len(self.lines)
 
-def load_file(filename):
-    log.debug("Parsing {}".format(filename))
+    def load_file(self, filename):
+        log.debug("Parsing {}".format(filename))
 
-    with open(filename) as f:
-        return f.readlines()
+        with open(filename) as f:
+            self.lines = f.readlines()
+            self.line_idx = 0 
 
+    def calc_modified_lines(added_lines, removed_lines):
+        modified_lines = {}
 
-def convert_to_processed_lines(added_lines, removed_lines):
-    added_lines, removed_lines, modified_lines = calc_modified_lines(added_lines, removed_lines)
+        for key in set(removed_lines.keys()).intersection(set(added_lines.keys())):
+            modified_lines[key] = LineChange(key, LineChange.ChangeType.modified, added_lines[key].file_path, added_lines[key].commit_sha)
+            del added_lines[key]
+            del removed_lines[key]
 
-    # print("added", len(added_lines))
-    # print("removed", len(removed_lines))
-    # print("modified", len(modified_lines))
+        return added_lines, removed_lines, modified_lines
 
-    return list(added_lines.values()) + list(removed_lines.values()) + list(modified_lines.values())
+    def calc_modified_lines_for_file(self, file):
+        if not file in self.changes:
+            log.warning("Could not find {} in self.changes".format(file))
+            return
 
-def parse_short_commit_hash(line):
-    diff_commits_re = re.compile('^index ([a-f,0-9]{7})\.\.([a-f,0-9]{7}).*$')
+        added, removed = self.changes[file]
+        self.changes[file] = DiffParser.calc_modified_lines(added, removed)
 
-    commits_match = diff_commits_re.match(line)
-    if commits_match != None:
-        current_before_commit = commits_match.group(1)
-        current_after_commit = commits_match.group(2)
-        return current_before_commit, current_after_commit
-    else:
-        log.error("Something went wrong when parsing commit!")
+    def parse_short_commit_hash(self, line=None):
+        diff_commits_re = re.compile('^index ([a-f,0-9]{7})\.\.([a-f,0-9]{7}).*$')
 
-def parse_lines(lines):
-    diff_start_re = re.compile('^@@ -([0-9]+),([0-9]+) \+([0-9]+),([0-9]+) @@.*$')
-    diff_long_commit_re = re.compile('^From ([a-f,0-9]{40}) [A-Z][a-z]{2} [A-Z][a-z]{2} [0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} [0-9]{4}$')
-    diff_filename_re = re.compile('^diff --git a/(.*?) b/(.*?)$')
+        commits_match = diff_commits_re.match(self.lines[self.line_idx] if line is None else line)
+        if commits_match != None:
+            self.from_commit = commits_match.group(1)
+            self.to_commit  = commits_match.group(2)
+        else:
+            log.error("Something went wrong when parsing commit!")
+
+    def parse_next_commit(self, added, removed):
+        if self.eof():
+            return None
+
+        commit_re = re.compile('^@@ -([0-9]+),([0-9]+) \+([0-9]+),([0-9]+) @@.*$')
+        filename_re = re.compile('^diff --git a/(.*?) b/(.*?)$')
+        long_re = re.compile('^From ([a-f,0-9]{40}) [A-Z][a-z]{2} [A-Z][a-z]{2} [0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} [0-9]{4}$')
     
-    blame_file = None
-    current_file = None
-    current_before_commit = None
-    current_after_commit = None
+        match = None
 
-    processed_lines = []
+        while not self.eof() and match == None:
+            match = commit_re.match(self.lines[self.line_idx])
+            self.line_idx += 1
 
-    added_lines = {}
-    removed_lines = {}
+        if match == None:
+            return None
 
-    for idx in range(len(lines)):
-        line = lines[idx]
+        before_line_n = int(match.group(1))
+        before_offset = int(match.group(2))
+        after_line_n = int(match.group(3))
+        after_offset = int(match.group(4))
+
+        before_finish_line_n = before_line_n + before_offset
+        after_finish_line_n = after_line_n + after_offset
         
-        commit_match = diff_long_commit_re.match(line)
-        if commit_match != None:
-            continue
+        while not self.eof():
+            line = self.lines[self.line_idx]
 
-        filename_match = diff_filename_re.match(line)
-        if filename_match != None:
-            
-            if current_file != None:
-                processed_lines += convert_to_processed_lines(added_lines, removed_lines)
-                # TODO Add blaming here
-                added_lines = {}
-                removed_lines = {}
-
-            current_file = filename_match.group(2)
-            log.debug("Current file set to {}".format(current_file))
-
-            # Load short commit
-            idx += 1
-            line = lines[idx]
-            current_before_commit, current_after_commit = parse_short_commit_hash(line)
-
-            continue
-
-        commit = diff_start_re.match(line)
-        if commit == None:
-            continue
-
-        before_line = int(commit.group(1))
-        before_offset = int(commit.group(2))
-        after_line = int(commit.group(3))
-        after_offset = int(commit.group(4))
-
-        before_finish = before_line + before_offset
-        after_finish = after_line + after_offset
-        idx += 1
-
-        # analyse individual change
-        while idx < len(lines) \
-            and diff_start_re.match(lines[idx]) == None \
-            and diff_long_commit_re.match(lines[idx]) == None \
-            and diff_filename_re.match(lines[idx]) == None:
-            
-            line = lines[idx]
+            match = commit_re.match(line)
+            if match != None:
+                break
+            match = filename_re.match(line)
+            if match != None:
+                break
+            match = long_re.match(line)
+            if match != None:
+                break
 
             if line.startswith("+"):
-                added_lines[after_line] = LineChange(after_line, LineChange.ChangeType.added, current_file, current_after_commit)
-                after_line += 1
+                added[after_line_n] = LineChange(after_line_n, LineChange.ChangeType.added, self.current_file, self.to_commit)
+                after_line_n += 1
             elif line.startswith("-"):
-                removed_lines[after_line] = LineChange(before_line, LineChange.ChangeType.deleted, current_file, current_before_commit)
-                before_line += 1
+                removed[after_line_n] = LineChange(before_line_n, LineChange.ChangeType.deleted, self.current_file, self.from_commit)
+                before_line_n += 1
             else:
-                before_line += 1
-                after_line += 1
+                before_line_n += 1
+                after_line_n += 1
 
-            idx += 1
+            # TODO find code blocks
 
-        if not (after_finish == after_line and before_finish == before_line):
-            log.warning("Something went wrong with parsing the lines {} {} {} {} {} {}".format(
-                idx, after_line, after_finish, line, lines[idx], lines[idx-1]))
+            self.line_idx += 1
 
-    if current_file != None:
-        added_lines, removed_lines, modified_lines = calc_modified_lines(added_lines, removed_lines)
-        processed_lines += list(added_lines.values()) + list(removed_lines.values()) + list(modified_lines.values())
+        if not (after_finish_line_n == after_line_n and before_finish_line_n == before_line_n):
+            log.warning("Something went wrong with parsing commits {}...{} {} {}".format(
+                self.from_commit, self.to_commit, before_line_n, after_line_n))
 
-    return processed_lines
+    def parse_next_file_changes(self):
+        if self.eof():
+            return None
+
+        filename_re = re.compile('^diff --git a/(.*?) b/(.*?)$')
+        self.current_file = None
+        self.to_commit = None
+        self.from_commit = None
+
+        match = None
+
+        while not self.eof() and match == None:
+            match = filename_re.match(self.lines[self.line_idx])
+            self.line_idx += 1
+
+        if match == None:
+            return None
+
+        # TODO handle rename
+
+        self.current_file = match.group(2)
+        log.debug("Current file set to {} ".format(self.current_file))
+        added = {}
+        removed = {}
+
+        self.parse_short_commit_hash()
+        if self.to_commit == None or self.from_commit == None:
+            log.error("Failure loading commits for {} from '{}'".format(self.current_file, self.lines[self.line_idx]))
+            return None
+        self.line_idx += 1
+
+        while not self.eof():
+            match = filename_re.match(self.lines[self.line_idx])  
+            if match != None:
+                break
+
+            self.parse_next_commit(added, removed)
+
+
+        self.changes[self.current_file] = DiffParser.calc_modified_lines(added, removed)
+
+        self.current_file = None
+        self.to_commit = None
+        self.from_commit = None
+
+        return True
+
+    def get_all_changes(self):
+        changes = []
+        for file in self.changes:        
+            changes += list(self.changes[file][0].values()) + list(self.changes[file][1].values()) + list(self.changes[file][2].values())
+
+        return changes
+
+
+    def parse(self):
+
+        while not self.eof() and self.parse_next_file_changes():
+            pass
+
+        return self.get_all_changes()
 
 def main():
     parser = argparse.ArgumentParser(description='Parses a diff, returns changed lines')
@@ -141,9 +181,9 @@ def main():
     args = parser.parse_args()
     log.setLevel([logging.WARNING, logging.INFO, logging.DEBUG][min(2,args.verbose)])
 
-    parsed = parse_lines(load_file(args.diff))
+    parser = DiffParser(args.diff)
 
-    log.info("{}".format(parsed))
+    log.info("{}".format(parser.parse()))
 
 
 if __name__ == "__main__":

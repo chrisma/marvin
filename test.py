@@ -28,9 +28,10 @@ class MarvinTest(unittest.TestCase):
 	def full_test_path(self, file):
 		return os.path.join(self.test_data_dir, file)
 
-	def read_diff(self, file):
+	def setup_parser(self, file):
 		file_path = self.full_test_path(file)
-		return parse.load_file(file_path)
+		parser = parse.DiffParser(file_path)
+		return parser
 
 	def assertKeyValueInDictList(self, item, lst):
 		def key_in_list(key, lst):
@@ -54,10 +55,26 @@ class TestLineChangeEquality(unittest.TestCase):
 	def test_custom_ne(self):
 		self.assertNotEqual(LineChange(), LineChange(line_number='1'))
 
+class TestLineChangeRenameFile(MarvinTest):
+	def setUp(self):
+		self.file_changes = self.setup_parser('rename.diff').parse()
+
+	def test_rename(self):
+		self.assertTrue(False)
+
+class TestLineChangeBlocks(MarvinTest):
+	def setUp(self):
+		self.file_changes = self.setup_parser('modify.diff').parse()
+
+	def test_block_lines_before(self):
+		self.assertTrue(False)
+
+	def test_block_lines_after(self):
+		self.assertTrue(False)
 
 class TestReturnType(MarvinTest):
 	def setUp(self):
-		self.file_changes = parse.parse_lines(self.read_diff('modify.diff'))
+		self.file_changes = self.setup_parser('modify.diff').parse()
 
 	def test_collection(self):
 		self.assertIsInstance(self.file_changes, list)
@@ -67,7 +84,7 @@ class TestReturnType(MarvinTest):
 
 class TestDiffModifiedLine(MarvinTest):
 	def setUp(self):
-		self.file_changes = parse.parse_lines(self.read_diff('modify.diff'))
+		self.file_changes = self.setup_parser('modify.diff').parse()
 
 	def test_amount(self):
 		self.assertEqual(len(self.file_changes), 1)
@@ -84,7 +101,7 @@ class TestDiffModifiedLine(MarvinTest):
 
 class TestDiffAppendedLine(MarvinTest):
 	def setUp(self):
-		self.file_changes = parse.parse_lines(self.read_diff('append.diff'))
+		self.file_changes = self.setup_parser('append.diff').parse()
 
 	def test_amount(self):
 		self.assertEqual(len(self.file_changes), 1)
@@ -101,7 +118,7 @@ class TestDiffAppendedLine(MarvinTest):
 
 class TestDiffMultipleAppendedLines(MarvinTest):
 	def setUp(self):
-		self.file_changes = parse.parse_lines(self.read_diff('multiple_appends.diff'))
+		self.file_changes = self.setup_parser('multiple_appends.diff').parse()
 
 	def test_amount(self):
 		self.assertEqual(len(self.file_changes), 9 + 13)
@@ -126,7 +143,7 @@ class TestDiffMultipleAppendedLines(MarvinTest):
 
 class TestDiffPrependedLine(MarvinTest):
 	def setUp(self):
-		self.file_changes = parse.parse_lines(self.read_diff('prepend.diff'))
+		self.file_changes = self.setup_parser('prepend.diff').parse()
 
 	def test_amount(self):
 		self.assertEqual(len(self.file_changes), 1)
@@ -143,7 +160,7 @@ class TestDiffPrependedLine(MarvinTest):
 
 class TestDiffDeletedLine(MarvinTest):
 	def setUp(self):
-		self.file_changes = parse.parse_lines(self.read_diff('delete.diff'))
+		self.file_changes = self.setup_parser('delete.diff').parse()
 
 	def test_amount(self):
 		self.assertEqual(len(self.file_changes), 1)
@@ -164,7 +181,7 @@ class TestDiffDeletedLine(MarvinTest):
 
 class TestDiffMultipleEdits(MarvinTest):
 	def setUp(self):
-		self.file_changes = parse.parse_lines(self.read_diff('multiple_edits.diff'))
+		self.file_changes = self.setup_parser('multiple_edits.diff').parse()
 		self.new_sha = "484e717"
 		self.file_path = "Gemfile"
 
@@ -199,7 +216,7 @@ class TestDiffMultipleEdits(MarvinTest):
 
 class TestDiffMultipleFiles(MarvinTest):
 	def setUp(self):
-		self.file_changes = parse.parse_lines(self.read_diff('multiple_files.diff'))
+		self.file_changes = self.setup_parser('multiple_files.diff').parse()
 
 	def test_amount(self):
 		self.assertEqual(len(self.file_changes), 5)
@@ -237,7 +254,7 @@ class TestDiffMultipleFiles(MarvinTest):
 @unittest.skip("Not refactored yet")
 class TestDiffLarge(MarvinTest):
 	def setUp(self):
-		self.file_changes = parse.parse_lines(self.read_diff('pr_338.diff'))
+		self.file_changes = self.setup_parser('pr_338.diff').parse()
 
 	def test_amount(self):
 		self.assertEqual(len(self.file_changes), 15)
