@@ -17,6 +17,8 @@ class DiffParser:
         self.load_file(filename)
         self.changes = {}
         self.interesting = {}
+        self.added_files = set([])
+        self.removed_files = set([])
 
     def eof(self):
         return self.line_idx >= len(self.lines)
@@ -35,7 +37,12 @@ class DiffParser:
 
         line = self.lines[self.line_idx]
 
-        # TODO Do something with this information
+        if new_file_re.match(line) != None:
+            self.added_files.add(self.current_file)
+
+        elif delete_file_re.match(line) != None:
+            self.removed_files.add(self.current_file)
+
         if new_file_re.match(line) != None or delete_file_re.match(line) != None:
             self.line_idx += 1
             line = self.lines[self.line_idx]
@@ -113,6 +120,7 @@ class DiffParser:
                     removed_in_new_file[after_line_n].append(before_line_n)
 
                 before_line_n += 1
+
             else:
                 # TODO find code blocks and better evaluation
                 if self.evaluate_line(line):
@@ -121,12 +129,12 @@ class DiffParser:
                 before_line_n += 1
                 after_line_n += 1
 
-
             self.line_idx += 1
 
-        if not (after_finish_line_n == after_line_n and before_finish_line_n == before_line_n):
-            log.warning("Something went wrong with parsing commits {}...{} {} {}".format(
-                self.from_commit, self.to_commit, before_line_n, after_line_n))
+        if not (after_finish_line_n == after_line_n and before_finish_line_n == before_line_n) \
+            and not self.current_file in self.removed_files and not self.current_file in self.added_files:
+            log.warning("Something went wrong with parsing commits in {} {}...{} S {} {} B {} v {} A {} v {}".format(
+                self.current_file, self.from_commit, self.to_commit, before_finish_line_n - before_offset, after_finish_line_n - after_offset, before_finish_line_n, before_line_n, after_finish_line_n, after_line_n))
 
     def parse_next_file_changes(self):
         if self.eof():
@@ -154,6 +162,7 @@ class DiffParser:
         if self.to_commit == None or self.from_commit == None:
             log.error("Failure loading commits for {} from '{}'".format(self.current_file, self.lines[self.line_idx]))
             return None
+
         self.line_idx += 1
 
         while not self.eof():
@@ -162,7 +171,6 @@ class DiffParser:
                 break
 
             self.parse_next_commit(added, removed, modified, interesting)
-
 
         self.changes[self.current_file] = added, removed, modified
         self.interesting[self.current_file] = interesting

@@ -2,7 +2,7 @@ diff --git a/Gemfile b/Gemfile
 index 647ad8d..1437958 100644
 --- a/Gemfile
 +++ b/Gemfile
-@@ -34,7 +34,6 @@ gem 'annotate'
+@@ -34,7 +34,4 @@ gem 'annotate'
  # Use ActiveModel has_secure_password
  # gem 'bcrypt', '~> 3.1.7'
  
