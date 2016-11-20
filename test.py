@@ -15,7 +15,7 @@
 # assertNotIsInstance(a, b) 	not isinstance(a, b)
 
 import unittest, json, codecs, os, logging
-import parse, blame
+import parse, blame, marvin
 from models import LineChange
 
 TEST_DATA_DIR_NAME = 'test_data'
@@ -30,8 +30,14 @@ class MarvinTest(unittest.TestCase):
 
 	def setup_parser(self, file):
 		file_path = self.full_test_path(file)
-		parser = parse.DiffParser(file_path)
+		parser = parse.DiffParser(filename=file_path)
 		return parser
+
+	def setup_marvin(self, project_link, pr_n, file):
+		file_path = self.full_test_path(file)
+		marvin_obj = marvin.Marvin(project_link, pr_n)
+		marvin_obj.load_diff_from_filename(filename=file_path)
+		return marvin_obj
 
 	def assertKeyValueInDictList(self, item, lst):
 		def key_in_list(key, lst):
@@ -270,6 +276,37 @@ class TestDiffMultipleFiles(MarvinTest):
 						file_path=file, change_type=LineChange.ChangeType.added)]
 		for e in expected:
 			self.assertIn(e, single_file_changes)
+
+class TestMarvinMultipleCommitsForSameFile(MarvinTest):
+	def setUp(self):
+		self.parser = self.setup_parser('marvin_sample.patch')
+		self.parser.parse()
+
+	def test_all_files_loaded(self):
+		self.assertEqual(len(self.parser.changes.keys()), 2)
+
+	def test_all_changes_loaded(self):
+		self.assertTrue(10 in self.parser.changes['app/controllers/application_controller.rb'][0])
+		self.assertTrue(271 in self.parser.changes['config/initializers/devise.rb'][1])
+
+class TestMarvinSetup(MarvinTest):
+	def setUp(self):
+		self.marvin = self.setup_marvin('test', 1, 'marvin_sample.diff')
+
+	def test_load_diff_from_file(self):
+		self.assertEqual(len(self.marvin.raw_diff), 61)
+
+	def test_diff_parser(self):
+		self.marvin.parse_diff()
+		
+		self.assertEqual(len(self.marvin.diff_parser.changes.keys()), 2)
+		self.assertEqual(len(self.marvin.diff_parser.changes['app/controllers/application_controller.rb'][0]), 7)
+		self.assertEqual(len(self.marvin.diff_parser.changes['app/controllers/application_controller.rb'][1]), 0)
+		self.assertEqual(len(self.marvin.diff_parser.changes['app/controllers/application_controller.rb'][2]), 0)
+		self.assertEqual(len(self.marvin.diff_parser.changes['config/initializers/devise.rb'][0]), 26)
+		self.assertEqual(len(self.marvin.diff_parser.changes['config/initializers/devise.rb'][1]), 0)
+		self.assertEqual(len(self.marvin.diff_parser.changes['config/initializers/devise.rb'][2]), 0)
+
 
 @unittest.skip("Not refactored yet")
 class TestDiffLarge(MarvinTest):

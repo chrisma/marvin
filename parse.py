@@ -6,15 +6,18 @@ import re
 import logging
 
 from models import LineChange
-from blame import BlameParser
 
 module = sys.modules['__main__'].__file__
 log = logging.getLogger(module)
 
 class DiffParser:
 
-    def __init__(self, filename):
-        self.load_file(filename)
+    def __init__(self, filename=None, diff_content=None):
+        if filename != None:
+            self.load_file(filename)
+        elif diff_content != None:
+            self.load_diff_content(diff_content)
+
         self.changes = {}
         self.interesting = {}
         self.added_files = set([])
@@ -22,6 +25,10 @@ class DiffParser:
 
     def eof(self):
         return self.line_idx >= len(self.lines)
+
+    def load_diff_content(self, content):
+        self.lines = content
+        self.line_idx = 0
 
     def load_file(self, filename):
         log.debug("Parsing {}".format(filename))
@@ -71,6 +78,9 @@ class DiffParser:
         match = None
 
         while not self.eof() and match == None:
+            if filename_re.match(self.lines[self.line_idx]) != None:
+                break
+
             match = commit_re.match(self.lines[self.line_idx])
             self.line_idx += 1
 
@@ -98,6 +108,9 @@ class DiffParser:
                 break
             match = long_re.match(line)
             if match != None:
+                # Remove empty line which is insert for spacing
+                after_line_n -= 1
+                before_line_n -= 1
                 break
 
             if line.startswith("+"):
@@ -122,7 +135,6 @@ class DiffParser:
                 before_line_n += 1
 
             else:
-                # TODO find code blocks and better evaluation
                 if self.evaluate_line(line):
                     interesting[after_line_n] = LineChange(after_line_n, LineChange.ChangeType.interesting, self.current_file, self.to_commit)
 
@@ -131,6 +143,7 @@ class DiffParser:
 
             self.line_idx += 1
 
+        # Does not work when multiple commits change the same lines
         if not (after_finish_line_n == after_line_n and before_finish_line_n == before_line_n) \
             and not self.current_file in self.removed_files and not self.current_file in self.added_files:
             log.warning("Something went wrong with parsing commits in {} {}...{} S {} {} B {} v {} A {} v {}".format(
@@ -166,13 +179,21 @@ class DiffParser:
         self.line_idx += 1
 
         while not self.eof():
-            match = filename_re.match(self.lines[self.line_idx])  
+            match = filename_re.match(self.lines[self.line_idx])
             if match != None:
                 break
 
             self.parse_next_commit(added, removed, modified, interesting)
 
-        self.changes[self.current_file] = added, removed, modified
+        if not self.current_file in self.changes:
+            self.changes[self.current_file] = added, removed, modified
+        else:
+            # TODO maybe check for errors
+            self.changes[self.current_file][0].update(added)
+            self.changes[self.current_file][1].update(removed)
+            self.changes[self.current_file][2].update(modified)
+
+
         self.interesting[self.current_file] = interesting
 
         self.current_file = None
@@ -192,7 +213,6 @@ class DiffParser:
 
 
     def parse(self):
-
         while not self.eof() and self.parse_next_file_changes():
             pass
 
@@ -206,10 +226,8 @@ def main():
     args = parser.parse_args()
     log.setLevel([logging.WARNING, logging.INFO, logging.DEBUG][min(2,args.verbose)])
 
-    parser = DiffParser(args.diff)
-
+    parser = DiffParser(filename=args.diff)
     log.info("{}".format(parser.parse()))
-
 
 if __name__ == "__main__":
     logging.basicConfig(stream=sys.stderr, format='%(name)s %(levelname)s %(message)s')
