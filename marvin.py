@@ -4,6 +4,7 @@ import argparse
 import logging
 import sys
 import requests
+import operator
 from collections import OrderedDict
 
 from models import LineChange
@@ -45,6 +46,10 @@ class Marvin:
         self.blame_data[file][commit_sha].load_html_file(filepath)
 
     def blame_lines(self):
+        if self.diff_parser == None:
+            self.logger.error("Diff not parsed before blaming")
+            return
+
         for file in self.diff_parser.changes.keys():
             if not file in self.blame_data:
                 self.blame_data[file] = {}
@@ -64,6 +69,10 @@ class Marvin:
         return not line.strip() in to_skip
 
     def has_been_changed(self, line_n, file, commit):
+        if self.diff_parser == None:
+            self.logger.error("Diff not parsed before checking for changes")
+            return
+
         for i in range(3):
             if line_n in self.diff_parser.changes[file][i] and \
                 self.diff_parser.changes[file][i][line_n].commit_sha == commit:
@@ -92,16 +101,55 @@ class Marvin:
         return self._find_intersing_line(file, line_n, linechange, 1, 1)
 
     def load_additional_lines(self):
+        if self.diff_parser == None:
+            self.logger.error("Diff not parsed before loading additional lines")
+            return
+
         for file in self.diff_parser.changes.keys():
             for i in range(3):
                 for line_n, linechange in self.diff_parser.changes[file][i].items():
                     prev_line = self._find_previous_intersing_line(file, line_n, linechange)
                     next_line = self._find_next_intersing_line(file, line_n, linechange)
                     
+                    if self.blame_data[file][linechange.commit_sha] == None:
+                        self.logger.error("Blame not loaded before blaming line")
+                        return
+
                     if prev_line != None:
+                        prev_line.author = self.blame_data[file][linechange.commit_sha].blame_line(prev_line.line_number)
                         self.additional_lines[prev_line.line_number] = prev_line
                     if next_line != None:
+                        next_line.author = self.blame_data[file][linechange.commit_sha].blame_line(next_line.line_number)
                         self.additional_lines[next_line.line_number] = next_line
+
+
+    def get_reviewer(self):
+        # Most simple approach to obtaining reviewer
+        if self.diff_parser == None:
+            self.logger.error("Diff not parsed before requesting reviewer")
+            return None
+
+        reviewer_stats = {}
+        for file in self.diff_parser.changes.keys():
+            for i in range(3):
+                for line_n, linechange in self.diff_parser.changes[file][i].items():
+                    if linechange.author == None:
+                        self.logger.error("Author data not fully loaded before requesting reviewer")
+                        return None
+                    else:
+                        if not linechange.author.user_name in reviewer_stats:
+                            reviewer_stats[linechange.author.user_name] = 0
+                        else:
+                            reviewer_stats[linechange.author.user_name] += 1
+        
+        for line_n, linechange in self.additional_lines.items():
+            if not linechange.author.user_name in reviewer_stats:
+                reviewer_stats[linechange.author.user_name] = 0
+            else:
+                reviewer_stats[linechange.author.user_name] += 1
+
+        sorted_reviewer = sorted(reviewer_stats.items(), key=operator.itemgetter(1))
+        return sorted_reviewer.pop()
 
 def main():
     parser = argparse.ArgumentParser(description='Parses a commit, returns recommendation for reviewer')
