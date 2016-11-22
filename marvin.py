@@ -4,6 +4,7 @@ import argparse
 import logging
 import sys
 import requests
+from collections import OrderedDict
 
 from models import LineChange
 from blame import BlameParser
@@ -20,7 +21,7 @@ class Marvin:
 
         self.raw_diff = None
         self.diff_parser = None
-        self.additional_lines = []
+        self.additional_lines = OrderedDict()
         self.blame_data = {}
 
     def load_diff_from_project(self):
@@ -57,25 +58,50 @@ class Marvin:
                     
                     linechange.author = self.blame_data[file][linechange.commit_sha].blame_line(line)
 
-    def evaluate_line(self, line):
+    def is_interesting(self, line):
         to_skip = set(["", "{", "}", "begin", "end"])
 
         return not line.strip() in to_skip
 
-    def has_been_changed(self, line_n, file):
-        return line_n in self.diff_parser.changes[file][0] or \
-                line_n in self.diff_parser.changes[file][1] or \
-                line_n in self.diff_parser.changes[file][2]
+    def has_been_changed(self, line_n, file, commit):
+        for i in range(3):
+            if line_n in self.diff_parser.changes[file][i] and \
+                self.diff_parser.changes[file][i][line_n].commit_sha == commit:
+                return True
+
+        return False
+
+    def _find_intersing_line(self, file, line_n, linechange, offset, step):
+        p = offset
+        while not self.has_been_changed(line_n + p, file, linechange.commit_sha) and \
+            not self.is_interesting(self.blame_data[file][linechange.commit_sha].file_data[line_n + p]):
+            p += step
+
+            if line_n + p < 1 or line_n + p > len(self.blame_data[file][linechange.commit_sha].file_data):
+                return None
+
+        if not self.has_been_changed(line_n + p, file, linechange.commit_sha):
+            return LineChange(line_n + p, LineChange.ChangeType.interesting, file, linechange.commit_sha)
+        else:
+            return None
+
+    def _find_previous_intersing_line(self, file, line_n, linechange):
+        return self._find_intersing_line(file, line_n, linechange, -1, -1)
+
+    def _find_next_intersing_line(self, file, line_n, linechange):
+        return self._find_intersing_line(file, line_n, linechange, 1, 1)
 
     def load_additional_lines(self):
-        for file, changes in self.diff_parser.changes.items():
+        for file in self.diff_parser.changes.keys():
             for i in range(3):
-                for line_n, linechange in changes[file][i].items():
-                    pass
-                    #while not self.has_been_changed(line_n - p, file) and 
-                    #if self.evaluate_line(line):
-                    #    interesting[after_line_n] = LineChange(after_line_n, LineChange.ChangeType.interesting, self.current_file, self.current_commit)
-
+                for line_n, linechange in self.diff_parser.changes[file][i].items():
+                    prev_line = self._find_previous_intersing_line(file, line_n, linechange)
+                    next_line = self._find_next_intersing_line(file, line_n, linechange)
+                    
+                    if prev_line != None:
+                        self.additional_lines[prev_line.line_number] = prev_line
+                    if next_line != None:
+                        self.additional_lines[next_line.line_number] = next_line
 
 def main():
     parser = argparse.ArgumentParser(description='Parses a commit, returns recommendation for reviewer')
