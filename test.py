@@ -306,6 +306,33 @@ class TestMarvinSetup(MarvinTest):
 		self.assertEqual(len(self.marvin.diff_parser.changes['config/initializers/devise.rb'][1]), 1)
 		self.assertEqual(len(self.marvin.diff_parser.changes['config/initializers/devise.rb'][2]), 0)
 
+		for file in self.marvin.diff_parser.changes.keys():
+			for i in range(3):
+				for line_n, change in self.marvin.diff_parser.changes[file][i].items():
+					self.assertTrue(change.commit_sha != None)
+
+	def test_blame_loading(self):
+		self.marvin.parse_diff()
+
+		self.marvin.load_blame_from_html('app/controllers/application_controller.rb', \
+			'3ac0f11ac948108eb4cb11c4f40b113f67479dd9', \
+		 	self.full_test_path('test_app_controllers_application_controller.html'))
+		self.marvin.load_blame_from_html('config/initializers/devise.rb', \
+			'06ec0f98b2d98b8a7284fcee8f3232f558a55048', \
+			self.full_test_path('test_config_initializers_devise_1.html'))
+		self.marvin.load_blame_from_html('config/initializers/devise.rb', \
+			'6b426063f37aa28e14afe8979384e12c7018d819', \
+			self.full_test_path('test_config_initializers_devise_2.html'))
+
+		self.marvin.blame_lines()
+
+		for file in self.marvin.diff_parser.changes.keys():
+			for i in range(3):
+				for line_n, change in self.marvin.diff_parser.changes[file][i].items():
+					# print(change)
+					self.assertTrue(change.author != None)
+					# print(change.author)
+			
 
 @unittest.skip("Not refactored yet")
 class TestDiffLarge(MarvinTest):

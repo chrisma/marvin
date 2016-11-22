@@ -21,22 +21,25 @@ class BlameParser:
         expression = ".//table[contains(@class, 'blame-container')]"
         container = html_tree.xpath(expression).pop()
         blame = None
-        for e in container.iterchildren():
-            # Every <tr class="blame-commit">commit info</tr> element
-            # is followed by the corresponding lines in
-            # <tr class="blame-line">line info</tr> elements
-            if e.get('class') == 'blame-commit':
-                blame = LineBlame(*[None]*6)
-                sha_anchor = e.find('.//a[@class="blame-sha"]')
-                blame.short_sha = sha_anchor.text
-                blame.commit_url = sha_anchor.get('href')
-                blame.avatar_url = e.xpath(".//img[contains(@class, 'avatar')]").pop().get('src')
-                blame.commit_message = e.find('.//a[@class="message"]').get('title')
-                blame.user_name = e.find('.//a[@rel="contributor"]').text
-                blame.time = e.find('.//relative-time').get('datetime')
-            if e.get('class') == 'blame-line':
-                line = e.xpath(".//td[contains(@class, 'blob-num')]").pop().text
-                self.blame_data[int(line)] = blame
+
+        for hunk in container.iterchildren():
+            if hunk.get('class') == 'blame-hunk':
+                for e in hunk.iterchildren():
+                    # Every <tr class="blame-commit">commit info</tr> element
+                    # is followed by the corresponding lines in
+                    # <tr class="blame-line">line info</tr> elements
+                    if e.get('class') == 'blame-commit':
+                        blame = LineBlame(*[None]*6)
+                        sha_anchor = e.find('.//a[@class="blame-sha"]')
+                        blame.short_sha = sha_anchor.text
+                        blame.commit_url = sha_anchor.get('href')
+                        blame.avatar_url = e.xpath(".//img[contains(@class, 'avatar')]").pop().get('src')
+                        blame.commit_message = e.find('.//a[@class="message"]').get('title')
+                        blame.user_name = e.find('.//a[@rel="contributor"]').text
+                        blame.time = e.find('.//relative-time').get('datetime')
+                    if e.get('class') == 'blame-line':
+                        line = e.xpath(".//td[contains(@class, 'blob-num')]").pop().text
+                        self.blame_data[int(line)] = blame
 
     def get_blame_page(self, commit, file):
         blame_url = self.project_link + "/blame/" + commit + "/" + file

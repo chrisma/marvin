@@ -20,7 +20,6 @@ class Marvin:
 
         self.raw_diff = None
         self.diff_parser = None
-        self.blame = None
         self.blame_data = {}
 
     def load_diff_from_project(self):
@@ -36,15 +35,25 @@ class Marvin:
         self.diff_parser = DiffParser(diff_content=self.raw_diff)
         self.diff_parser.parse()
 
+    def load_blame_from_html(self, file, commit_sha, filepath):
+        if not file in self.blame_data:
+            self.blame_data[file] = {}
+
+        self.blame_data[file][commit_sha] = BlameParser(self.project_link)
+        self.blame_data[file][commit_sha].load_html_file(filepath)
+
     def blame_lines(self):
         for file in self.diff_parser.changes.keys():
-            self.blame_data[file] = {}
+            if not file in self.blame_data:
+                self.blame_data[file] = {}
 
             for line, linechange in self.diff_parser.changes[file][0].items():
                 if not linechange.commit_sha in self.blame_data[file]:
-                    self.blame_data[file][linechange.commit_sha] = BlameParser(self.project_link).get_blame_page(linechange.commit_sha, file)
+                    self.blame_data[file][linechange.commit_sha] = BlameParser(self.project_link)
+                    self.blame_data[file][linechange.commit_sha].get_blame_page(linechange.commit_sha, file)
+                
                 linechange.author = self.blame_data[file][linechange.commit_sha].blame_line(line)
-                self.diff_parser.changes[file][0][line] = linechange
+                
 
 def main():
     parser = argparse.ArgumentParser(description='Parses a commit, returns recommendation for reviewer')
