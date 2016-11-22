@@ -70,18 +70,6 @@ class TestLineChangeRenameFile(MarvinTest):
 		for line, added in self.parser.changes['sample.diff'][0].items():
 			self.assertTrue(line in self.parser.changes['sample.patch'][1])
 
-class TestLineChangeBlocks(MarvinTest):
-	def setUp(self):
-		self.parser = self.setup_parser('modify.diff')
-		self.parser.parse()
-
-	def test_interesting_lines_count(self):
-		self.assertEqual(len(self.parser.interesting['Gemfile']), 2)
-
-	def test_skip_not_interesting_lines(self):
-		self.assertTrue(39 not in self.parser.interesting['Gemfile'])
-		self.assertTrue(42 not in self.parser.interesting['Gemfile'])
-
 class TestReturnType(MarvinTest):
 	def setUp(self):
 		self.file_changes = self.setup_parser('modify.diff').parse()
@@ -329,10 +317,14 @@ class TestMarvinSetup(MarvinTest):
 		for file in self.marvin.diff_parser.changes.keys():
 			for i in range(3):
 				for line_n, change in self.marvin.diff_parser.changes[file][i].items():
-					# print(change)
 					self.assertTrue(change.author != None)
-					# print(change.author)
 			
+					# TODO fix getting hash of previous commit
+					if i == 1:
+						self.assertTrue(False)
+
+	def test_load_additional_lines(self):
+		self.assertTrue(False)			
 
 @unittest.skip("Not refactored yet")
 class TestDiffLarge(MarvinTest):
@@ -371,6 +363,17 @@ class TestBlame(MarvinTest):
 		self.assertIsNotNone(data)
 		# 116 lines in the file
 		self.assertEqual(len(data), self.line_count)
+
+		file_data = self.blamer.file_data
+		self.assertIsNotNone(file_data)
+		self.assertEqual(len(file_data), self.line_count)
+	
+	def test_assert_file_data(self):
+		file_data = self.blamer.file_data
+
+		self.assertEqual(file_data[1], "source 'https://rubygems.org'")
+		self.assertEqual(file_data[4], "")
+		self.assertEqual(file_data[self.line_count], "end")
 
 	def test_blame_first_line(self):
 		blame_info = self.blamer.blame_line(1)

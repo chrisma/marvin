@@ -15,6 +15,7 @@ class BlameParser:
         self.project_link = project_link
         self.logger = logger or logging
         self.blame_data = OrderedDict()
+        self.file_data = OrderedDict()
 
     def _parse_gh_blame_html(self, string):
         html_tree = html.fromstring(string)
@@ -40,6 +41,8 @@ class BlameParser:
                     if e.get('class') == 'blame-line':
                         line = e.xpath(".//td[contains(@class, 'blob-num')]").pop().text
                         self.blame_data[int(line)] = blame
+                        text = e.xpath(".//td[contains(@class, 'blob-code')]").pop().text_content()
+                        self.file_data[int(line)] = text
 
     def get_blame_page(self, commit, file):
         blame_url = self.project_link + "/blame/" + commit + "/" + file

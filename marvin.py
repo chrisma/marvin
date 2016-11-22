@@ -20,6 +20,7 @@ class Marvin:
 
         self.raw_diff = None
         self.diff_parser = None
+        self.additional_lines = []
         self.blame_data = {}
 
     def load_diff_from_project(self):
@@ -47,13 +48,34 @@ class Marvin:
             if not file in self.blame_data:
                 self.blame_data[file] = {}
 
-            for line, linechange in self.diff_parser.changes[file][0].items():
-                if not linechange.commit_sha in self.blame_data[file]:
-                    self.blame_data[file][linechange.commit_sha] = BlameParser(self.project_link)
-                    self.blame_data[file][linechange.commit_sha].get_blame_page(linechange.commit_sha, file)
-                
-                linechange.author = self.blame_data[file][linechange.commit_sha].blame_line(line)
-                
+            for i in range(3):
+                for line, linechange in self.diff_parser.changes[file][i].items():
+                    if not linechange.commit_sha in self.blame_data[file]:
+                        self.blame_data[file][linechange.commit_sha] = BlameParser(self.project_link)
+                        # TODO!! Do the line blaming for removed lines differently
+                        self.blame_data[file][linechange.commit_sha].get_blame_page(linechange.commit_sha, file)
+                    
+                    linechange.author = self.blame_data[file][linechange.commit_sha].blame_line(line)
+
+    def evaluate_line(self, line):
+        to_skip = set(["", "{", "}", "begin", "end"])
+
+        return not line.strip() in to_skip
+
+    def has_been_changed(self, line_n, file):
+        return line_n in self.diff_parser.changes[file][0] or \
+                line_n in self.diff_parser.changes[file][1] or \
+                line_n in self.diff_parser.changes[file][2]
+
+    def load_additional_lines(self):
+        for file, changes in self.diff_parser.changes.items():
+            for i in range(3):
+                for line_n, linechange in changes[file][i].items():
+                    pass
+                    #while not self.has_been_changed(line_n - p, file) and 
+                    #if self.evaluate_line(line):
+                    #    interesting[after_line_n] = LineChange(after_line_n, LineChange.ChangeType.interesting, self.current_file, self.current_commit)
+
 
 def main():
     parser = argparse.ArgumentParser(description='Parses a commit, returns recommendation for reviewer')

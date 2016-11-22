@@ -19,7 +19,6 @@ class DiffParser:
             self.load_diff_content(diff_content)
 
         self.changes = {}
-        self.interesting = {}
         self.added_files = set([])
         self.removed_files = set([])
 
@@ -62,13 +61,7 @@ class DiffParser:
         else:
             log.error("Something went wrong when parsing commit!")
 
-
-    def evaluate_line(self, line):
-        to_skip = set(["", "{", "}", "begin", "end"])
-
-        return not line.strip() in to_skip
-
-    def parse_next_commit(self, added, removed, modified, interesting):
+    def parse_next_commit(self, added, removed, modified):
         if self.eof():
             return None
 
@@ -136,9 +129,6 @@ class DiffParser:
                 before_line_n += 1
 
             else:
-                if self.evaluate_line(line):
-                    interesting[after_line_n] = LineChange(after_line_n, LineChange.ChangeType.interesting, self.current_file, self.current_commit)
-
                 before_line_n += 1
                 after_line_n += 1
 
@@ -175,7 +165,7 @@ class DiffParser:
 
         self.current_file = match.group(2)
         log.debug("Current file set to {} ".format(self.current_file))
-        added, removed, modified, interesting = {}, {}, {}, {}
+        added, removed, modified = {}, {}, {}
 
         # self.parse_short_commit_hash()
         # if self.to_commit == None or self.from_commit == None:
@@ -193,7 +183,7 @@ class DiffParser:
                 self.current_commit = None
                 break
 
-            self.parse_next_commit(added, removed, modified, interesting)
+            self.parse_next_commit(added, removed, modified)
 
         if not self.current_file in self.changes:
             self.changes[self.current_file] = added, removed, modified
@@ -202,9 +192,6 @@ class DiffParser:
             self.changes[self.current_file][0].update(added)
             self.changes[self.current_file][1].update(removed)
             self.changes[self.current_file][2].update(modified)
-
-
-        self.interesting[self.current_file] = interesting
 
         self.current_file = None
         
