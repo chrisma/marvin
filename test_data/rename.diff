@@ -19,7 +19,7 @@ new file mode 100644
 index 0000000..4161174
 --- /dev/null
 +++ b/sample.diff
-@@ -0,0 +1,105 @@
+@@ -0,0 +1,38 @@
 +From 6b426063f37aa28e14afe8979384e12c7018d819 Mon Sep 17 00:00:00 2001
 +From: Christoph Matthies <christoph.matthies@gmail.com>
 +Date: Mon, 18 Apr 2016 16:53:36 +0200
@@ -63,7 +63,7 @@ deleted file mode 100644
 index 4161174..0000000
 --- a/sample.patch
 +++ /dev/null
-@@ -1,105 +0,0 @@
+@@ -1,38 +0,0 @@
 -From 6b426063f37aa28e14afe8979384e12c7018d819 Mon Sep 17 00:00:00 2001
 -From: Christoph Matthies <christoph.matthies@gmail.com>
 -Date: Mon, 18 Apr 2016 16:53:36 +0200

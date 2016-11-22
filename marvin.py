@@ -20,10 +20,11 @@ class Marvin:
 
         self.raw_diff = None
         self.diff_parser = None
-        self.blame_parser = None
+        self.blame = None
+        self.blame_data = {}
 
     def load_diff_from_project(self):
-        diff_url = self.project_link + "/pull/" + str(self.pr_n) + ".diff"
+        diff_url = self.project_link + "/pull/" + str(self.pr_n) + ".patch"
         response = requests.get(diff_url)
         self.raw_diff = response.text.split('\n')
 
@@ -35,6 +36,16 @@ class Marvin:
         self.diff_parser = DiffParser(diff_content=self.raw_diff)
         self.diff_parser.parse()
 
+    def blame_lines(self):
+        for file in self.diff_parser.changes.keys():
+            self.blame_data[file] = {}
+
+            for line, linechange in self.diff_parser.changes[file][0].items():
+                if not linechange.commit_sha in self.blame_data[file]:
+                    self.blame_data[file][linechange.commit_sha] = BlameParser(self.project_link).get_blame_page(linechange.commit_sha, file)
+                linechange.author = self.blame_data[file][linechange.commit_sha].blame_line(line)
+                self.diff_parser.changes[file][0][line] = linechange
+
 def main():
     parser = argparse.ArgumentParser(description='Parses a commit, returns recommendation for reviewer')
     parser.add_argument('project_link', type=str, help='the link to the project')
@@ -45,6 +56,11 @@ def main():
     log.setLevel([logging.WARNING, logging.INFO, logging.DEBUG][min(2,args.verbose)])
 
     marvin = Marvin(args.project_link, args.pr_n)
+    marvin.load_diff_from_project()
+    marvin.parse_diff()
+    marvin.blame_lines()
+
+    print(marvin.diff_parser.changes)
 
     log.info("{}".format(marvin.diff_parser.changes))
 

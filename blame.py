@@ -39,9 +39,10 @@ class BlameParser:
                 self.blame_data[int(line)] = blame
 
     def get_blame_page(self, commit, file):
-        blame_url = self.project_link + "/blame/" + commit + file
+        blame_url = self.project_link + "/blame/" + commit + "/" + file
+        print('Blame URL', blame_url)
         response = requests.get(blame_url)
-        self._parse_gh_blame_html(respone.content)
+        self._parse_gh_blame_html(response.content)
 
     def load_html_file(self, html_path):
         with open(html_path) as f:

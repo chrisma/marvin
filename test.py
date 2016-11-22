@@ -106,7 +106,7 @@ class TestDiffModifiedLine(MarvinTest):
 	def test_change(self):
 		change = self.file_changes[0]
 		self.assertEqual(change.line_number, 40)
-		self.assertEqual(change.commit_sha, "d486669")
+		self.assertEqual(change.commit_sha, None)
 		self.assertEqual(change.change_type, LineChange.ChangeType.modified)
 
 class TestDiffAppendedLine(MarvinTest):
@@ -123,7 +123,7 @@ class TestDiffAppendedLine(MarvinTest):
 	def test_change(self):
 		change = self.file_changes[0]
 		self.assertEqual(change.line_number, 117)
-		self.assertEqual(change.commit_sha, "77e39d5")
+		self.assertEqual(change.commit_sha, None)
 		self.assertEqual(change.change_type, LineChange.ChangeType.added)
 
 class TestDiffMultipleAppendedLines(MarvinTest):
@@ -165,7 +165,6 @@ class TestDiffPrependedLine(MarvinTest):
 	def test_changes(self):
 		change = self.file_changes[0]
 		self.assertEqual(change.line_number, 1)
-		self.assertEqual(change.commit_sha, "de30360")
 		self.assertEqual(change.change_type, LineChange.ChangeType.added)
 
 class TestDiffDeletedLine(MarvinTest):
@@ -187,7 +186,7 @@ class TestDiffDeletedLine(MarvinTest):
 	def test_old_sha(self):
 		# In case of a deletion the old commit is of interest
 		change = self.file_changes[0]
-		self.assertEqual(change.commit_sha, "647ad8d")
+		self.assertEqual(change.commit_sha, None)
 
 class TestDiffDeleteMoreThanAdded(MarvinTest):
 	def setUp(self):
@@ -208,7 +207,7 @@ class TestDiffDeleteMoreThanAdded(MarvinTest):
 class TestDiffMultipleEdits(MarvinTest):
 	def setUp(self):
 		self.file_changes = self.setup_parser('multiple_edits.diff').parse()
-		self.new_sha = "484e717"
+		self.new_sha = None
 		self.file_path = "Gemfile"
 
 	def test_amount(self):
@@ -253,7 +252,7 @@ class TestDiffMultipleFiles(MarvinTest):
 
 	def test_changes_file1(self):
 		file = "Gemfile"
-		new_sha = "37c323f"
+		new_sha = None
 		single_file_changes = [c for c in self.file_changes if c.file_path == file]
 		# line 1 prepended, line 37 (now 38) and line 40 (now 41) modified
 		expected = [LineChange(line_number=1, commit_sha=new_sha,
@@ -267,7 +266,7 @@ class TestDiffMultipleFiles(MarvinTest):
 
 	def test_changes_file2(self):
 		file = "README.md"
-		new_sha = "9add005"
+		new_sha = None
 		single_file_changes = [c for c in self.file_changes if c.file_path == file]
 		# Inserted lines 25 and 26
 		expected = [LineChange(line_number=25, commit_sha=new_sha,
@@ -291,10 +290,10 @@ class TestMarvinMultipleCommitsForSameFile(MarvinTest):
 
 class TestMarvinSetup(MarvinTest):
 	def setUp(self):
-		self.marvin = self.setup_marvin('test', 1, 'marvin_sample.diff')
+		self.marvin = self.setup_marvin('test', 1, 'marvin_sample.patch')
 
 	def test_load_diff_from_file(self):
-		self.assertEqual(len(self.marvin.raw_diff), 61)
+		self.assertEqual(len(self.marvin.raw_diff), 105)
 
 	def test_diff_parser(self):
 		self.marvin.parse_diff()
@@ -303,8 +302,8 @@ class TestMarvinSetup(MarvinTest):
 		self.assertEqual(len(self.marvin.diff_parser.changes['app/controllers/application_controller.rb'][0]), 7)
 		self.assertEqual(len(self.marvin.diff_parser.changes['app/controllers/application_controller.rb'][1]), 0)
 		self.assertEqual(len(self.marvin.diff_parser.changes['app/controllers/application_controller.rb'][2]), 0)
-		self.assertEqual(len(self.marvin.diff_parser.changes['config/initializers/devise.rb'][0]), 26)
-		self.assertEqual(len(self.marvin.diff_parser.changes['config/initializers/devise.rb'][1]), 0)
+		self.assertEqual(len(self.marvin.diff_parser.changes['config/initializers/devise.rb'][0]), 27)
+		self.assertEqual(len(self.marvin.diff_parser.changes['config/initializers/devise.rb'][1]), 1)
 		self.assertEqual(len(self.marvin.diff_parser.changes['config/initializers/devise.rb'][2]), 0)
 
 

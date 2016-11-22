@@ -56,8 +56,9 @@ class DiffParser:
 
         commits_match = diff_commits_re.match(line)
         if commits_match != None:
-            self.from_commit = commits_match.group(1)
-            self.to_commit  = commits_match.group(2)
+            pass
+        #    self.from_commit = commits_match.group(1)
+        #    self.to_commit  = commits_match.group(2)
         else:
             log.error("Something went wrong when parsing commit!")
 
@@ -116,18 +117,18 @@ class DiffParser:
             if line.startswith("+"):
                 if after_line_n in removed_in_new_file and len(removed_in_new_file[after_line_n]) > 0:
                     del removed[removed_in_new_file[after_line_n].pop()]
-                    modified[after_line_n] = LineChange(after_line_n, LineChange.ChangeType.modified, self.current_file, self.to_commit)
+                    modified[after_line_n] = LineChange(after_line_n, LineChange.ChangeType.modified, self.current_file, self.current_commit)
                 else:
-                    added[after_line_n] = LineChange(after_line_n, LineChange.ChangeType.added, self.current_file, self.to_commit)
+                    added[after_line_n] = LineChange(after_line_n, LineChange.ChangeType.added, self.current_file, self.current_commit)
                 
                 after_line_n += 1
 
             elif line.startswith("-"):
                 if after_line_n in added:
                     del added[after_line_n]
-                    modified[after_line_n] = LineChange(after_line_n, LineChange.ChangeType.modified, self.current_file, self.to_commit)
+                    modified[after_line_n] = LineChange(after_line_n, LineChange.ChangeType.modified, self.current_file, self.current_commit)
                 else:
-                    removed[before_line_n] = LineChange(before_line_n, LineChange.ChangeType.deleted, self.current_file, self.from_commit)
+                    removed[before_line_n] = LineChange(before_line_n, LineChange.ChangeType.deleted, self.current_file, self.current_commit)
                     if not after_line_n in removed_in_new_file:
                         removed_in_new_file[after_line_n] = []
                     removed_in_new_file[after_line_n].append(before_line_n)
@@ -136,7 +137,7 @@ class DiffParser:
 
             else:
                 if self.evaluate_line(line):
-                    interesting[after_line_n] = LineChange(after_line_n, LineChange.ChangeType.interesting, self.current_file, self.to_commit)
+                    interesting[after_line_n] = LineChange(after_line_n, LineChange.ChangeType.interesting, self.current_file, self.current_commit)
 
                 before_line_n += 1
                 after_line_n += 1
@@ -146,22 +147,27 @@ class DiffParser:
         # Does not work when multiple commits change the same lines
         if not (after_finish_line_n == after_line_n and before_finish_line_n == before_line_n) \
             and not self.current_file in self.removed_files and not self.current_file in self.added_files:
-            log.warning("Something went wrong with parsing commits in {} {}...{} S {} {} B {} v {} A {} v {}".format(
-                self.current_file, self.from_commit, self.to_commit, before_finish_line_n - before_offset, after_finish_line_n - after_offset, before_finish_line_n, before_line_n, after_finish_line_n, after_line_n))
+            log.warning("Something went wrong with parsing commits in {} {} S {} {} B {} v {} A {} v {}".format(
+                self.current_file, self.current_commit, before_finish_line_n - before_offset, after_finish_line_n - after_offset, before_finish_line_n, before_line_n, after_finish_line_n, after_line_n))
 
     def parse_next_file_changes(self):
         if self.eof():
             return None
 
         filename_re = re.compile('^diff --git a/(.*?) b/(.*?)$')
+        long_re = re.compile('^From ([a-f,0-9]{40}) [A-Z][a-z]{2} [A-Z][a-z]{2} [0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} [0-9]{4}$')
         self.current_file = None
-        self.to_commit = None
-        self.from_commit = None
+        self.current_commit = None
+        #   self.to_commit = None
+        #   self.from_commit = None
 
         match = None
 
         while not self.eof() and match == None:
-            match = filename_re.match(self.lines[self.line_idx])
+            if long_re.match(self.lines[self.line_idx]) != None:
+                self.current_commit = long_re.match(self.lines[self.line_idx]).group(1)
+            else:
+                match = filename_re.match(self.lines[self.line_idx])
             self.line_idx += 1
 
         if match == None:
@@ -171,16 +177,20 @@ class DiffParser:
         log.debug("Current file set to {} ".format(self.current_file))
         added, removed, modified, interesting = {}, {}, {}, {}
 
-        self.parse_short_commit_hash()
-        if self.to_commit == None or self.from_commit == None:
-            log.error("Failure loading commits for {} from '{}'".format(self.current_file, self.lines[self.line_idx]))
-            return None
+        # self.parse_short_commit_hash()
+        # if self.to_commit == None or self.from_commit == None:
+        #    log.error("Failure loading commits for {} from '{}'".format(self.current_file, self.lines[self.line_idx]))
+        #    return None
 
         self.line_idx += 1
 
         while not self.eof():
             match = filename_re.match(self.lines[self.line_idx])
             if match != None:
+                break
+
+            if long_re.match(self.lines[self.line_idx]) != None:
+                self.current_commit = None
                 break
 
             self.parse_next_commit(added, removed, modified, interesting)
@@ -197,9 +207,7 @@ class DiffParser:
         self.interesting[self.current_file] = interesting
 
         self.current_file = None
-        self.to_commit = None
-        self.from_commit = None
-
+        
         return True
 
     def get_all_changes(self):
