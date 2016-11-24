@@ -129,9 +129,7 @@ class Marvin:
             val = 2
         if change.change_type == LineChange.ChangeType.modified:
             val = 3
-        if change.change_type == LineChange.ChangeType.added:
-            val = 1
-        if change.change_type == LineChange.ChangeType.interesting:
+        if change.change_type == LineChange.ChangeType.added or change.change_type == LineChange.ChangeType.interesting:
             val = 1
 
         filename, file_extension = os.path.splitext('change.file_path')
