@@ -342,10 +342,13 @@ class TestMarvinSetup(MarvinTest):
 		self.marvin.blame_lines()
 		self.marvin.load_additional_lines()
 		
-		self.assertEqual(len(self.marvin.additional_lines), 8)
 
-		for line_n, linechange in self.marvin.additional_lines.items():
-			self.assertNotEqual(linechange.author, None)
+		self.assertEqual(len(self.marvin.additional_lines), 2)
+		self.assertEqual(sum([len(self.marvin.additional_lines[file]) for file in self.marvin.additional_lines]),8)
+
+		for file in self.marvin.additional_lines:
+			for line_n, linechange in self.marvin.additional_lines[file].items():
+				self.assertNotEqual(linechange.author, None)
 
 	def test_getting_reviewer(self):
 		self.marvin.parse_diff()
@@ -363,8 +366,7 @@ class TestMarvinSetup(MarvinTest):
 		self.marvin.blame_lines()
 		self.marvin.load_additional_lines()
 
-		self.assertIsNotNone(self.marvin.get_reviewer())
-		self.assertEqual(self.marvin.get_reviewer()[0], 'chrisma')
+		self.assertEqual(self.marvin.reviewers().pop()[0], 'chrisma')
 
 @unittest.skip("Not refactored yet")
 class TestDiffLarge(MarvinTest):

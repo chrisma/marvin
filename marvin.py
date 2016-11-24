@@ -52,8 +52,7 @@ class Marvin:
 
         for file in self.diff_parser.changes.keys():
             if not file in self.blame_data:
-                self.blame_data[file] = {}
-
+                self.blame_data[file] = OrderedDict()
             for i in range(3):
                 for line, linechange in self.diff_parser.changes[file][i].items():
                     if not linechange.commit_sha in self.blame_data[file]:
@@ -105,6 +104,7 @@ class Marvin:
             return
 
         for file in self.diff_parser.changes.keys():
+            self.additional_lines[file] = {}
             for i in range(3):
                 for line_n, linechange in self.diff_parser.changes[file][i].items():
                     prev_line = self._find_previous_intersing_line(file, line_n, linechange)
@@ -116,13 +116,13 @@ class Marvin:
 
                     if prev_line != None:
                         prev_line.author = self.blame_data[file][linechange.commit_sha].blame_line(prev_line.line_number)
-                        self.additional_lines[prev_line.line_number] = prev_line
+                        self.additional_lines[file][prev_line.line_number] = prev_line
                     if next_line != None:
                         next_line.author = self.blame_data[file][linechange.commit_sha].blame_line(next_line.line_number)
-                        self.additional_lines[next_line.line_number] = next_line
+                        self.additional_lines[file][next_line.line_number] = next_line
 
 
-    def get_reviewer(self):
+    def reviewers(self):
         # Most simple approach to obtaining reviewer
         if self.diff_parser == None:
             self.logger.error("Diff not parsed before requesting reviewer")
@@ -141,14 +141,39 @@ class Marvin:
                         else:
                             reviewer_stats[linechange.author.user_name] += 1
         
-        for line_n, linechange in self.additional_lines.items():
-            if not linechange.author.user_name in reviewer_stats:
-                reviewer_stats[linechange.author.user_name] = 0
-            else:
-                reviewer_stats[linechange.author.user_name] += 1
+            for line_n, linechange in self.additional_lines[file].items():
+                if not linechange.author.user_name in reviewer_stats:
+                    reviewer_stats[linechange.author.user_name] = 0
+                else:
+                    reviewer_stats[linechange.author.user_name] += 1
 
         sorted_reviewer = sorted(reviewer_stats.items(), key=operator.itemgetter(1))
-        return sorted_reviewer.pop()
+        return sorted_reviewer
+
+    def print_summary(self):
+
+        for file in self.diff_parser.changes:
+            print('Changes for "{}"'.format(file))
+
+            for line, change in self.diff_parser.changes[file][0].items():
+                print('[{}] Line {} added by {} on {}:'.format(change.commit_sha, line, change.author.user_name, change.author.time),
+                    self.blame_data[file][change.commit_sha].file_data[line].rstrip())
+            for line, change in self.diff_parser.changes[file][1].items():
+                print('[{}] Line {} deleted by {} on {}:'.format(change.commit_sha, line, change.author.user_name, change.author.time),
+                    self.blame_data[file][change.commit_sha].file_data[line].rstrip())
+            for line, change in self.diff_parser.changes[file][2].items():
+                print('[{}] Line {} modified by {} on {}:'.format(change.commit_sha, line, change.author.user_name, change.author.time),
+                    self.blame_data[file][change.commit_sha].file_data[line].rstrip())
+
+            print('Interesting lines:')
+            for line, change in self.additional_lines[file].items():
+                print('[{}] Line {} created by {} on {}:'.format(change.commit_sha, line, change.author.user_name, change.author.time),
+                    self.blame_data[file][change.commit_sha].file_data[line].rstrip())
+
+        print('Possible reviewers:\nNAME\t\tCHANGEDLINES')
+        reviewers = self.reviewers()
+        for name, lines in reviewers:
+            print('{}\t\t{}'.format(name, lines))
 
 def main():
     parser = argparse.ArgumentParser(description='Parses a commit, returns recommendation for reviewer')
@@ -163,11 +188,9 @@ def main():
     marvin.load_diff_from_project()
     marvin.parse_diff()
     marvin.blame_lines()
-
-    print(marvin.diff_parser.changes)
-
-    log.info("{}".format(marvin.diff_parser.changes))
-
+    marvin.load_additional_lines()
+    marvin.print_summary()
+    
 if __name__ == "__main__":
     logging.basicConfig(stream=sys.stderr, format='%(name)s %(levelname)s %(message)s')
     main()
