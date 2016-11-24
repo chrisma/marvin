@@ -121,7 +121,8 @@ class DiffParser:
                     del added[after_line_n]
                     modified[after_line_n] = LineChange(after_line_n, LineChange.ChangeType.modified, self.current_file, self.current_commit)
                 else:
-                    removed[before_line_n] = LineChange(before_line_n, LineChange.ChangeType.deleted, self.current_file, self.current_commit)
+                    commit_hash = self.current_commit + "~1" if self.current_commit != None else None
+                    removed[before_line_n] = LineChange(before_line_n, LineChange.ChangeType.deleted, self.current_file, commit_hash)
                     if not after_line_n in removed_in_new_file:
                         removed_in_new_file[after_line_n] = []
                     removed_in_new_file[after_line_n].append(before_line_n)

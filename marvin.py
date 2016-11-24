@@ -58,7 +58,6 @@ class Marvin:
                 for line, linechange in self.diff_parser.changes[file][i].items():
                     if not linechange.commit_sha in self.blame_data[file]:
                         self.blame_data[file][linechange.commit_sha] = BlameParser(self.project_link)
-                        # TODO!! Do the line blaming for removed lines differently
                         self.blame_data[file][linechange.commit_sha].get_blame_page(linechange.commit_sha, file)
                     
                     linechange.author = self.blame_data[file][linechange.commit_sha].blame_line(line)
