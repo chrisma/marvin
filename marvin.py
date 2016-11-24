@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import os
 import argparse
 import logging
 import sys
@@ -121,6 +122,25 @@ class Marvin:
                         next_line.author = self.blame_data[file][linechange.commit_sha].blame_line(next_line.line_number)
                         self.additional_lines[file][next_line.line_number] = next_line
 
+    def relevanceOfChange(self, change):
+        val = 0
+
+        if change.change_type == LineChange.ChangeType.deleted:
+            val = 2
+        if change.change_type == LineChange.ChangeType.modified:
+            val = 3
+        if change.change_type == LineChange.ChangeType.added:
+            val = 1
+        if change.change_type == LineChange.ChangeType.interesting:
+            val = 1
+
+        filename, file_extension = os.path.splitext('change.file_path')
+        if file_extension in set(['.conf', '.txt', '.md', '.cfg']):
+            val /= 3
+
+        # TODO parse time
+
+        return val
 
     def reviewers(self):
         # Most simple approach to obtaining reviewer
@@ -139,13 +159,13 @@ class Marvin:
                         if not linechange.author.user_name in reviewer_stats:
                             reviewer_stats[linechange.author.user_name] = 0
                         else:
-                            reviewer_stats[linechange.author.user_name] += 1
+                            reviewer_stats[linechange.author.user_name] += self.relevanceOfChange(linechange)
         
             for line_n, linechange in self.additional_lines[file].items():
                 if not linechange.author.user_name in reviewer_stats:
                     reviewer_stats[linechange.author.user_name] = 0
                 else:
-                    reviewer_stats[linechange.author.user_name] += 1
+                    reviewer_stats[linechange.author.user_name] += self.relevanceOfChange(linechange)
 
         sorted_reviewer = sorted(reviewer_stats.items(), key=operator.itemgetter(1))
         return sorted_reviewer
@@ -170,7 +190,7 @@ class Marvin:
                 print('[{}] Line {} created by {} on {}:'.format(change.commit_sha, line, change.author.user_name, change.author.time),
                     self.blame_data[file][change.commit_sha].file_data[line].rstrip())
 
-        print('Possible reviewers:\nNAME\t\tCHANGEDLINES')
+        print('Possible reviewers:\nNAME\t\tRELEVANCE')
         reviewers = self.reviewers()
         for name, lines in reviewers:
             print('{}\t\t{}'.format(name, lines))
