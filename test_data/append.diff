@@ -1,0 +1,9 @@
+diff --git a/Gemfile b/Gemfile
+index 647ad8d..77e39d5 100644
+--- a/Gemfile
++++ b/Gemfile
+@@ -114,3 +114,4 @@ group :test do
+   # Stubbing external calls by blocking traffic with WebMock.disable_net_connect! or allow:
+   #gem 'webmock'
+ end
++# You have reached the end :(
