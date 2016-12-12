@@ -1,9 +1,0 @@
-diff --git a/Gemfile b/Gemfile
-index 647ad8d..de30360 100644
---- a/Gemfile
-+++ b/Gemfile
-@@ -1,3 +1,4 @@
-+# A new line at the start of the file
- source 'https://rubygems.org'
- 
- ruby '2.2.2'
