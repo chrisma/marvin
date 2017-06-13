@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
+# pylint: disable=invalid-name
 
 import os
 import argparse
 import logging
 import sys
-import requests
 import operator
 from collections import OrderedDict
+import requests
 
 from models import LineChange
 from blame import BlameParser
@@ -15,7 +16,8 @@ from parse import DiffParser
 module = sys.modules['__main__'].__file__
 log = logging.getLogger(module)
 
-class Marvin:
+class Marvin(object):
+    """Merely a ReView INcentiviser"""
 
     def __init__(self, project_link, pr_n):
         self.project_link = project_link
@@ -48,7 +50,7 @@ class Marvin:
 
     def blame_lines(self):
         if self.diff_parser == None:
-            self.logger.error("Diff not parsed before blaming")
+            log.error("Diff not parsed before blaming")
             return
 
         for file in self.diff_parser.changes.keys():
@@ -59,7 +61,6 @@ class Marvin:
                     if not linechange.commit_sha in self.blame_data[file]:
                         self.blame_data[file][linechange.commit_sha] = BlameParser(self.project_link)
                         self.blame_data[file][linechange.commit_sha].get_blame_page(linechange.commit_sha, file)
-                    
                     linechange.author = self.blame_data[file][linechange.commit_sha].blame_line(line)
 
     def is_interesting(self, line):
@@ -69,7 +70,7 @@ class Marvin:
 
     def has_been_changed(self, line_n, file, commit):
         if self.diff_parser == None:
-            self.logger.error("Diff not parsed before checking for changes")
+            log.error("Diff not parsed before checking for changes")
             return
 
         for i in range(3):
@@ -101,7 +102,7 @@ class Marvin:
 
     def load_additional_lines(self):
         if self.diff_parser == None:
-            self.logger.error("Diff not parsed before loading additional lines")
+            log.error("Diff not parsed before loading additional lines")
             return
 
         for file in self.diff_parser.changes.keys():
@@ -110,9 +111,8 @@ class Marvin:
                 for line_n, linechange in self.diff_parser.changes[file][i].items():
                     prev_line = self._find_previous_intersing_line(file, line_n, linechange)
                     next_line = self._find_next_intersing_line(file, line_n, linechange)
-                    
                     if self.blame_data[file][linechange.commit_sha] == None:
-                        self.logger.error("Blame not loaded before blaming line")
+                        log.error("Blame not loaded before blaming line")
                         return
 
                     if prev_line != None:
@@ -143,7 +143,7 @@ class Marvin:
     def reviewers(self):
         # Most simple approach to obtaining reviewer
         if self.diff_parser == None:
-            self.logger.error("Diff not parsed before requesting reviewer")
+            log.error("Diff not parsed before requesting reviewer")
             return None
 
         reviewer_stats = {}
@@ -151,14 +151,14 @@ class Marvin:
             for i in range(3):
                 for line_n, linechange in self.diff_parser.changes[file][i].items():
                     if linechange.author == None:
-                        self.logger.error("Author data not fully loaded before requesting reviewer")
+                        log.error("Author data not fully loaded before requesting reviewer")
                         return None
                     else:
                         if not linechange.author.user_name in reviewer_stats:
                             reviewer_stats[linechange.author.user_name] = 0
                         else:
                             reviewer_stats[linechange.author.user_name] += self.relevanceOfChange(linechange)
-        
+
             for line_n, linechange in self.additional_lines[file].items():
                 if not linechange.author.user_name in reviewer_stats:
                     reviewer_stats[linechange.author.user_name] = 0
@@ -169,7 +169,6 @@ class Marvin:
         return sorted_reviewer
 
     def print_summary(self):
-
         for file in self.diff_parser.changes:
             print('Changes for "{}"'.format(file))
 
@@ -200,7 +199,7 @@ def main():
     parser.add_argument('-v', '--verbose', action='count', default=0, help="increases log verbosity for each occurence.")
 
     args = parser.parse_args()
-    log.setLevel([logging.WARNING, logging.INFO, logging.DEBUG][min(2,args.verbose)])
+    log.setLevel([logging.WARNING, logging.INFO, logging.DEBUG][min(2, args.verbose)])
 
     marvin = Marvin(args.project_link, args.pr_n)
     marvin.load_diff_from_project()
@@ -208,8 +207,7 @@ def main():
     marvin.blame_lines()
     marvin.load_additional_lines()
     marvin.print_summary()
-    
+
 if __name__ == "__main__":
     logging.basicConfig(stream=sys.stderr, format='%(name)s %(levelname)s %(message)s')
     main()
-
