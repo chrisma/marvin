@@ -193,7 +193,7 @@ class Marvin(object):
             print('{}\t\t{}'.format(name, lines))
 
 def main():
-    parser = argparse.ArgumentParser(description='Parses a commit, returns recommendation for reviewer')
+    parser = argparse.ArgumentParser(description='Parses a pull request, returns recommendation for reviewer')
     parser.add_argument('project_link', type=str, help='the link to the project')
     parser.add_argument('pr_n', type=int, help='the number of the PR to parse')
     parser.add_argument('-v', '--verbose', action='count', default=0, help="increases log verbosity for each occurence.")

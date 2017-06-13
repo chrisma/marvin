@@ -31,13 +31,13 @@ class BlameParser:
                     # <tr class="blame-line">line info</tr> elements
                     if e.get('class') == 'blame-commit':
                         blame = LineBlame(*[None]*6)
-                        sha_anchor = e.find('.//a[@class="blame-sha"]')
-                        blame.short_sha = sha_anchor.text
-                        blame.commit_url = sha_anchor.get('href')
+                        message_anchor = e.find('.//a[@class="message"]')
+                        blame.short_sha = message_anchor.get('href').rsplit('/',1)[-1]
+                        blame.commit_url = message_anchor.get('href')
+                        blame.commit_message = message_anchor.get('title')
                         blame.avatar_url = e.xpath(".//img[contains(@class, 'avatar')]").pop().get('src')
-                        blame.commit_message = e.find('.//a[@class="message"]').get('title')
-                        blame.user_name = e.find('.//a[@rel="contributor"]').text
-                        blame.time = e.find('.//relative-time').get('datetime')
+                        blame.user_name = e.xpath(".//img[contains(@class, 'avatar')]").pop().get('alt')[1:]
+                        blame.time = e.xpath('//*[@datetime]').pop().get('datetime')
                     if e.get('class') == 'blame-line':
                         line = e.xpath(".//td[contains(@class, 'blob-num')]").pop().text
                         self.blame_data[int(line)] = blame
@@ -74,5 +74,9 @@ if __name__ == "__main__":
 
     blamer = BlameParser(project_link='', logger=log)
     blamer.load_html_file('test_data/test_blame.html')
+    blame_info = blamer.blame_line(1)
+    print(blame_info)
+
+    blamer.load_html_file('test_data/test_blame_new.html')
     blame_info = blamer.blame_line(1)
     print(blame_info)
