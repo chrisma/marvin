@@ -9,6 +9,9 @@ from models import LineBlame
 module = sys.modules['__main__'].__file__
 log = logging.getLogger(module)
 
+def get_first(lst, default=None):
+    return lst[0] if lst else default
+
 class BlameParser:
 
     def __init__(self, project_link, logger = None):
@@ -19,30 +22,34 @@ class BlameParser:
 
     def _parse_gh_blame_html(self, string):
         html_tree = html.fromstring(string)
-        expression = ".//table[contains(@class, 'blame-container')]"
+        expression = ".//div[contains(@class, 'blame-container')]"
         container = html_tree.xpath(expression).pop()
         blame = None
 
         for hunk in container.iterchildren():
-            if hunk.get('class') == 'blame-hunk':
+            if 'blame-hunk' in hunk.get('class'):
                 for e in hunk.iterchildren():
-                    # Every <tr class="blame-commit">commit info</tr> element
-                    # is followed by the corresponding lines in
-                    # <tr class="blame-line">line info</tr> elements
-                    if e.get('class') == 'blame-commit':
+                    # Every <div class="blame-commit">commit info</div> element
+                    # is followed by the corresponding lines in a
+                    # <div class="width-full">line info</div> element
+                    if 'blame-commit' in e.get('class'):
                         blame = LineBlame(*[None]*6)
-                        message_anchor = e.find('.//a[@class="message"]')
-                        blame.short_sha = message_anchor.get('href').rsplit('/',1)[-1]
+                        message_anchor = e.xpath(".//a[contains(@class, 'message')]").pop()
                         blame.commit_url = message_anchor.get('href')
+                        blame.short_sha = message_anchor.get('href').rsplit('/', 1)[-1]
                         blame.commit_message = message_anchor.get('title')
-                        blame.avatar_url = e.xpath(".//img[contains(@class, 'avatar')]").pop().get('src')
-                        blame.user_name = e.xpath(".//img[contains(@class, 'avatar')]").pop().get('alt')[1:]
-                        blame.time = e.xpath('//*[@datetime]').pop().get('datetime')
-                    if e.get('class') == 'blame-line':
-                        line = e.xpath(".//td[contains(@class, 'blob-num')]").pop().text
-                        self.blame_data[int(line)] = blame
-                        text = e.xpath(".//td[contains(@class, 'blob-code')]").pop().text_content()
-                        self.file_data[int(line)] = text
+                        blame.user_name = e.xpath(".//div[contains(@class, 'AvatarStack-body')]").pop().get('aria-label')
+                        blame.avatar_url = get_first(e.xpath('.//a[@class="avatar"]/img/@src'))
+                        if blame.avatar_url is None:
+                            log.info('Avatar for ' + blame.user_name + ' not found')
+                        blame.time = e.xpath(".//time-ago").pop().get('datetime')
+                    if e.get('class') == 'width-full':
+                        # Contains divs containing line number and text
+                        for line_element in e.iterchildren():
+                            line_number = line_element.xpath(".//div[contains(@class, 'blob-num')]").pop().text
+                            self.blame_data[int(line_number)] = blame
+                            line_contents = line_element.xpath(".//div[contains(@class, 'blob-code')]").pop().text_content()
+                            self.file_data[int(line_number)] = line_contents
 
     def get_blame_page(self, commit, file):
         blame_url = self.project_link + "/blame/" + commit + "/" + file

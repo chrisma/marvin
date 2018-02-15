@@ -381,7 +381,7 @@ class TestDiffLarge(MarvinTest):
 class TestBlame(MarvinTest):
   def setUp(self):
     self.line_count = 116
-    html_path = self.full_test_path('test_blame.html')
+    html_path = self.full_test_path('test_blame_20180215.html')
     self.blamer = blame.BlameParser(project_link='')
     self.blamer.load_html_file(html_path)
 
@@ -406,7 +406,7 @@ class TestBlame(MarvinTest):
     blame_info = self.blamer.blame_line(1)
     self.assertEqual(blame_info.user_name, 'jaSunny')
     self.assertEqual(blame_info.commit_message, 'adding rails 4.2.4 app')
-    self.assertEqual(blame_info.short_sha, '867c8f8')
+    self.assertEqual(blame_info.short_sha, '867c8f83d432a5c8d7236735e513a3bd0b12bb38')
     self.assertIn(blame_info.short_sha, blame_info.commit_url)
 
   def test_blame_multiple_line_commit(self):
