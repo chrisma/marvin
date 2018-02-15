@@ -123,13 +123,11 @@ class Marvin(object):
                         self.additional_lines[file][next_line.line_number] = next_line
 
     def relevanceOfChange(self, change):
-        val = 0
-
         if change.change_type == LineChange.ChangeType.deleted:
             val = 2
         if change.change_type == LineChange.ChangeType.modified:
             val = 3
-        if change.change_type == LineChange.ChangeType.added or change.change_type == LineChange.ChangeType.interesting:
+        if change.change_type in [LineChange.ChangeType.added, LineChange.ChangeType.interesting]:
             val = 1
 
         filename, file_extension = os.path.splitext('change.file_path')
@@ -170,21 +168,19 @@ class Marvin(object):
 
     def print_summary(self):
         for file in self.diff_parser.changes:
-            print('Changes for "{}"'.format(file))
-
+            print('\n> Changes for "{}"'.format(file))
             for line, change in self.diff_parser.changes[file][0].items():
-                print('[{}] Line {} added by {} on {}:'.format(change.commit_sha, line, change.author.user_name, change.author.time),
+                print('{} L{} added "{}", {}:'.format(change.commit_sha[0:4], line, change.author.user_name, change.author.time),
                     self.blame_data[file][change.commit_sha].file_data[line].rstrip())
             for line, change in self.diff_parser.changes[file][1].items():
-                print('[{}] Line {} deleted by {} on {}:'.format(change.commit_sha, line, change.author.user_name, change.author.time),
+                print('{} L{} deleted "{}", {}:'.format(change.commit_sha[0:4], line, change.author.user_name, change.author.time),
                     self.blame_data[file][change.commit_sha].file_data[line].rstrip())
             for line, change in self.diff_parser.changes[file][2].items():
-                print('[{}] Line {} modified by {} on {}:'.format(change.commit_sha, line, change.author.user_name, change.author.time),
+                print('{} L{} modified "{}", {}:'.format(change.commit_sha[0:4], line, change.author.user_name, change.author.time),
                     self.blame_data[file][change.commit_sha].file_data[line].rstrip())
-
-            print('Interesting lines:')
+            print('>> Interesting lines:')
             for line, change in self.additional_lines[file].items():
-                print('[{}] Line {} created by {} on {}:'.format(change.commit_sha, line, change.author.user_name, change.author.time),
+                print('{} L{} created "{}", {}:'.format(change.commit_sha[0:4], line, change.author.user_name, change.author.time),
                     self.blame_data[file][change.commit_sha].file_data[line].rstrip())
 
         print('Possible reviewers:\nNAME\t\tRELEVANCE')
