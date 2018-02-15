@@ -13,7 +13,6 @@ def get_first(lst, default=None):
     return lst[0] if lst else default
 
 class BlameParser:
-
     def __init__(self, project_link, logger = None):
         self.project_link = project_link
         self.logger = logger or logging
@@ -22,9 +21,7 @@ class BlameParser:
 
     def _parse_gh_blame_html(self, string):
         html_tree = html.fromstring(string)
-        expression = ".//div[contains(@class, 'blame-container')]"
-        container = html_tree.xpath(expression).pop()
-        blame = None
+        container = html_tree.xpath(".//div[contains(@class, 'blame-container')]").pop()
 
         for hunk in container.iterchildren():
             if 'blame-hunk' in hunk.get('class'):

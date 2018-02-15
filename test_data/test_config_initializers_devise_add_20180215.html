@@ -1,0 +1,2002 @@
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+  <link rel="dns-prefetch" href="https://assets-cdn.github.com">
+  <link rel="dns-prefetch" href="https://avatars0.githubusercontent.com">
+  <link rel="dns-prefetch" href="https://avatars1.githubusercontent.com">
+  <link rel="dns-prefetch" href="https://avatars2.githubusercontent.com">
+  <link rel="dns-prefetch" href="https://avatars3.githubusercontent.com">
+  <link rel="dns-prefetch" href="https://github-cloud.s3.amazonaws.com">
+  <link rel="dns-prefetch" href="https://user-images.githubusercontent.com/">
+
+
+
+  <link crossorigin="anonymous" href="https://assets-cdn.github.com/assets/frameworks-521cbf980c80.css" integrity="sha512-Uhy/mAyAx1HfsenmjQ85ASpOk5bjt2Ay03pNeixXIvkHlEm5S+N4u0HWfDGhvsGYx4bGyviXWGGPZeIffqYcNA==" media="all" rel="stylesheet" />
+  <link crossorigin="anonymous" href="https://assets-cdn.github.com/assets/github-f2020cf6f4c3.css" integrity="sha512-8gIM9vTD7yxCFcNk1HtVj5TzCvGM2oHg9bL3DG1VoGdVthrnb8iMW90Q2dOC6WlMEzU8vjKp+xi5s6lpLcXF6A==" media="all" rel="stylesheet" />
+  
+  
+  <link crossorigin="anonymous" href="https://assets-cdn.github.com/assets/site-e1e1bc98a53e.css" integrity="sha512-4eG8mKU+R9QAnMQwfSIgbo24hS+nUXxSuUs5G5LMQw+5wjC1TSKfgxJb2j61PXya94+wMwN1OT7r7MF5rbdUvw==" media="all" rel="stylesheet" />
+  
+
+  <meta name="viewport" content="width=device-width">
+  
+  <title>wimi-portal/config/initializers/devise.rb at 6b426063f37aa28e14afe8979384e12c7018d819 · hpi-swt2/wimi-portal · GitHub</title>
+  <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="GitHub">
+  <link rel="fluid-icon" href="https://github.com/fluidicon.png" title="GitHub">
+  <meta property="fb:app_id" content="1401488693436528">
+
+    
+    <meta content="https://avatars0.githubusercontent.com/u/6618414?s=400&amp;v=4" property="og:image" /><meta content="GitHub" property="og:site_name" /><meta content="object" property="og:type" /><meta content="hpi-swt2/wimi-portal" property="og:title" /><meta content="https://github.com/hpi-swt2/wimi-portal" property="og:url" /><meta content="Contribute to wimi-portal development by creating an account on GitHub." property="og:description" />
+
+  <link rel="assets" href="https://assets-cdn.github.com/">
+  
+  <meta name="pjax-timeout" content="1000">
+  
+  <meta name="request-id" content="CEF7:29333:5B2C82:984BCE:5A85A9DC" data-pjax-transient>
+  
+
+  <meta name="selected-link" value="repo_source" data-pjax-transient>
+
+    <meta name="google-site-verification" content="KT5gs8h0wvaagLKAVWq8bbeNwnZZK1r1XQysX3xurLU">
+  <meta name="google-site-verification" content="ZzhVyEFwb7w3e0-uOTltm8Jsck2F5StVihD0exw2fsA">
+  <meta name="google-site-verification" content="GXs5KoUUkNCoaAZn7wPN-t01Pywp9M3sEjnt_3_ZWPc">
+    <meta name="google-analytics" content="UA-3769691-2">
+
+<meta content="collector.githubapp.com" name="octolytics-host" /><meta content="github" name="octolytics-app-id" /><meta content="https://collector.githubapp.com/github-external/browser_event" name="octolytics-event-url" /><meta content="CEF7:29333:5B2C82:984BCE:5A85A9DC" name="octolytics-dimension-request_id" /><meta content="iad" name="octolytics-dimension-region_edge" /><meta content="iad" name="octolytics-dimension-region_render" />
+<meta content="https://github.com/hydro_browser_events" name="hydro-events-url" />
+<meta content="/&lt;user-name&gt;/&lt;repo-name&gt;/blob/blame" data-pjax-transient="true" name="analytics-location" />
+
+
+
+
+  <meta class="js-ga-set" name="dimension1" content="Logged Out">
+
+
+  
+
+      <meta name="hostname" content="github.com">
+  <meta name="user-login" content="">
+
+      <meta name="expected-hostname" content="github.com">
+    <meta name="js-proxy-site-detection-payload" content="MzBkMzYxNzY4MjVjM2YwOTljN2U1MDlmMTkzYWRiMmRiYmZmZGMzOTNhY2ViZmEwZDYzNmVlNWY2ODViZTY0MHx7InJlbW90ZV9hZGRyZXNzIjoiMTQxLjg5LjIyNi4xNDYiLCJyZXF1ZXN0X2lkIjoiQ0VGNzoyOTMzMzo1QjJDODI6OTg0QkNFOjVBODVBOURDIiwidGltZXN0YW1wIjoxNTE4NzA5MjEyLCJob3N0IjoiZ2l0aHViLmNvbSJ9">
+
+    <meta name="enabled-features" content="UNIVERSE_BANNER,FREE_TRIALS,MARKETPLACE_HERO_CARD_UPLOADER">
+
+  <meta name="html-safe-nonce" content="f9a099b5fc3ac931bdaa6467aaeb75ec8e903009">
+
+  <meta http-equiv="x-pjax-version" content="64d5b517fc84a944ec829b5bde48b252">
+  
+
+      <link href="https://github.com/hpi-swt2/wimi-portal/commits/6b426063f37aa28e14afe8979384e12c7018d819.atom" rel="alternate" title="Recent Commits to wimi-portal:6b426063f37aa28e14afe8979384e12c7018d819" type="application/atom+xml">
+
+  <meta name="description" content="Contribute to wimi-portal development by creating an account on GitHub.">
+  <meta name="go-import" content="github.com/hpi-swt2/wimi-portal git https://github.com/hpi-swt2/wimi-portal.git">
+
+  <meta content="6618414" name="octolytics-dimension-user_id" /><meta content="hpi-swt2" name="octolytics-dimension-user_login" /><meta content="42998928" name="octolytics-dimension-repository_id" /><meta content="hpi-swt2/wimi-portal" name="octolytics-dimension-repository_nwo" /><meta content="true" name="octolytics-dimension-repository_public" /><meta content="false" name="octolytics-dimension-repository_is_fork" /><meta content="42998928" name="octolytics-dimension-repository_network_root_id" /><meta content="hpi-swt2/wimi-portal" name="octolytics-dimension-repository_network_root_nwo" /><meta content="false" name="octolytics-dimension-repository_explore_github_marketplace_ci_cta_shown" />
+
+
+
+
+  <meta name="browser-stats-url" content="https://api.github.com/_private/browser/stats">
+
+  <meta name="browser-errors-url" content="https://api.github.com/_private/browser/errors">
+
+  <link rel="mask-icon" href="https://assets-cdn.github.com/pinned-octocat.svg" color="#000000">
+  <link rel="icon" type="image/x-icon" class="js-site-favicon" href="https://assets-cdn.github.com/favicon.ico">
+
+<meta name="theme-color" content="#1e2327">
+
+
+  <meta name="u2f-support" content="true">
+
+<link rel="manifest" href="/manifest.json" crossOrigin="use-credentials">
+
+  </head>
+
+  <body class="logged-out env-production full-width">
+    
+
+  <div class="position-relative js-header-wrapper ">
+    <a href="#start-of-content" tabindex="1" class="px-2 py-4 show-on-focus js-skip-to-content">Skip to content</a>
+    <div id="js-pjax-loader-bar" class="pjax-loader-bar"><div class="progress"></div></div>
+
+    
+    
+    
+
+
+
+        <header class="Header header-logged-out  position-relative f4 py-3" role="banner">
+  <div class="container-lg d-flex px-3">
+    <div class="d-flex flex-justify-between flex-items-center">
+      <a class="header-logo-invertocat my-0" href="https://github.com/" aria-label="Homepage" data-ga-click="(Logged out) Header, go to homepage, icon:logo-wordmark">
+        <svg aria-hidden="true" class="octicon octicon-mark-github" height="32" version="1.1" viewBox="0 0 16 16" width="32"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+      </a>
+
+    </div>
+
+    <div class="HeaderMenu HeaderMenu--bright d-flex flex-justify-between flex-auto">
+        <nav class="mt-0">
+          <ul class="d-flex list-style-none">
+              <li class="ml-2">
+                <a href="/features" class="js-selected-navigation-item HeaderNavlink px-0 py-2 m-0" data-ga-click="Header, click, Nav menu - item:features" data-selected-links="/features /features/project-management /features/code-review /features/project-management /features/integrations /features">
+                  Features
+</a>              </li>
+              <li class="ml-4">
+                <a href="/business" class="js-selected-navigation-item HeaderNavlink px-0 py-2 m-0" data-ga-click="Header, click, Nav menu - item:business" data-selected-links="/business /business/security /business/customers /business">
+                  Business
+</a>              </li>
+
+              <li class="ml-4">
+                <a href="/explore" class="js-selected-navigation-item HeaderNavlink px-0 py-2 m-0" data-ga-click="Header, click, Nav menu - item:explore" data-selected-links="/explore /trending /trending/developers /integrations /integrations/feature/code /integrations/feature/collaborate /integrations/feature/ship showcases showcases_search showcases_landing /explore">
+                  Explore
+</a>              </li>
+
+              <li class="ml-4">
+                    <a href="/marketplace" class="js-selected-navigation-item HeaderNavlink px-0 py-2 m-0" data-ga-click="Header, click, Nav menu - item:marketplace" data-selected-links=" /marketplace">
+                      Marketplace
+</a>              </li>
+              <li class="ml-4">
+                <a href="/pricing" class="js-selected-navigation-item HeaderNavlink px-0 py-2 m-0" data-ga-click="Header, click, Nav menu - item:pricing" data-selected-links="/pricing /pricing/developer /pricing/team /pricing/business-hosted /pricing/business-enterprise /pricing">
+                  Pricing
+</a>              </li>
+          </ul>
+        </nav>
+
+      <div class="d-flex">
+          <div class="d-lg-flex flex-items-center mr-3">
+            <div class="header-search scoped-search site-scoped-search js-site-search" role="search">
+  <!-- '"` --><!-- </textarea></xmp> --></option></form><form accept-charset="UTF-8" action="/hpi-swt2/wimi-portal/search" class="js-site-search-form" data-scoped-search-url="/hpi-swt2/wimi-portal/search" data-unscoped-search-url="/search" method="get"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div>
+    <label class="form-control header-search-wrapper js-chromeless-input-container">
+        <a href="/hpi-swt2/wimi-portal/blame/6b426063f37aa28e14afe8979384e12c7018d819/config/initializers/devise.rb" class="header-search-scope no-underline">This repository</a>
+      <input type="text"
+        class="form-control header-search-input js-site-search-focus js-site-search-field is-clearable"
+        data-hotkey="s"
+        name="q"
+        value=""
+        placeholder="Search"
+        aria-label="Search this repository"
+        data-unscoped-placeholder="Search GitHub"
+        data-scoped-placeholder="Search"
+        autocapitalize="off">
+        <input type="hidden" class="js-site-search-type-field" name="type" >
+    </label>
+</form></div>
+
+          </div>
+
+        <span class="d-inline-block">
+            <div class="HeaderNavlink px-0 py-2 m-0">
+              <a class="text-bold text-white no-underline" href="/login?return_to=%2Fhpi-swt2%2Fwimi-portal%2Fblame%2F6b426063f37aa28e14afe8979384e12c7018d819%2Fconfig%2Finitializers%2Fdevise.rb" data-ga-click="(Logged out) Header, clicked Sign in, text:sign-in">Sign in</a>
+                <span class="text-gray">or</span>
+                <a class="text-bold text-white no-underline" href="/join?source=header-repo" data-ga-click="(Logged out) Header, clicked Sign up, text:sign-up">Sign up</a>
+            </div>
+        </span>
+      </div>
+    </div>
+  </div>
+</header>
+
+  </div>
+
+  <div id="start-of-content" class="show-on-focus"></div>
+
+    <div id="js-flash-container">
+</div>
+
+
+
+  <div role="main" class="application-main ">
+        <div itemscope itemtype="http://schema.org/SoftwareSourceCode" class="">
+    <div id="js-repo-pjax-container" data-pjax-container >
+      
+
+
+
+
+  
+
+
+
+  <div class="pagehead repohead instapaper_ignore readability-menu experiment-repo-nav  ">
+    <div class="repohead-details-container clearfix container">
+
+      <ul class="pagehead-actions">
+  <li>
+      <a href="/login?return_to=%2Fhpi-swt2%2Fwimi-portal"
+    class="btn btn-sm btn-with-count tooltipped tooltipped-n"
+    aria-label="You must be signed in to watch a repository" rel="nofollow">
+    <svg aria-hidden="true" class="octicon octicon-eye" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M8.06 2C3 2 0 8 0 8s3 6 8.06 6C13 14 16 8 16 8s-3-6-7.94-6zM8 12c-2.2 0-4-1.78-4-4 0-2.2 1.8-4 4-4 2.22 0 4 1.8 4 4 0 2.22-1.78 4-4 4zm2-4c0 1.11-.89 2-2 2-1.11 0-2-.89-2-2 0-1.11.89-2 2-2 1.11 0 2 .89 2 2z"/></svg>
+    Watch
+  </a>
+  <a class="social-count" href="/hpi-swt2/wimi-portal/watchers"
+     aria-label="7 users are watching this repository">
+    7
+  </a>
+
+  </li>
+
+  <li>
+      <a href="/login?return_to=%2Fhpi-swt2%2Fwimi-portal"
+    class="btn btn-sm btn-with-count tooltipped tooltipped-n"
+    aria-label="You must be signed in to star a repository" rel="nofollow">
+    <svg aria-hidden="true" class="octicon octicon-star" height="16" version="1.1" viewBox="0 0 14 16" width="14"><path fill-rule="evenodd" d="M14 6l-4.9-.64L7 1 4.9 5.36 0 6l3.6 3.26L2.67 14 7 11.67 11.33 14l-.93-4.74z"/></svg>
+    Star
+  </a>
+
+    <a class="social-count js-social-count" href="/hpi-swt2/wimi-portal/stargazers"
+      aria-label="6 users starred this repository">
+      6
+    </a>
+
+  </li>
+
+  <li>
+      <a href="/login?return_to=%2Fhpi-swt2%2Fwimi-portal"
+        class="btn btn-sm btn-with-count tooltipped tooltipped-n"
+        aria-label="You must be signed in to fork a repository" rel="nofollow">
+        <svg aria-hidden="true" class="octicon octicon-repo-forked" height="16" version="1.1" viewBox="0 0 10 16" width="10"><path fill-rule="evenodd" d="M8 1a1.993 1.993 0 0 0-1 3.72V6L5 8 3 6V4.72A1.993 1.993 0 0 0 2 1a1.993 1.993 0 0 0-1 3.72V6.5l3 3v1.78A1.993 1.993 0 0 0 5 15a1.993 1.993 0 0 0 1-3.72V9.5l3-3V4.72A1.993 1.993 0 0 0 8 1zM2 4.2C1.34 4.2.8 3.65.8 3c0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2zm3 10c-.66 0-1.2-.55-1.2-1.2 0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2zm3-10c-.66 0-1.2-.55-1.2-1.2 0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2z"/></svg>
+        Fork
+      </a>
+
+    <a href="/hpi-swt2/wimi-portal/network" class="social-count"
+       aria-label="3 users forked this repository">
+      3
+    </a>
+  </li>
+</ul>
+
+      <h1 class="public ">
+  <svg aria-hidden="true" class="octicon octicon-repo" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M4 9H3V8h1v1zm0-3H3v1h1V6zm0-2H3v1h1V4zm0-2H3v1h1V2zm8-1v12c0 .55-.45 1-1 1H6v2l-1.5-1.5L3 16v-2H1c-.55 0-1-.45-1-1V1c0-.55.45-1 1-1h10c.55 0 1 .45 1 1zm-1 10H1v2h2v-1h3v1h5v-2zm0-10H2v9h9V1z"/></svg>
+  <span class="author" itemprop="author"><a href="/hpi-swt2" class="url fn" rel="author">hpi-swt2</a></span><!--
+--><span class="path-divider">/</span><!--
+--><strong itemprop="name"><a href="/hpi-swt2/wimi-portal" data-pjax="#js-repo-pjax-container">wimi-portal</a></strong>
+
+</h1>
+
+    </div>
+    
+<nav class="reponav js-repo-nav js-sidenav-container-pjax container"
+     itemscope
+     itemtype="http://schema.org/BreadcrumbList"
+     role="navigation"
+     data-pjax="#js-repo-pjax-container">
+
+  <span itemscope itemtype="http://schema.org/ListItem" itemprop="itemListElement">
+    <a href="/hpi-swt2/wimi-portal" class="js-selected-navigation-item selected reponav-item" data-hotkey="g c" data-selected-links="repo_source repo_downloads repo_commits repo_releases repo_tags repo_branches repo_packages /hpi-swt2/wimi-portal" itemprop="url">
+      <svg aria-hidden="true" class="octicon octicon-code" height="16" version="1.1" viewBox="0 0 14 16" width="14"><path fill-rule="evenodd" d="M9.5 3L8 4.5 11.5 8 8 11.5 9.5 13 14 8 9.5 3zm-5 0L0 8l4.5 5L6 11.5 2.5 8 6 4.5 4.5 3z"/></svg>
+      <span itemprop="name">Code</span>
+      <meta itemprop="position" content="1">
+</a>  </span>
+
+    <span itemscope itemtype="http://schema.org/ListItem" itemprop="itemListElement">
+      <a href="/hpi-swt2/wimi-portal/issues" class="js-selected-navigation-item reponav-item" data-hotkey="g i" data-selected-links="repo_issues repo_labels repo_milestones /hpi-swt2/wimi-portal/issues" itemprop="url">
+        <svg aria-hidden="true" class="octicon octicon-issue-opened" height="16" version="1.1" viewBox="0 0 14 16" width="14"><path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"/></svg>
+        <span itemprop="name">Issues</span>
+        <span class="Counter">2</span>
+        <meta itemprop="position" content="2">
+</a>    </span>
+
+  <span itemscope itemtype="http://schema.org/ListItem" itemprop="itemListElement">
+    <a href="/hpi-swt2/wimi-portal/pulls" class="js-selected-navigation-item reponav-item" data-hotkey="g p" data-selected-links="repo_pulls /hpi-swt2/wimi-portal/pulls" itemprop="url">
+      <svg aria-hidden="true" class="octicon octicon-git-pull-request" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M11 11.28V5c-.03-.78-.34-1.47-.94-2.06C9.46 2.35 8.78 2.03 8 2H7V0L4 3l3 3V4h1c.27.02.48.11.69.31.21.2.3.42.31.69v6.28A1.993 1.993 0 0 0 10 15a1.993 1.993 0 0 0 1-3.72zm-1 2.92c-.66 0-1.2-.55-1.2-1.2 0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2zM4 3c0-1.11-.89-2-2-2a1.993 1.993 0 0 0-1 3.72v6.56A1.993 1.993 0 0 0 2 15a1.993 1.993 0 0 0 1-3.72V4.72c.59-.34 1-.98 1-1.72zm-.8 10c0 .66-.55 1.2-1.2 1.2-.65 0-1.2-.55-1.2-1.2 0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2zM2 4.2C1.34 4.2.8 3.65.8 3c0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2z"/></svg>
+      <span itemprop="name">Pull requests</span>
+      <span class="Counter">1</span>
+      <meta itemprop="position" content="3">
+</a>  </span>
+
+    <a href="/hpi-swt2/wimi-portal/projects" class="js-selected-navigation-item reponav-item" data-hotkey="g b" data-selected-links="repo_projects new_repo_project repo_project /hpi-swt2/wimi-portal/projects">
+      <svg aria-hidden="true" class="octicon octicon-project" height="16" version="1.1" viewBox="0 0 15 16" width="15"><path fill-rule="evenodd" d="M10 12h3V2h-3v10zm-4-2h3V2H6v8zm-4 4h3V2H2v12zm-1 1h13V1H1v14zM14 0H1a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h13a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1z"/></svg>
+      Projects
+      <span class="Counter" >1</span>
+</a>
+    <a href="/hpi-swt2/wimi-portal/wiki" class="js-selected-navigation-item reponav-item" data-hotkey="g w" data-selected-links="repo_wiki /hpi-swt2/wimi-portal/wiki">
+      <svg aria-hidden="true" class="octicon octicon-book" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M3 5h4v1H3V5zm0 3h4V7H3v1zm0 2h4V9H3v1zm11-5h-4v1h4V5zm0 2h-4v1h4V7zm0 2h-4v1h4V9zm2-6v9c0 .55-.45 1-1 1H9.5l-1 1-1-1H2c-.55 0-1-.45-1-1V3c0-.55.45-1 1-1h5.5l1 1 1-1H15c.55 0 1 .45 1 1zm-8 .5L7.5 3H2v9h6V3.5zm7-.5H9.5l-.5.5V12h6V3z"/></svg>
+      Wiki
+</a>
+
+  <a href="/hpi-swt2/wimi-portal/pulse" class="js-selected-navigation-item reponav-item" data-selected-links="repo_graphs repo_contributors dependency_graph pulse /hpi-swt2/wimi-portal/pulse">
+    <svg aria-hidden="true" class="octicon octicon-graph" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M16 14v1H0V0h1v14h15zM5 13H3V8h2v5zm4 0H7V3h2v10zm4 0h-2V6h2v7z"/></svg>
+    Insights
+</a>
+
+</nav>
+
+
+  </div>
+
+<div class="container new-discussion-timeline experiment-repo-nav  ">
+  <div class="repository-content ">
+
+    
+
+  <div class="wants-full-width-container"></div>
+
+  <a href="/hpi-swt2/wimi-portal/blame/6b426063f37aa28e14afe8979384e12c7018d819/config/initializers/devise.rb" class="d-none js-permalink-shortcut" data-hotkey="y">Permalink</a>
+
+  <div class="breadcrumb css-truncate blame-breadcrumb js-zeroclipboard-container">
+    <span class="css-truncate-target js-zeroclipboard-target"><span class="repo-root js-repo-root"><span class="js-path-segment"><a href="/hpi-swt2/wimi-portal/tree/6b426063f37aa28e14afe8979384e12c7018d819" data-pjax="true" rel="nofollow"><span>wimi-portal</span></a></span></span><span class="separator">/</span><span class="js-path-segment"><a href="/hpi-swt2/wimi-portal/tree/6b426063f37aa28e14afe8979384e12c7018d819/config" data-pjax="true" rel="nofollow"><span>config</span></a></span><span class="separator">/</span><span class="js-path-segment"><a href="/hpi-swt2/wimi-portal/tree/6b426063f37aa28e14afe8979384e12c7018d819/config/initializers" data-pjax="true" rel="nofollow"><span>initializers</span></a></span><span class="separator">/</span><strong class="final-path">devise.rb</strong></span>
+    <button aria-label="Copy file path to clipboard" class="js-zeroclipboard btn btn-sm zeroclipboard-button tooltipped tooltipped-s" data-copied-hint="Copied!" type="button"><svg aria-hidden="true" class="octicon octicon-clippy" height="16" version="1.1" viewBox="0 0 14 16" width="14"><path fill-rule="evenodd" d="M2 13h4v1H2v-1zm5-6H2v1h5V7zm2 3V8l-3 3 3 3v-2h5v-2H9zM4.5 9H2v1h2.5V9zM2 12h2.5v-1H2v1zm9 1h1v2c-.02.28-.11.52-.3.7-.19.18-.42.28-.7.3H1c-.55 0-1-.45-1-1V4c0-.55.45-1 1-1h3c0-1.11.89-2 2-2 1.11 0 2 .89 2 2h3c.55 0 1 .45 1 1v5h-1V6H1v9h10v-2zM2 5h8c0-.55-.45-1-1-1H8c-.55 0-1-.45-1-1s-.45-1-1-1-1 .45-1 1-.45 1-1 1H3c-.55 0-1 .45-1 1z"/></svg></button>
+  </div>
+
+  <div class="line-age-legend float-right mt-n4 f6">
+    <span>Newer</span>
+    <ol class="d-inline-block mx-1 list-style-none">
+        <li class="heat d-inline-block" data-heat="1"></li>
+        <li class="heat d-inline-block" data-heat="2"></li>
+        <li class="heat d-inline-block" data-heat="3"></li>
+        <li class="heat d-inline-block" data-heat="4"></li>
+        <li class="heat d-inline-block" data-heat="5"></li>
+        <li class="heat d-inline-block" data-heat="6"></li>
+        <li class="heat d-inline-block" data-heat="7"></li>
+        <li class="heat d-inline-block" data-heat="8"></li>
+        <li class="heat d-inline-block" data-heat="9"></li>
+        <li class="heat d-inline-block" data-heat="10"></li>
+    </ol>
+    <span>Older</span>
+  </div>
+
+  <div class="file">
+    <div class="file-header">
+      <div class="file-actions">
+        <div class="BtnGroup">
+          <a href="/hpi-swt2/wimi-portal/raw/6b426063f37aa28e14afe8979384e12c7018d819/config/initializers/devise.rb" class="btn btn-sm BtnGroup-item" id="raw-url">Raw</a>
+          <a href="/hpi-swt2/wimi-portal/blob/6b426063f37aa28e14afe8979384e12c7018d819/config/initializers/devise.rb" class="btn btn-sm js-update-url-with-hash BtnGroup-item">Normal view</a>
+          <a href="/hpi-swt2/wimi-portal/commits/6b426063f37aa28e14afe8979384e12c7018d819/config/initializers/devise.rb" class="btn btn-sm BtnGroup-item" rel="nofollow">History</a>
+        </div>
+      </div>
+
+  
+
+      <div class="file-info">
+        <svg aria-hidden="true" class="octicon octicon-file" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M6 5H2V4h4v1zM2 8h7V7H2v1zm0 2h7V9H2v1zm0 2h7v-1H2v1zm10-7.5V14c0 .55-.45 1-1 1H1c-.55 0-1-.45-1-1V2c0-.55.45-1 1-1h7.5L12 4.5zM11 5L8 2H1v12h10V5z"/></svg>
+        <span class="file-mode" title="File Mode">100644</span>
+        <span class="file-info-divider"></span>
+          290 lines (240 sloc)
+          <span class="file-info-divider"></span>
+        13.5 KB
+      </div>
+    </div>
+
+    <div class="blob-wrapper">
+      <div class="blame-container  highlight data js-file-line-container tab-size" data-tab-size="8">
+
+          <div class="blame-hunk d-flex border-gray-light border-bottom">
+
+            <div class="blame-commit flex-self-stretch mr-1" data-heat="10">
+              <div class="blame-commit-info pl-1 pr-2">
+
+                <div class="no-wrap d-flex flex-items-start">
+                  
+<div class="AvatarStack flex-self-start ">
+  <div class="AvatarStack-body tooltipped tooltipped-se tooltipped-align-left-1"
+       aria-label="jaSunny">
+
+        <a href="/jaSunny" data-skip-pjax="true" class="avatar">
+          <img src="https://avatars1.githubusercontent.com/u/5164846?s=40&amp;v=4" width="20" height="20" alt="@jaSunny">
+        </a>
+  </div>
+</div>
+
+                  <div class="blame-commit-content d-flex no-wrap flex-items-center">
+                    <div class="blame-commit-message overflow-hidden pt-1 f6">
+                        <a href="/hpi-swt2/wimi-portal/commit/e75d8b7b697bae7753a10bd8ffe0b7bd02eb4da7" class="message f6 text-gray-dark" data-pjax="true" title="adding MVCs for user, holiday, expenses, project, business trip and publication">adding MVCs for user, holiday, expenses, project, business trip and p…</a>
+                    </div>
+                  </div>
+                  <div class="blame-commit-date ml-3" data-heat="10"><time-ago datetime="2015-10-06T15:26:42Z">Oct 6, 2015</time-ago></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="blob-reblame pl-1 pr-1">
+            </div>
+
+            <div class="width-full">
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L1">1</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC1"><span class="pl-c"><span class="pl-c">#</span> Use this hook to configure devise mailer, warden hooks and so forth.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L2">2</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC2"><span class="pl-c"><span class="pl-c">#</span> Many of these configuration options can be set straight in your model.</span></div>
+                </div>
+            </div>
+          </div>
+
+          <div class="blame-hunk d-flex border-gray-light border-bottom">
+
+            <div class="blame-commit flex-self-stretch mr-1" data-heat="10">
+              <div class="blame-commit-info pl-1 pr-2">
+
+                <div class="no-wrap d-flex flex-items-start">
+                  
+<div class="AvatarStack flex-self-start ">
+  <div class="AvatarStack-body tooltipped tooltipped-se tooltipped-align-left-1"
+       aria-label="chrisma">
+
+        <a href="/chrisma" data-skip-pjax="true" class="avatar">
+          <img src="https://avatars3.githubusercontent.com/u/1652117?s=40&amp;v=4" width="20" height="20" alt="@chrisma">
+        </a>
+  </div>
+</div>
+
+                  <div class="blame-commit-content d-flex no-wrap flex-items-center">
+                    <div class="blame-commit-message overflow-hidden pt-1 f6">
+                        <a href="/hpi-swt2/wimi-portal/commit/6b426063f37aa28e14afe8979384e12c7018d819" class="message f6 text-gray-dark" data-pjax="true" title="Redirect to external login path after invalid login. Fixes #364">Redirect to external login path after invalid login. <span aria-label="This commit closes issue #364." class="issue-keyword tooltipped tooltipped-se">Fixes</span> <a href="https://github.com/hpi-swt2/wimi-portal/issues/364" class="issue-link js-issue-link" data-error-text="Failed to load issue title" data-id="148304555" data-permission-text="Issue title is private" data-url="https://github.com/hpi-swt2/wimi-portal/issues/364">#364</a>
+</a>
+                    </div>
+                  </div>
+                  <div class="blame-commit-date ml-3" data-heat="10"><time-ago datetime="2016-04-18T14:53:36Z">Apr 18, 2016</time-ago></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="blob-reblame pl-1 pr-1">
+                <a href="/hpi-swt2/wimi-portal/blame/40c789f043a322cc9e3908aa041dd713d2feb351/config/initializers/devise.rb"
+                  aria-label="View blame prior to this change" class="reblame-link link-hover-blue no-underline tooltipped tooltipped-e d-inline-block pr-1">
+                  <svg aria-hidden="true" class="octicon octicon-versions" height="16" version="1.1" viewBox="0 0 14 16" width="14"><path fill-rule="evenodd" d="M13 3H7c-.55 0-1 .45-1 1v8c0 .55.45 1 1 1h6c.55 0 1-.45 1-1V4c0-.55-.45-1-1-1zm-1 8H8V5h4v6zM4 4h1v1H4v6h1v1H4c-.55 0-1-.45-1-1V5c0-.55.45-1 1-1zM1 5h1v1H1v4h1v1H1c-.55 0-1-.45-1-1V6c0-.55.45-1 1-1z"/></svg>
+                </a>
+            </div>
+
+            <div class="width-full">
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L3">3</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC3"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L4">4</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC4"><span class="pl-c"><span class="pl-c">#</span> Custom Devise FailureApp that redirects to external login on invalid login attempts.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L5">5</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC5"><span class="pl-c"><span class="pl-c">#</span> http://stackoverflow.com/questions/5832631/devise-redirect-after-login-fail</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L6">6</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC6"><span class="pl-k">class</span> <span class="pl-en">RedirectFailure<span class="pl-e"> &lt; Devise::FailureApp</span></span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L7">7</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC7">  <span class="pl-k">def</span> <span class="pl-en">redirect_url</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L8">8</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC8">    external_login_path</div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L9">9</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC9">  <span class="pl-k">end</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L10">10</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC10"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L11">11</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC11">  <span class="pl-k">def</span> <span class="pl-en">respond</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L12">12</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC12">    <span class="pl-k">if</span> http_auth?</div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L13">13</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC13">      http_auth</div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L14">14</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC14">    <span class="pl-k">else</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L15">15</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC15">      <span class="pl-c"><span class="pl-c">#</span> https://github.com/plataformatec/devise/blob/69bee06ceee6280b54304928bb6e55c5064abad8/config/locales/en.yml</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L16">16</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC16">      <span class="pl-c"><span class="pl-c">#</span> https://github.com/plataformatec/devise/wiki/I18n</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L17">17</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC17">      flash[<span class="pl-c1">:error</span>] <span class="pl-k">=</span> <span class="pl-c1">I18n</span>.t(<span class="pl-c1">:invalid</span>, <span class="pl-c1">:authentication_keys</span> =&gt; <span class="pl-s"><span class="pl-pds">&#39;</span>username<span class="pl-pds">&#39;</span></span>, <span class="pl-c1">:scope</span> =&gt; [<span class="pl-c1">:devise</span>, <span class="pl-c1">:failure</span>])</div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L18">18</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC18">      redirect</div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L19">19</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC19">    <span class="pl-k">end</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L20">20</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC20">  <span class="pl-k">end</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L21">21</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC21"><span class="pl-k">end</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L22">22</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC22"></div>
+                </div>
+            </div>
+          </div>
+
+          <div class="blame-hunk d-flex border-gray-light border-bottom">
+
+            <div class="blame-commit flex-self-stretch mr-1" data-heat="10">
+              <div class="blame-commit-info pl-1 pr-2">
+
+                <div class="no-wrap d-flex flex-items-start">
+                  
+<div class="AvatarStack flex-self-start ">
+  <div class="AvatarStack-body tooltipped tooltipped-se tooltipped-align-left-1"
+       aria-label="jaSunny">
+
+        <a href="/jaSunny" data-skip-pjax="true" class="avatar">
+          <img src="https://avatars1.githubusercontent.com/u/5164846?s=40&amp;v=4" width="20" height="20" alt="@jaSunny">
+        </a>
+  </div>
+</div>
+
+                  <div class="blame-commit-content d-flex no-wrap flex-items-center">
+                    <div class="blame-commit-message overflow-hidden pt-1 f6">
+                        <a href="/hpi-swt2/wimi-portal/commit/e75d8b7b697bae7753a10bd8ffe0b7bd02eb4da7" class="message f6 text-gray-dark" data-pjax="true" title="adding MVCs for user, holiday, expenses, project, business trip and publication">adding MVCs for user, holiday, expenses, project, business trip and p…</a>
+                    </div>
+                  </div>
+                  <div class="blame-commit-date ml-3" data-heat="10"><time-ago datetime="2015-10-06T15:26:42Z">Oct 6, 2015</time-ago></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="blob-reblame pl-1 pr-1">
+            </div>
+
+            <div class="width-full">
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L23">23</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC23"><span class="pl-c1">Devise</span>.setup <span class="pl-k">do</span> |<span class="pl-smi">config</span>|</div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L24">24</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC24">  <span class="pl-c"><span class="pl-c">#</span> The secret key used by Devise. Devise uses this key to generate</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L25">25</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC25">  <span class="pl-c"><span class="pl-c">#</span> random tokens. Changing this key will render invalid all existing</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L26">26</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC26">  <span class="pl-c"><span class="pl-c">#</span> confirmation, reset password and unlock tokens in the database.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L27">27</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC27">  <span class="pl-c"><span class="pl-c">#</span> Devise will use the `secret_key_base` on Rails 4+ applications as its `secret_key`</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L28">28</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC28">  <span class="pl-c"><span class="pl-c">#</span> by default. You can change it below and use your own secret key.</span></div>
+                </div>
+            </div>
+          </div>
+
+          <div class="blame-hunk d-flex border-gray-light border-bottom">
+
+            <div class="blame-commit flex-self-stretch mr-1" data-heat="10">
+              <div class="blame-commit-info pl-1 pr-2">
+
+                <div class="no-wrap d-flex flex-items-start">
+                  
+<div class="AvatarStack flex-self-start ">
+  <div class="AvatarStack-body tooltipped tooltipped-se tooltipped-align-left-1"
+       aria-label="WGierke">
+
+        <a href="/WGierke" data-skip-pjax="true" class="avatar">
+          <img src="https://avatars3.githubusercontent.com/u/6676439?s=40&amp;v=4" width="20" height="20" alt="@WGierke">
+        </a>
+  </div>
+</div>
+
+                  <div class="blame-commit-content d-flex no-wrap flex-items-center">
+                    <div class="blame-commit-message overflow-hidden pt-1 f6">
+                        <a href="/hpi-swt2/wimi-portal/commit/74bc82b96cd6034a3fc06346437ebc343693b208" class="message f6 text-gray-dark" data-pjax="true" title="implemented password change">implemented password change</a>
+                    </div>
+                  </div>
+                  <div class="blame-commit-date ml-3" data-heat="10"><time-ago datetime="2016-01-14T00:11:00Z">Jan 14, 2016</time-ago></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="blob-reblame pl-1 pr-1">
+                <a href="/hpi-swt2/wimi-portal/blame/c3264f8e35c8c360eef0569dcb9fa226ffe2c720/config/initializers/devise.rb"
+                  aria-label="View blame prior to this change" class="reblame-link link-hover-blue no-underline tooltipped tooltipped-e d-inline-block pr-1">
+                  <svg aria-hidden="true" class="octicon octicon-versions" height="16" version="1.1" viewBox="0 0 14 16" width="14"><path fill-rule="evenodd" d="M13 3H7c-.55 0-1 .45-1 1v8c0 .55.45 1 1 1h6c.55 0 1-.45 1-1V4c0-.55-.45-1-1-1zm-1 8H8V5h4v6zM4 4h1v1H4v6h1v1H4c-.55 0-1-.45-1-1V5c0-.55.45-1 1-1zM1 5h1v1H1v4h1v1H1c-.55 0-1-.45-1-1V6c0-.55.45-1 1-1z"/></svg>
+                </a>
+            </div>
+
+            <div class="width-full">
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L29">29</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC29">  <span class="pl-c"><span class="pl-c">#</span> config.secret_key = &#39;77a97decd213dc0e85017af5e0764986665783bded2bfc71d88d56cbf762d0e41423f179ebc5a035777706b5333c028daab152ddc236d076091f4a0ce3668043&#39;</span></div>
+                </div>
+            </div>
+          </div>
+
+          <div class="blame-hunk d-flex border-gray-light border-bottom">
+
+            <div class="blame-commit flex-self-stretch mr-1" data-heat="10">
+              <div class="blame-commit-info pl-1 pr-2">
+
+                <div class="no-wrap d-flex flex-items-start">
+                  
+<div class="AvatarStack flex-self-start ">
+  <div class="AvatarStack-body tooltipped tooltipped-se tooltipped-align-left-1"
+       aria-label="jaSunny">
+
+        <a href="/jaSunny" data-skip-pjax="true" class="avatar">
+          <img src="https://avatars1.githubusercontent.com/u/5164846?s=40&amp;v=4" width="20" height="20" alt="@jaSunny">
+        </a>
+  </div>
+</div>
+
+                  <div class="blame-commit-content d-flex no-wrap flex-items-center">
+                    <div class="blame-commit-message overflow-hidden pt-1 f6">
+                        <a href="/hpi-swt2/wimi-portal/commit/e75d8b7b697bae7753a10bd8ffe0b7bd02eb4da7" class="message f6 text-gray-dark" data-pjax="true" title="adding MVCs for user, holiday, expenses, project, business trip and publication">adding MVCs for user, holiday, expenses, project, business trip and p…</a>
+                    </div>
+                  </div>
+                  <div class="blame-commit-date ml-3" data-heat="10"><time-ago datetime="2015-10-06T15:26:42Z">Oct 6, 2015</time-ago></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="blob-reblame pl-1 pr-1">
+            </div>
+
+            <div class="width-full">
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L30">30</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC30"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L31">31</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC31">  <span class="pl-c"><span class="pl-c">#</span> ==&gt; Mailer Configuration</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L32">32</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC32">  <span class="pl-c"><span class="pl-c">#</span> Configure the e-mail address which will be shown in Devise::Mailer,</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L33">33</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC33">  <span class="pl-c"><span class="pl-c">#</span> note that it will be overwritten if you use your own mailer class</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L34">34</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC34">  <span class="pl-c"><span class="pl-c">#</span> with default &quot;from&quot; parameter.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L35">35</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC35">  config.mailer_sender <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">&#39;</span>please-change-me-at-config-initializers-devise@example.com<span class="pl-pds">&#39;</span></span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L36">36</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC36"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L37">37</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC37">  <span class="pl-c"><span class="pl-c">#</span> Configure the class responsible to send e-mails.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L38">38</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC38">  <span class="pl-c"><span class="pl-c">#</span> config.mailer = &#39;Devise::Mailer&#39;</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L39">39</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC39"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L40">40</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC40">  <span class="pl-c"><span class="pl-c">#</span> ==&gt; ORM configuration</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L41">41</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC41">  <span class="pl-c"><span class="pl-c">#</span> Load and configure the ORM. Supports :active_record (default) and</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L42">42</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC42">  <span class="pl-c"><span class="pl-c">#</span> :mongoid (bson_ext recommended) by default. Other ORMs may be</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L43">43</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC43">  <span class="pl-c"><span class="pl-c">#</span> available as additional gems.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L44">44</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC44">  <span class="pl-k">require</span> <span class="pl-s"><span class="pl-pds">&#39;</span>devise/orm/active_record<span class="pl-pds">&#39;</span></span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L45">45</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC45"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L46">46</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC46">  <span class="pl-c"><span class="pl-c">#</span> ==&gt; Configuration for any authentication mechanism</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L47">47</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC47">  <span class="pl-c"><span class="pl-c">#</span> Configure which keys are used when authenticating a user. The default is</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L48">48</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC48">  <span class="pl-c"><span class="pl-c">#</span> just :email. You can configure it to use [:username, :subdomain], so for</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L49">49</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC49">  <span class="pl-c"><span class="pl-c">#</span> authenticating a user, both parameters are required. Remember that those</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L50">50</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC50">  <span class="pl-c"><span class="pl-c">#</span> parameters are used only when authenticating and not when retrieving from</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L51">51</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC51">  <span class="pl-c"><span class="pl-c">#</span> session. If you need permissions, you should implement that in a before filter.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L52">52</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC52">  <span class="pl-c"><span class="pl-c">#</span> You can also supply a hash where the value is a boolean determining whether</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L53">53</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC53">  <span class="pl-c"><span class="pl-c">#</span> or not authentication should be aborted when the value is not present.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L54">54</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC54">  <span class="pl-c"><span class="pl-c">#</span> config.authentication_keys = [:email]</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L55">55</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC55"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L56">56</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC56">  <span class="pl-c"><span class="pl-c">#</span> Configure parameters from the request object used for authentication. Each entry</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L57">57</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC57">  <span class="pl-c"><span class="pl-c">#</span> given should be a request method and it will automatically be passed to the</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L58">58</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC58">  <span class="pl-c"><span class="pl-c">#</span> find_for_authentication method and considered in your model lookup. For instance,</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L59">59</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC59">  <span class="pl-c"><span class="pl-c">#</span> if you set :request_keys to [:subdomain], :subdomain will be used on authentication.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L60">60</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC60">  <span class="pl-c"><span class="pl-c">#</span> The same considerations mentioned for authentication_keys also apply to request_keys.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L61">61</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC61">  <span class="pl-c"><span class="pl-c">#</span> config.request_keys = []</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L62">62</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC62"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L63">63</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC63">  <span class="pl-c"><span class="pl-c">#</span> Configure which authentication keys should be case-insensitive.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L64">64</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC64">  <span class="pl-c"><span class="pl-c">#</span> These keys will be downcased upon creating or modifying a user and when used</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L65">65</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC65">  <span class="pl-c"><span class="pl-c">#</span> to authenticate or find a user. Default is :email.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L66">66</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC66">  config.case_insensitive_keys <span class="pl-k">=</span> [<span class="pl-c1">:email</span>]</div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L67">67</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC67"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L68">68</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC68">  <span class="pl-c"><span class="pl-c">#</span> Configure which authentication keys should have whitespace stripped.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L69">69</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC69">  <span class="pl-c"><span class="pl-c">#</span> These keys will have whitespace before and after removed upon creating or</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L70">70</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC70">  <span class="pl-c"><span class="pl-c">#</span> modifying a user and when used to authenticate or find a user. Default is :email.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L71">71</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC71">  config.strip_whitespace_keys <span class="pl-k">=</span> [<span class="pl-c1">:email</span>]</div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L72">72</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC72"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L73">73</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC73">  <span class="pl-c"><span class="pl-c">#</span> Tell if authentication through request.params is enabled. True by default.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L74">74</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC74">  <span class="pl-c"><span class="pl-c">#</span> It can be set to an array that will enable params authentication only for the</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L75">75</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC75">  <span class="pl-c"><span class="pl-c">#</span> given strategies, for example, `config.params_authenticatable = [:database]` will</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L76">76</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC76">  <span class="pl-c"><span class="pl-c">#</span> enable it only for database (email + password) authentication.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L77">77</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC77">  <span class="pl-c"><span class="pl-c">#</span> config.params_authenticatable = true</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L78">78</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC78"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L79">79</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC79">  <span class="pl-c"><span class="pl-c">#</span> Tell if authentication through HTTP Auth is enabled. False by default.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L80">80</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC80">  <span class="pl-c"><span class="pl-c">#</span> It can be set to an array that will enable http authentication only for the</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L81">81</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC81">  <span class="pl-c"><span class="pl-c">#</span> given strategies, for example, `config.http_authenticatable = [:database]` will</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L82">82</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC82">  <span class="pl-c"><span class="pl-c">#</span> enable it only for database authentication. The supported strategies are:</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L83">83</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC83">  <span class="pl-c"><span class="pl-c">#</span> :database      = Support basic authentication with authentication key + password</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L84">84</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC84">  <span class="pl-c"><span class="pl-c">#</span> config.http_authenticatable = false</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L85">85</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC85"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L86">86</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC86">  <span class="pl-c"><span class="pl-c">#</span> If 401 status code should be returned for AJAX requests. True by default.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L87">87</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC87">  <span class="pl-c"><span class="pl-c">#</span> config.http_authenticatable_on_xhr = true</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L88">88</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC88"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L89">89</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC89">  <span class="pl-c"><span class="pl-c">#</span> The realm used in Http Basic Authentication. &#39;Application&#39; by default.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L90">90</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC90">  <span class="pl-c"><span class="pl-c">#</span> config.http_authentication_realm = &#39;Application&#39;</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L91">91</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC91"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L92">92</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC92">  <span class="pl-c"><span class="pl-c">#</span> It will change confirmation, password recovery and other workflows</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L93">93</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC93">  <span class="pl-c"><span class="pl-c">#</span> to behave the same regardless if the e-mail provided was right or wrong.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L94">94</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC94">  <span class="pl-c"><span class="pl-c">#</span> Does not affect registerable.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L95">95</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC95">  <span class="pl-c"><span class="pl-c">#</span> config.paranoid = true</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L96">96</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC96"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L97">97</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC97">  <span class="pl-c"><span class="pl-c">#</span> By default Devise will store the user in session. You can skip storage for</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L98">98</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC98">  <span class="pl-c"><span class="pl-c">#</span> particular strategies by setting this option.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L99">99</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC99">  <span class="pl-c"><span class="pl-c">#</span> Notice that if you are skipping storage for all authentication paths, you</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L100">100</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC100">  <span class="pl-c"><span class="pl-c">#</span> may want to disable generating routes to Devise&#39;s sessions controller by</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L101">101</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC101">  <span class="pl-c"><span class="pl-c">#</span> passing skip: :sessions to `devise_for` in your config/routes.rb</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L102">102</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC102">  config.skip_session_storage <span class="pl-k">=</span> [<span class="pl-c1">:http_auth</span>]</div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L103">103</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC103"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L104">104</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC104">  <span class="pl-c"><span class="pl-c">#</span> By default, Devise cleans up the CSRF token on authentication to</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L105">105</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC105">  <span class="pl-c"><span class="pl-c">#</span> avoid CSRF token fixation attacks. This means that, when using AJAX</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L106">106</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC106">  <span class="pl-c"><span class="pl-c">#</span> requests for sign in and sign up, you need to get a new CSRF token</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L107">107</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC107">  <span class="pl-c"><span class="pl-c">#</span> from the server. You can disable this option at your own risk.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L108">108</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC108">  <span class="pl-c"><span class="pl-c">#</span> config.clean_up_csrf_token_on_authentication = true</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L109">109</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC109"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L110">110</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC110">  <span class="pl-c"><span class="pl-c">#</span> ==&gt; Configuration for :database_authenticatable</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L111">111</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC111">  <span class="pl-c"><span class="pl-c">#</span> For bcrypt, this is the cost for hashing the password and defaults to 10. If</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L112">112</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC112">  <span class="pl-c"><span class="pl-c">#</span> using other encryptors, it sets how many times you want the password re-encrypted.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L113">113</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC113">  <span class="pl-c"><span class="pl-c">#</span></span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L114">114</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC114">  <span class="pl-c"><span class="pl-c">#</span> Limiting the stretches to just one in testing will increase the performance of</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L115">115</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC115">  <span class="pl-c"><span class="pl-c">#</span> your test suite dramatically. However, it is STRONGLY RECOMMENDED to not use</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L116">116</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC116">  <span class="pl-c"><span class="pl-c">#</span> a value less than 10 in other environments. Note that, for bcrypt (the default</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L117">117</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC117">  <span class="pl-c"><span class="pl-c">#</span> encryptor), the cost increases exponentially with the number of stretches (e.g.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L118">118</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC118">  <span class="pl-c"><span class="pl-c">#</span> a value of 20 is already extremely slow: approx. 60 seconds for 1 calculation).</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L119">119</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC119">  config.stretches <span class="pl-k">=</span> <span class="pl-c1">Rails</span>.env.test? <span class="pl-k">?</span> <span class="pl-c1">1</span> : <span class="pl-c1">10</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L120">120</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC120"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L121">121</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC121">  <span class="pl-c"><span class="pl-c">#</span> Setup a pepper to generate the encrypted password.</span></div>
+                </div>
+            </div>
+          </div>
+
+          <div class="blame-hunk d-flex border-gray-light border-bottom">
+
+            <div class="blame-commit flex-self-stretch mr-1" data-heat="10">
+              <div class="blame-commit-info pl-1 pr-2">
+
+                <div class="no-wrap d-flex flex-items-start">
+                  
+<div class="AvatarStack flex-self-start ">
+  <div class="AvatarStack-body tooltipped tooltipped-se tooltipped-align-left-1"
+       aria-label="WGierke">
+
+        <a href="/WGierke" data-skip-pjax="true" class="avatar">
+          <img src="https://avatars3.githubusercontent.com/u/6676439?s=40&amp;v=4" width="20" height="20" alt="@WGierke">
+        </a>
+  </div>
+</div>
+
+                  <div class="blame-commit-content d-flex no-wrap flex-items-center">
+                    <div class="blame-commit-message overflow-hidden pt-1 f6">
+                        <a href="/hpi-swt2/wimi-portal/commit/74bc82b96cd6034a3fc06346437ebc343693b208" class="message f6 text-gray-dark" data-pjax="true" title="implemented password change">implemented password change</a>
+                    </div>
+                  </div>
+                  <div class="blame-commit-date ml-3" data-heat="10"><time-ago datetime="2016-01-14T00:11:00Z">Jan 14, 2016</time-ago></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="blob-reblame pl-1 pr-1">
+                <a href="/hpi-swt2/wimi-portal/blame/c3264f8e35c8c360eef0569dcb9fa226ffe2c720/config/initializers/devise.rb"
+                  aria-label="View blame prior to this change" class="reblame-link link-hover-blue no-underline tooltipped tooltipped-e d-inline-block pr-1">
+                  <svg aria-hidden="true" class="octicon octicon-versions" height="16" version="1.1" viewBox="0 0 14 16" width="14"><path fill-rule="evenodd" d="M13 3H7c-.55 0-1 .45-1 1v8c0 .55.45 1 1 1h6c.55 0 1-.45 1-1V4c0-.55-.45-1-1-1zm-1 8H8V5h4v6zM4 4h1v1H4v6h1v1H4c-.55 0-1-.45-1-1V5c0-.55.45-1 1-1zM1 5h1v1H1v4h1v1H1c-.55 0-1-.45-1-1V6c0-.55.45-1 1-1z"/></svg>
+                </a>
+            </div>
+
+            <div class="width-full">
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L122">122</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC122">  <span class="pl-c"><span class="pl-c">#</span> config.pepper = &#39;9e447b3674570685d3093cf70eadaaa52ecb91c7a852a5884a01317756b1554fd6424dbcdfb5a01fa4ec96d128266923252a91fa53e26ab084fd0bba7149b895&#39;</span></div>
+                </div>
+            </div>
+          </div>
+
+          <div class="blame-hunk d-flex border-gray-light border-bottom">
+
+            <div class="blame-commit flex-self-stretch mr-1" data-heat="10">
+              <div class="blame-commit-info pl-1 pr-2">
+
+                <div class="no-wrap d-flex flex-items-start">
+                  
+<div class="AvatarStack flex-self-start ">
+  <div class="AvatarStack-body tooltipped tooltipped-se tooltipped-align-left-1"
+       aria-label="jaSunny">
+
+        <a href="/jaSunny" data-skip-pjax="true" class="avatar">
+          <img src="https://avatars1.githubusercontent.com/u/5164846?s=40&amp;v=4" width="20" height="20" alt="@jaSunny">
+        </a>
+  </div>
+</div>
+
+                  <div class="blame-commit-content d-flex no-wrap flex-items-center">
+                    <div class="blame-commit-message overflow-hidden pt-1 f6">
+                        <a href="/hpi-swt2/wimi-portal/commit/e75d8b7b697bae7753a10bd8ffe0b7bd02eb4da7" class="message f6 text-gray-dark" data-pjax="true" title="adding MVCs for user, holiday, expenses, project, business trip and publication">adding MVCs for user, holiday, expenses, project, business trip and p…</a>
+                    </div>
+                  </div>
+                  <div class="blame-commit-date ml-3" data-heat="10"><time-ago datetime="2015-10-06T15:26:42Z">Oct 6, 2015</time-ago></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="blob-reblame pl-1 pr-1">
+            </div>
+
+            <div class="width-full">
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L123">123</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC123"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L124">124</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC124">  <span class="pl-c"><span class="pl-c">#</span> ==&gt; Configuration for :confirmable</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L125">125</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC125">  <span class="pl-c"><span class="pl-c">#</span> A period that the user is allowed to access the website even without</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L126">126</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC126">  <span class="pl-c"><span class="pl-c">#</span> confirming their account. For instance, if set to 2.days, the user will be</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L127">127</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC127">  <span class="pl-c"><span class="pl-c">#</span> able to access the website for two days without confirming their account,</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L128">128</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC128">  <span class="pl-c"><span class="pl-c">#</span> access will be blocked just in the third day. Default is 0.days, meaning</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L129">129</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC129">  <span class="pl-c"><span class="pl-c">#</span> the user cannot access the website without confirming their account.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L130">130</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC130">  <span class="pl-c"><span class="pl-c">#</span> config.allow_unconfirmed_access_for = 2.days</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L131">131</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC131"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L132">132</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC132">  <span class="pl-c"><span class="pl-c">#</span> A period that the user is allowed to confirm their account before their</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L133">133</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC133">  <span class="pl-c"><span class="pl-c">#</span> token becomes invalid. For example, if set to 3.days, the user can confirm</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L134">134</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC134">  <span class="pl-c"><span class="pl-c">#</span> their account within 3 days after the mail was sent, but on the fourth day</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L135">135</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC135">  <span class="pl-c"><span class="pl-c">#</span> their account can&#39;t be confirmed with the token any more.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L136">136</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC136">  <span class="pl-c"><span class="pl-c">#</span> Default is nil, meaning there is no restriction on how long a user can take</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L137">137</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC137">  <span class="pl-c"><span class="pl-c">#</span> before confirming their account.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L138">138</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC138">  <span class="pl-c"><span class="pl-c">#</span> config.confirm_within = 3.days</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L139">139</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC139"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L140">140</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC140">  <span class="pl-c"><span class="pl-c">#</span> If true, requires any email changes to be confirmed (exactly the same way as</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L141">141</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC141">  <span class="pl-c"><span class="pl-c">#</span> initial account confirmation) to be applied. Requires additional unconfirmed_email</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L142">142</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC142">  <span class="pl-c"><span class="pl-c">#</span> db field (see migrations). Until confirmed, new email is stored in</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L143">143</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC143">  <span class="pl-c"><span class="pl-c">#</span> unconfirmed_email column, and copied to email column on successful confirmation.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L144">144</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC144">  config.reconfirmable <span class="pl-k">=</span> <span class="pl-c1">true</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L145">145</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC145"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L146">146</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC146">  <span class="pl-c"><span class="pl-c">#</span> Defines which key will be used when confirming an account</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L147">147</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC147">  <span class="pl-c"><span class="pl-c">#</span> config.confirmation_keys = [:email]</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L148">148</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC148"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L149">149</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC149">  <span class="pl-c"><span class="pl-c">#</span> ==&gt; Configuration for :rememberable</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L150">150</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC150">  <span class="pl-c"><span class="pl-c">#</span> The time the user will be remembered without asking for credentials again.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L151">151</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC151">  <span class="pl-c"><span class="pl-c">#</span> config.remember_for = 2.weeks</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L152">152</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC152"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L153">153</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC153">  <span class="pl-c"><span class="pl-c">#</span> Invalidates all the remember me tokens when the user signs out.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L154">154</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC154">  config.expire_all_remember_me_on_sign_out <span class="pl-k">=</span> <span class="pl-c1">true</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L155">155</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC155"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L156">156</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC156">  <span class="pl-c"><span class="pl-c">#</span> If true, extends the user&#39;s remember period when remembered via cookie.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L157">157</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC157">  <span class="pl-c"><span class="pl-c">#</span> config.extend_remember_period = false</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L158">158</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC158"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L159">159</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC159">  <span class="pl-c"><span class="pl-c">#</span> Options to be passed to the created cookie. For instance, you can set</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L160">160</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC160">  <span class="pl-c"><span class="pl-c">#</span> secure: true in order to force SSL only cookies.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L161">161</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC161">  <span class="pl-c"><span class="pl-c">#</span> config.rememberable_options = {}</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L162">162</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC162"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L163">163</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC163">  <span class="pl-c"><span class="pl-c">#</span> ==&gt; Configuration for :validatable</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L164">164</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC164">  <span class="pl-c"><span class="pl-c">#</span> Range for password length.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L165">165</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC165">  config.password_length <span class="pl-k">=</span> <span class="pl-c1">8</span>..<span class="pl-c1">72</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L166">166</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC166"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L167">167</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC167">  <span class="pl-c"><span class="pl-c">#</span> Email regex used to validate email formats. It simply asserts that</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L168">168</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC168">  <span class="pl-c"><span class="pl-c">#</span> one (and only one) @ exists in the given string. This is mainly</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L169">169</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC169">  <span class="pl-c"><span class="pl-c">#</span> to give user feedback and not to assert the e-mail validity.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L170">170</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC170">  <span class="pl-c"><span class="pl-c">#</span> config.email_regexp = /\A[^@]+@[^@]+\z/</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L171">171</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC171"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L172">172</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC172">  <span class="pl-c"><span class="pl-c">#</span> ==&gt; Configuration for :timeoutable</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L173">173</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC173">  <span class="pl-c"><span class="pl-c">#</span> The time you want to timeout the user session without activity. After this</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L174">174</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC174">  <span class="pl-c"><span class="pl-c">#</span> time the user will be asked for credentials again. Default is 30 minutes.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L175">175</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC175">  <span class="pl-c"><span class="pl-c">#</span> config.timeout_in = 30.minutes</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L176">176</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC176"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L177">177</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC177">  <span class="pl-c"><span class="pl-c">#</span> ==&gt; Configuration for :lockable</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L178">178</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC178">  <span class="pl-c"><span class="pl-c">#</span> Defines which strategy will be used to lock an account.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L179">179</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC179">  <span class="pl-c"><span class="pl-c">#</span> :failed_attempts = Locks an account after a number of failed attempts to sign in.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L180">180</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC180">  <span class="pl-c"><span class="pl-c">#</span> :none            = No lock strategy. You should handle locking by yourself.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L181">181</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC181">  <span class="pl-c"><span class="pl-c">#</span> config.lock_strategy = :failed_attempts</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L182">182</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC182"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L183">183</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC183">  <span class="pl-c"><span class="pl-c">#</span> Defines which key will be used when locking and unlocking an account</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L184">184</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC184">  <span class="pl-c"><span class="pl-c">#</span> config.unlock_keys = [:email]</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L185">185</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC185"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L186">186</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC186">  <span class="pl-c"><span class="pl-c">#</span> Defines which strategy will be used to unlock an account.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L187">187</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC187">  <span class="pl-c"><span class="pl-c">#</span> :email = Sends an unlock link to the user email</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L188">188</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC188">  <span class="pl-c"><span class="pl-c">#</span> :time  = Re-enables login after a certain amount of time (see :unlock_in below)</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L189">189</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC189">  <span class="pl-c"><span class="pl-c">#</span> :both  = Enables both strategies</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L190">190</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC190">  <span class="pl-c"><span class="pl-c">#</span> :none  = No unlock strategy. You should handle unlocking by yourself.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L191">191</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC191">  <span class="pl-c"><span class="pl-c">#</span> config.unlock_strategy = :both</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L192">192</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC192"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L193">193</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC193">  <span class="pl-c"><span class="pl-c">#</span> Number of authentication tries before locking an account if lock_strategy</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L194">194</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC194">  <span class="pl-c"><span class="pl-c">#</span> is failed attempts.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L195">195</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC195">  <span class="pl-c"><span class="pl-c">#</span> config.maximum_attempts = 20</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L196">196</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC196"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L197">197</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC197">  <span class="pl-c"><span class="pl-c">#</span> Time interval to unlock the account if :time is enabled as unlock_strategy.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L198">198</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC198">  <span class="pl-c"><span class="pl-c">#</span> config.unlock_in = 1.hour</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L199">199</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC199"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L200">200</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC200">  <span class="pl-c"><span class="pl-c">#</span> Warn on the last attempt before the account is locked.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L201">201</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC201">  <span class="pl-c"><span class="pl-c">#</span> config.last_attempt_warning = true</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L202">202</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC202"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L203">203</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC203">  <span class="pl-c"><span class="pl-c">#</span> ==&gt; Configuration for :recoverable</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L204">204</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC204">  <span class="pl-c"><span class="pl-c">#</span></span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L205">205</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC205">  <span class="pl-c"><span class="pl-c">#</span> Defines which key will be used when recovering the password for an account</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L206">206</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC206">  <span class="pl-c"><span class="pl-c">#</span> config.reset_password_keys = [:email]</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L207">207</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC207"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L208">208</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC208">  <span class="pl-c"><span class="pl-c">#</span> Time interval you can reset your password with a reset password key.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L209">209</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC209">  <span class="pl-c"><span class="pl-c">#</span> Don&#39;t put a too small interval or your users won&#39;t have the time to</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L210">210</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC210">  <span class="pl-c"><span class="pl-c">#</span> change their passwords.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L211">211</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC211">  config.reset_password_within <span class="pl-k">=</span> <span class="pl-c1">6</span>.hours</div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L212">212</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC212"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L213">213</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC213">  <span class="pl-c"><span class="pl-c">#</span> When set to false, does not sign a user in automatically after their password is</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L214">214</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC214">  <span class="pl-c"><span class="pl-c">#</span> reset. Defaults to true, so a user is signed in automatically after a reset.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L215">215</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC215">  <span class="pl-c"><span class="pl-c">#</span> config.sign_in_after_reset_password = true</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L216">216</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC216"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L217">217</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC217">  <span class="pl-c"><span class="pl-c">#</span> ==&gt; Configuration for :encryptable</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L218">218</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC218">  <span class="pl-c"><span class="pl-c">#</span> Allow you to use another encryption algorithm besides bcrypt (default). You can use</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L219">219</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC219">  <span class="pl-c"><span class="pl-c">#</span> :sha1, :sha512 or encryptors from others authentication tools as :clearance_sha1,</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L220">220</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC220">  <span class="pl-c"><span class="pl-c">#</span> :authlogic_sha512 (then you should set stretches above to 20 for default behavior)</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L221">221</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC221">  <span class="pl-c"><span class="pl-c">#</span> and :restful_authentication_sha1 (then you should set stretches to 10, and copy</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L222">222</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC222">  <span class="pl-c"><span class="pl-c">#</span> REST_AUTH_SITE_KEY to pepper).</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L223">223</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC223">  <span class="pl-c"><span class="pl-c">#</span></span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L224">224</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC224">  <span class="pl-c"><span class="pl-c">#</span> Require the `devise-encryptable` gem when using anything other than bcrypt</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L225">225</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC225">  <span class="pl-c"><span class="pl-c">#</span> config.encryptor = :sha512</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L226">226</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC226"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L227">227</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC227">  <span class="pl-c"><span class="pl-c">#</span> ==&gt; Scopes configuration</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L228">228</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC228">  <span class="pl-c"><span class="pl-c">#</span> Turn scoped views on. Before rendering &quot;sessions/new&quot;, it will first check for</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L229">229</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC229">  <span class="pl-c"><span class="pl-c">#</span> &quot;users/sessions/new&quot;. It&#39;s turned off by default because it&#39;s slower if you</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L230">230</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC230">  <span class="pl-c"><span class="pl-c">#</span> are using only default views.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L231">231</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC231">  <span class="pl-c"><span class="pl-c">#</span> config.scoped_views = false</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L232">232</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC232"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L233">233</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC233">  <span class="pl-c"><span class="pl-c">#</span> Configure the default scope given to Warden. By default it&#39;s the first</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L234">234</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC234">  <span class="pl-c"><span class="pl-c">#</span> devise role declared in your routes (usually :user).</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L235">235</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC235">  <span class="pl-c"><span class="pl-c">#</span> config.default_scope = :user</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L236">236</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC236"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L237">237</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC237">  <span class="pl-c"><span class="pl-c">#</span> Set this configuration to false if you want /users/sign_out to sign out</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L238">238</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC238">  <span class="pl-c"><span class="pl-c">#</span> only the current scope. By default, Devise signs out all scopes.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L239">239</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC239">  <span class="pl-c"><span class="pl-c">#</span> config.sign_out_all_scopes = true</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L240">240</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC240"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L241">241</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC241">  <span class="pl-c"><span class="pl-c">#</span> ==&gt; Navigation configuration</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L242">242</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC242">  <span class="pl-c"><span class="pl-c">#</span> Lists the formats that should be treated as navigational. Formats like</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L243">243</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC243">  <span class="pl-c"><span class="pl-c">#</span> :html, should redirect to the sign in page when the user does not have</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L244">244</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC244">  <span class="pl-c"><span class="pl-c">#</span> access, but formats like :xml or :json, should return 401.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L245">245</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC245">  <span class="pl-c"><span class="pl-c">#</span></span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L246">246</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC246">  <span class="pl-c"><span class="pl-c">#</span> If you have any extra navigational formats, like :iphone or :mobile, you</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L247">247</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC247">  <span class="pl-c"><span class="pl-c">#</span> should add them to the navigational formats lists.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L248">248</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC248">  <span class="pl-c"><span class="pl-c">#</span></span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L249">249</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC249">  <span class="pl-c"><span class="pl-c">#</span> The &quot;*/*&quot; below is required to match Internet Explorer requests.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L250">250</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC250">  <span class="pl-c"><span class="pl-c">#</span> config.navigational_formats = [&#39;*/*&#39;, :html]</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L251">251</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC251"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L252">252</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC252">  <span class="pl-c"><span class="pl-c">#</span> The default HTTP method used to sign out a resource. Default is :delete.</span></div>
+                </div>
+            </div>
+          </div>
+
+          <div class="blame-hunk d-flex border-gray-light border-bottom">
+
+            <div class="blame-commit flex-self-stretch mr-1" data-heat="10">
+              <div class="blame-commit-info pl-1 pr-2">
+
+                <div class="no-wrap d-flex flex-items-start">
+                  
+<div class="AvatarStack flex-self-start ">
+  <div class="AvatarStack-body tooltipped tooltipped-se tooltipped-align-left-1"
+       aria-label="DasDingGehtNicht">
+
+        <a href="/DasDingGehtNicht" data-skip-pjax="true" class="avatar">
+          <img src="https://avatars1.githubusercontent.com/u/12875106?s=40&amp;v=4" width="20" height="20" alt="@DasDingGehtNicht">
+        </a>
+  </div>
+</div>
+
+                  <div class="blame-commit-content d-flex no-wrap flex-items-center">
+                    <div class="blame-commit-message overflow-hidden pt-1 f6">
+                        <a href="/hpi-swt2/wimi-portal/commit/d145756d601dd54d1e78c0e09bf286a60121ddf1" class="message f6 text-gray-dark" data-pjax="true" title="fixing navbar responsiveness and layout">fixing navbar responsiveness and layout</a>
+                    </div>
+                  </div>
+                  <div class="blame-commit-date ml-3" data-heat="10"><time-ago datetime="2015-10-16T11:24:04Z">Oct 16, 2015</time-ago></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="blob-reblame pl-1 pr-1">
+                <a href="/hpi-swt2/wimi-portal/blame/2e6196021953237ff121d567d4cd510dc4f0ce96/config/initializers/devise.rb"
+                  aria-label="View blame prior to this change" class="reblame-link link-hover-blue no-underline tooltipped tooltipped-e d-inline-block pr-1">
+                  <svg aria-hidden="true" class="octicon octicon-versions" height="16" version="1.1" viewBox="0 0 14 16" width="14"><path fill-rule="evenodd" d="M13 3H7c-.55 0-1 .45-1 1v8c0 .55.45 1 1 1h6c.55 0 1-.45 1-1V4c0-.55-.45-1-1-1zm-1 8H8V5h4v6zM4 4h1v1H4v6h1v1H4c-.55 0-1-.45-1-1V5c0-.55.45-1 1-1zM1 5h1v1H1v4h1v1H1c-.55 0-1-.45-1-1V6c0-.55.45-1 1-1z"/></svg>
+                </a>
+            </div>
+
+            <div class="width-full">
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L253">253</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC253">  config.sign_out_via <span class="pl-k">=</span> <span class="pl-c1">:get</span></div>
+                </div>
+            </div>
+          </div>
+
+          <div class="blame-hunk d-flex border-gray-light border-bottom">
+
+            <div class="blame-commit flex-self-stretch mr-1" data-heat="10">
+              <div class="blame-commit-info pl-1 pr-2">
+
+                <div class="no-wrap d-flex flex-items-start">
+                  
+<div class="AvatarStack flex-self-start ">
+  <div class="AvatarStack-body tooltipped tooltipped-se tooltipped-align-left-1"
+       aria-label="jaSunny">
+
+        <a href="/jaSunny" data-skip-pjax="true" class="avatar">
+          <img src="https://avatars1.githubusercontent.com/u/5164846?s=40&amp;v=4" width="20" height="20" alt="@jaSunny">
+        </a>
+  </div>
+</div>
+
+                  <div class="blame-commit-content d-flex no-wrap flex-items-center">
+                    <div class="blame-commit-message overflow-hidden pt-1 f6">
+                        <a href="/hpi-swt2/wimi-portal/commit/e75d8b7b697bae7753a10bd8ffe0b7bd02eb4da7" class="message f6 text-gray-dark" data-pjax="true" title="adding MVCs for user, holiday, expenses, project, business trip and publication">adding MVCs for user, holiday, expenses, project, business trip and p…</a>
+                    </div>
+                  </div>
+                  <div class="blame-commit-date ml-3" data-heat="10"><time-ago datetime="2015-10-06T15:26:42Z">Oct 6, 2015</time-ago></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="blob-reblame pl-1 pr-1">
+            </div>
+
+            <div class="width-full">
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L254">254</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC254"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L255">255</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC255">  <span class="pl-c"><span class="pl-c">#</span> ==&gt; OmniAuth</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L256">256</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC256">  <span class="pl-c"><span class="pl-c">#</span> Add a new OmniAuth provider. Check the wiki for more information on setting</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L257">257</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC257">  <span class="pl-c"><span class="pl-c">#</span> up on your models and hooks.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L258">258</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC258">  <span class="pl-c"><span class="pl-c">#</span> config.omniauth :github, &#39;APP_ID&#39;, &#39;APP_SECRET&#39;, scope: &#39;user,public_repo&#39;</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L259">259</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC259"></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L260">260</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC260">  <span class="pl-c"><span class="pl-c">#</span> ==&gt; Warden configuration</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L261">261</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC261">  <span class="pl-c"><span class="pl-c">#</span> If you want to use other strategies, that are not supported by Devise, or</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L262">262</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC262">  <span class="pl-c"><span class="pl-c">#</span> change the failure app, you can configure them inside the config.warden block.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L263">263</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC263">  <span class="pl-c"><span class="pl-c">#</span></span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L264">264</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC264">  <span class="pl-c"><span class="pl-c">#</span> config.warden do |manager|</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L265">265</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC265">  <span class="pl-c"><span class="pl-c">#</span>   manager.intercept_401 = false</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L266">266</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC266">  <span class="pl-c"><span class="pl-c">#</span>   manager.default_strategies(scope: :user).unshift :some_external_strategy</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L267">267</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC267">  <span class="pl-c"><span class="pl-c">#</span> end</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L268">268</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC268"></div>
+                </div>
+            </div>
+          </div>
+
+          <div class="blame-hunk d-flex border-gray-light border-bottom">
+
+            <div class="blame-commit flex-self-stretch mr-1" data-heat="10">
+              <div class="blame-commit-info pl-1 pr-2">
+
+                <div class="no-wrap d-flex flex-items-start">
+                  
+<div class="AvatarStack flex-self-start ">
+  <div class="AvatarStack-body tooltipped tooltipped-se tooltipped-align-left-1"
+       aria-label="chrisma">
+
+        <a href="/chrisma" data-skip-pjax="true" class="avatar">
+          <img src="https://avatars3.githubusercontent.com/u/1652117?s=40&amp;v=4" width="20" height="20" alt="@chrisma">
+        </a>
+  </div>
+</div>
+
+                  <div class="blame-commit-content d-flex no-wrap flex-items-center">
+                    <div class="blame-commit-message overflow-hidden pt-1 f6">
+                        <a href="/hpi-swt2/wimi-portal/commit/6b426063f37aa28e14afe8979384e12c7018d819" class="message f6 text-gray-dark" data-pjax="true" title="Redirect to external login path after invalid login. Fixes #364">Redirect to external login path after invalid login. <span aria-label="This commit closes issue #364." class="issue-keyword tooltipped tooltipped-se">Fixes</span> <a href="https://github.com/hpi-swt2/wimi-portal/issues/364" class="issue-link js-issue-link" data-error-text="Failed to load issue title" data-id="148304555" data-permission-text="Issue title is private" data-url="https://github.com/hpi-swt2/wimi-portal/issues/364">#364</a>
+</a>
+                    </div>
+                  </div>
+                  <div class="blame-commit-date ml-3" data-heat="10"><time-ago datetime="2016-04-18T14:53:36Z">Apr 18, 2016</time-ago></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="blob-reblame pl-1 pr-1">
+                <a href="/hpi-swt2/wimi-portal/blame/40c789f043a322cc9e3908aa041dd713d2feb351/config/initializers/devise.rb"
+                  aria-label="View blame prior to this change" class="reblame-link link-hover-blue no-underline tooltipped tooltipped-e d-inline-block pr-1">
+                  <svg aria-hidden="true" class="octicon octicon-versions" height="16" version="1.1" viewBox="0 0 14 16" width="14"><path fill-rule="evenodd" d="M13 3H7c-.55 0-1 .45-1 1v8c0 .55.45 1 1 1h6c.55 0 1-.45 1-1V4c0-.55-.45-1-1-1zm-1 8H8V5h4v6zM4 4h1v1H4v6h1v1H4c-.55 0-1-.45-1-1V5c0-.55.45-1 1-1zM1 5h1v1H1v4h1v1H1c-.55 0-1-.45-1-1V6c0-.55.45-1 1-1z"/></svg>
+                </a>
+            </div>
+
+            <div class="width-full">
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L269">269</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC269">  <span class="pl-c"><span class="pl-c">#</span> Use custom Devise FailureApp that redirects to external login</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L270">270</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC270">  <span class="pl-c"><span class="pl-c">#</span> when an invalid username / password is given.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L271">271</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC271">  <span class="pl-c"><span class="pl-c">#</span> Defined in lib/redirect_failure.rb</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L272">272</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC272">  config.warden <span class="pl-k">do</span> |<span class="pl-smi">manager</span>|</div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L273">273</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC273">    manager.failure_app <span class="pl-k">=</span> <span class="pl-c1">RedirectFailure</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L274">274</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC274">  <span class="pl-k">end</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L275">275</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC275"></div>
+                </div>
+            </div>
+          </div>
+
+          <div class="blame-hunk d-flex border-gray-light border-bottom">
+
+            <div class="blame-commit flex-self-stretch mr-1" data-heat="10">
+              <div class="blame-commit-info pl-1 pr-2">
+
+                <div class="no-wrap d-flex flex-items-start">
+                  
+<div class="AvatarStack flex-self-start ">
+  <div class="AvatarStack-body tooltipped tooltipped-se tooltipped-align-left-1"
+       aria-label="jaSunny">
+
+        <a href="/jaSunny" data-skip-pjax="true" class="avatar">
+          <img src="https://avatars1.githubusercontent.com/u/5164846?s=40&amp;v=4" width="20" height="20" alt="@jaSunny">
+        </a>
+  </div>
+</div>
+
+                  <div class="blame-commit-content d-flex no-wrap flex-items-center">
+                    <div class="blame-commit-message overflow-hidden pt-1 f6">
+                        <a href="/hpi-swt2/wimi-portal/commit/e75d8b7b697bae7753a10bd8ffe0b7bd02eb4da7" class="message f6 text-gray-dark" data-pjax="true" title="adding MVCs for user, holiday, expenses, project, business trip and publication">adding MVCs for user, holiday, expenses, project, business trip and p…</a>
+                    </div>
+                  </div>
+                  <div class="blame-commit-date ml-3" data-heat="10"><time-ago datetime="2015-10-06T15:26:42Z">Oct 6, 2015</time-ago></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="blob-reblame pl-1 pr-1">
+            </div>
+
+            <div class="width-full">
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L276">276</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC276">  <span class="pl-c"><span class="pl-c">#</span> ==&gt; Mountable engine configurations</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L277">277</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC277">  <span class="pl-c"><span class="pl-c">#</span> When using Devise inside an engine, let&#39;s call it `MyEngine`, and this engine</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L278">278</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC278">  <span class="pl-c"><span class="pl-c">#</span> is mountable, there are some extra configurations to be taken into account.</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L279">279</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC279">  <span class="pl-c"><span class="pl-c">#</span> The following options are available, assuming the engine is mounted as:</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L280">280</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC280">  <span class="pl-c"><span class="pl-c">#</span></span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L281">281</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC281">  <span class="pl-c"><span class="pl-c">#</span>     mount MyEngine, at: &#39;/my_engine&#39;</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L282">282</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC282">  <span class="pl-c"><span class="pl-c">#</span></span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L283">283</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC283">  <span class="pl-c"><span class="pl-c">#</span> The router that invoked `devise_for`, in the example above, would be:</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L284">284</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC284">  <span class="pl-c"><span class="pl-c">#</span> config.router_name = :my_engine</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L285">285</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC285">  <span class="pl-c"><span class="pl-c">#</span></span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L286">286</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC286">  <span class="pl-c"><span class="pl-c">#</span> When using OmniAuth, Devise cannot automatically set OmniAuth path,</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L287">287</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC287">  <span class="pl-c"><span class="pl-c">#</span> so you need to do it manually. For the users scope, it would be:</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L288">288</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC288">  <span class="pl-c"><span class="pl-c">#</span> config.omniauth_path_prefix = &#39;/my_engine/users/auth&#39;</span></div>
+                </div>
+                <div class="d-flex flex-justify-start flex-items-start">
+                  <div class="blob-num blame-blob-num bg-gray-light js-line-number" id="L289">289</div>
+                  <div class="blob-code blob-code-inner js-file-line" id="LC289"><span class="pl-k">end</span></div>
+                </div>
+            </div>
+          </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  </div>
+  <div class="modal-backdrop js-touch-events"></div>
+</div>
+
+    </div>
+  </div>
+
+  </div>
+
+      
+<div class="footer container-lg px-3" role="contentinfo">
+  <div class="position-relative d-flex flex-justify-between py-6 mt-6 f6 text-gray border-top border-gray-light ">
+    <ul class="list-style-none d-flex flex-wrap ">
+      <li class="mr-3">&copy; 2018 <span title="0.27497s from unicorn-71277662-6k3w2">GitHub</span>, Inc.</li>
+        <li class="mr-3"><a href="https://help.github.com/articles/github-terms-of-service/" data-ga-click="Footer, go to terms, text:terms">Terms</a></li>
+        <li class="mr-3"><a href="https://github.com/site/privacy" data-ga-click="Footer, go to privacy, text:privacy">Privacy</a></li>
+        <li class="mr-3"><a href="https://help.github.com/articles/github-security/" data-ga-click="Footer, go to security, text:security">Security</a></li>
+        <li class="mr-3"><a href="https://status.github.com/" data-ga-click="Footer, go to status, text:status">Status</a></li>
+        <li><a href="https://help.github.com" data-ga-click="Footer, go to help, text:help">Help</a></li>
+    </ul>
+
+    <a href="https://github.com" aria-label="Homepage" class="footer-octicon" title="GitHub">
+      <svg aria-hidden="true" class="octicon octicon-mark-github" height="24" version="1.1" viewBox="0 0 16 16" width="24"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+</a>
+    <ul class="list-style-none d-flex flex-wrap ">
+        <li class="mr-3"><a href="https://github.com/contact" data-ga-click="Footer, go to contact, text:contact">Contact GitHub</a></li>
+      <li class="mr-3"><a href="https://developer.github.com" data-ga-click="Footer, go to api, text:api">API</a></li>
+      <li class="mr-3"><a href="https://training.github.com" data-ga-click="Footer, go to training, text:training">Training</a></li>
+      <li class="mr-3"><a href="https://shop.github.com" data-ga-click="Footer, go to shop, text:shop">Shop</a></li>
+        <li class="mr-3"><a href="https://github.com/blog" data-ga-click="Footer, go to blog, text:blog">Blog</a></li>
+        <li><a href="https://github.com/about" data-ga-click="Footer, go to about, text:about">About</a></li>
+
+    </ul>
+  </div>
+</div>
+
+
+
+  <div id="ajax-error-message" class="ajax-error-message flash flash-error">
+    <svg aria-hidden="true" class="octicon octicon-alert" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M8.865 1.52c-.18-.31-.51-.5-.87-.5s-.69.19-.87.5L.275 13.5c-.18.31-.18.69 0 1 .19.31.52.5.87.5h13.7c.36 0 .69-.19.86-.5.17-.31.18-.69.01-1L8.865 1.52zM8.995 13h-2v-2h2v2zm0-3h-2V6h2v4z"/></svg>
+    <button type="button" class="flash-close js-ajax-error-dismiss" aria-label="Dismiss error">
+      <svg aria-hidden="true" class="octicon octicon-x" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48z"/></svg>
+    </button>
+    You can't perform that action at this time.
+  </div>
+
+
+    
+    <script crossorigin="anonymous" integrity="sha512-MO2ZtIEZrtDlHQRpl/db39VEpjw/+MfQjkgZhl52kxNrXqYwEKwe0oEa/IRuvPRN5v9UUrznRAoA2AgP8s/OIw==" src="https://assets-cdn.github.com/assets/frameworks-30ed99b48119.js" type="application/javascript"></script>
+    
+    <script async="async" crossorigin="anonymous" integrity="sha512-3v5SHiwYMWdvL7PX+vt1sdYGlTxotrqWMK4cDc0fupBnGALt0VvTvr2KxIS+qkFhFuCZw+KsSmEIHvaxID77BA==" src="https://assets-cdn.github.com/assets/github-defe521e2c18.js" type="application/javascript"></script>
+    
+    
+    
+    
+  <div class="js-stale-session-flash stale-session-flash flash flash-warn flash-banner d-none">
+    <svg aria-hidden="true" class="octicon octicon-alert" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M8.865 1.52c-.18-.31-.51-.5-.87-.5s-.69.19-.87.5L.275 13.5c-.18.31-.18.69 0 1 .19.31.52.5.87.5h13.7c.36 0 .69-.19.86-.5.17-.31.18-.69.01-1L8.865 1.52zM8.995 13h-2v-2h2v2zm0-3h-2V6h2v4z"/></svg>
+    <span class="signed-in-tab-flash">You signed in with another tab or window. <a href="">Reload</a> to refresh your session.</span>
+    <span class="signed-out-tab-flash">You signed out in another tab or window. <a href="">Reload</a> to refresh your session.</span>
+  </div>
+  <div class="facebox" id="facebox" style="display:none;">
+  <div class="facebox-popup">
+    <div class="facebox-content" role="dialog" aria-labelledby="facebox-header" aria-describedby="facebox-description">
+    </div>
+    <button type="button" class="facebox-close js-facebox-close" aria-label="Close modal">
+      <svg aria-hidden="true" class="octicon octicon-x" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48z"/></svg>
+    </button>
+  </div>
+</div>
+
+  
+
+  </body>
+</html>
+
