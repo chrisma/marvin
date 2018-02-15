@@ -77,10 +77,6 @@ if __name__ == "__main__":
     logging.basicConfig(stream=sys.stderr, format='%(name)s %(levelname)s %(message)s')
 
     blamer = BlameParser(project_link='', logger=log)
-    blamer.load_html_file('test_data/test_blame.html')
-    blame_info = blamer.blame_line(1)
-    print(blame_info)
-
-    blamer.load_html_file('test_data/test_blame_new.html')
+    blamer.load_html_file('test_data/test_blame_20180215.html')
     blame_info = blamer.blame_line(1)
     print(blame_info)
